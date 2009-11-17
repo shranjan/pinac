@@ -19,8 +19,21 @@ C:\Users\KULDEEP GANDHI\Desktop\pinac\Spinach\InterpreterFrontEnd\bin\Debug\Stri
 C:\Users\KULDEEP GANDHI\Desktop\pinac\Spinach\InterpreterFrontEnd\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\KULDEEP GANDHI\Desktop\pinac\Spinach\InterpreterFrontEnd\obj\Debug\InterpreterFrontEnd.dll
 C:\Users\KULDEEP GANDHI\Desktop\pinac\Spinach\InterpreterFrontEnd\obj\Debug\InterpreterFrontEnd.pdb
+<<<<<<< HEAD
 C:\Documents and Settings\Administrator\Desktop\Spinach\InterpreterFrontEnd\bin\Debug\InterpreterFrontEnd.dll
 C:\Documents and Settings\Administrator\Desktop\Spinach\InterpreterFrontEnd\bin\Debug\InterpreterFrontEnd.pdb
 C:\Documents and Settings\Administrator\Desktop\Spinach\InterpreterFrontEnd\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Administrator\Desktop\Spinach\InterpreterFrontEnd\obj\Debug\InterpreterFrontEnd.dll
 C:\Documents and Settings\Administrator\Desktop\Spinach\InterpreterFrontEnd\obj\Debug\InterpreterFrontEnd.pdb
+=======
+C:\Users\shashi\Desktop\pinac\Spinach\InterpreterFrontEnd\bin\Debug\InterpreterFrontEnd.dll
+C:\Users\shashi\Desktop\pinac\Spinach\InterpreterFrontEnd\bin\Debug\InterpreterFrontEnd.pdb
+C:\Users\shashi\Desktop\pinac\Spinach\InterpreterFrontEnd\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\shashi\Desktop\pinac\Spinach\InterpreterFrontEnd\obj\Debug\InterpreterFrontEnd.dll
+C:\Users\shashi\Desktop\pinac\Spinach\InterpreterFrontEnd\obj\Debug\InterpreterFrontEnd.pdb
+H:\EarlyMorning\pinac\Spinach\InterpreterFrontEnd\bin\Debug\InterpreterFrontEnd.dll
+H:\EarlyMorning\pinac\Spinach\InterpreterFrontEnd\bin\Debug\InterpreterFrontEnd.pdb
+H:\EarlyMorning\pinac\Spinach\InterpreterFrontEnd\obj\Debug\ResolveAssemblyReference.cache
+H:\EarlyMorning\pinac\Spinach\InterpreterFrontEnd\obj\Debug\InterpreterFrontEnd.dll
+H:\EarlyMorning\pinac\Spinach\InterpreterFrontEnd\obj\Debug\InterpreterFrontEnd.pdb
+>>>>>>> 4efd1032afc10710501156488d3a240631b09772
