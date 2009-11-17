@@ -20,7 +20,7 @@ namespace Spinach
     public class executor
     {
         private Core coreObject;
-        private exec frontEnd;
+        public Program MyProg;
         public delegate void err(int code, string message);
         public event err errEvent;
         public void Onerror(int code, string message)
@@ -31,15 +31,16 @@ namespace Spinach
         public executor()
         {
             coreObject = new Core();
-            frontEnd = new exec();
+            Antlr.Runtime.CommonTokenStream str = new Antlr.Runtime.CommonTokenStream();
+            MyProg = new Program(str);
         }
         public void VisitLine(string args)
         {
             List<string> keywords = new List<string>();
-            keywords = frontEnd.getKeywords();
-            frontEnd.error_ += new Spinach.exec.errorreport(Onerror);
-            frontEnd.astEvent += new Spinach.exec.ast(AST);
-            frontEnd.Visitline(args);
+            keywords = MyProg.getKeywords();
+            MyProg.error += new Spinach.Program.errorreport(Onerror);
+            MyProg.AstEvent += new Spinach.Program.AstReport(AST);
+            MyProg.VisitLine(args);
         }
         public void AST(List<Element> elements)
         {
@@ -63,7 +64,7 @@ namespace Spinach
             Core obj = new Core();
             executor obj1 = new executor();
             obj1.errEvent += new executor.err(error);
-            obj1.VisitLine("ubPlot(1,a,\"abc\",1D);vec[i]=i + 2;mat[i][j] = i + 2;");
+            obj1.VisitLine("for(i->0to10){int a; double b; b = 1.1*(2.1*3.2);}struct s{}; struct sasda{int a; double b;};parallelfor(i->0to10){for(i->0to10){int a; double b;Matrix<int>[2][3] bv= []; b = 1.1*(2.1*3.2);}if(s.a!=0){int a;Vector<double>[4] vec= [1,2,3,4];}}");
         }
         public static void error(int code, string message)
         {
