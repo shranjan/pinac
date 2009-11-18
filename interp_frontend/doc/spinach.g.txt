@@ -1,0 +1,371 @@
+///-- Interpreter Front End team.
+///-- version 1.1 Date: 11/08/09
+///-- version 1.2 Date: 11/09/09 -- Updated vectorelem, matrixelem, plot grammar, struct propertices Name changed, removed commented code, modified for and if-else body loop
+ 
+ 
+grammar spinach;
+ 
+options {
+  language = 'CSharp';
+  output=AST;
+}
+ 
+@parser::header {
+using System.Collections.Generic;
+}
+ 
+@lexer::header {
+using System.Collections.Generic;
+}
+ 
+/*
+ * Parser Rules
+ */
+program 
+
+  : (expr)+;
+  
+  
+  
+expr 
+  :expr1| parallelfor| structdec 
+     | structobjdec 
+     | functiondefination
+;
+ 
+expr1 
+   : expr2
+    | matrixvardec 
+    | plotfunctions
+    | deletionofvar
+    | print 
+    | functioncall
+    | scalarvardec 
+    | vectorvardec  ;
+ 
+expr2 
+: assignment 
+  | ifelse
+  | forstatement
+  | comment;
+ 
+var_int_or_double_literal 
+  : (int_literal 
+  | double_literal 
+  | varorstruct);
+ 
+varorstruct 
+: (variable|structassign)
+;
+ 
+variable 
+
+  : VARIABLE;
+ 
+int_literal 
+
+  : INT_LITERAL ;
+ 
+double_literal 
+
+: DOUBLE_LITERAL ;
+ 
+string_literal 
+
+ :('"'(var_int_or_double_literal )*'"');
+ 
+matrixvardec
+
+:('Matrix' '<' VARTYPE '>' '['int_literal']'
+'[' int_literal ']'
+(variable )
+ASSIGNMENT
+'['((int_literal  (','int_literal )*)|
+(double_literal 
+(','double_literal)*))']')
+END_OF_STATEMENT;
+ 
+vectorvardec 
+
+:('Vector' '<' VARTYPE '>' '['int_literal ']'
+variable 
+ASSIGNMENT
+'['((int_literal  (','int_literal )*)|
+(double_literal 
+(','double_literal )*))']')
+END_OF_STATEMENT;
+ 
+matrixelem 
+
+ :(variable
+  '['(int_literal|variable)']'
+ '['(int_literal|variable)']');
+ 
+vectorelem 
+
+ :(variable 
+  '['(int_literal|variable)']');
+ 
+assignment 
+
+  : ((variable 
+    | structassign
+    | vectorelem
+    |  matrixelem)
+    ASSIGNMENT
+    (( subtractive_exp| dotproduct
+    | matrixtranspose |string_literal)
+    END_OF_STATEMENT
+    | functioncall))
+    ;
+ 
+additive_expression 
+
+: (( multiplicative_expression) ('+'  additive_expression)*)
+;
+ 
+multiplicative_expression 
+
+: ( var_int_or_double_literal
+|  bracket_exp
+|  matrixelem
+|  vectorelem)
+('*'
+ multiplicative_expression
+ 
+)*
+;
+        
+    
+bracket_exp returns 
+
+: '('subtractive_exp')' ;
+ 
+ 
+ 
+ 
+ 
+subtractive_exp 
+
+: (additive_expression ('-'  subtractive_exp)*)
+;
+    
+ 
+structdec 
+
+: ('struct' variable 
+'{' (scalarvardec )+
+'}')END_OF_STATEMENT;
+ 
+scalarvardec 
+
+:((VARTYPE
+| STRINGTYPE )
+variable)END_OF_STATEMENT;
+ 
+ 
+structobjdec 
+
+: (variable 
+ variable )
+ END_OF_STATEMENT;
+
+structassign 
+
+:(variable '.'variable)
+;
+ 
+deletionofvar 
+
+:('delete' el1=variable )END_OF_STATEMENT;
+ 
+print 
+
+  : 'print' (var_int_or_double_literal 
+    |string_literal
+    |vectorelem 
+     | matrixelem
+     )
+    END_OF_STATEMENT;
+    
+ 
+parallelfor 
+: 'parallelfor'LEFTBRACE  variable POINT  int_literal 'to'  int_literal RIGHTBRACE LEFTPARANTHESIS ((expr2)+(('SYNC' END_OF_STATEMENT)|))+ RIGHTPARANTHESIS
+;
+ 
+ifelse 
+
+:('if' LEFTBRACE (varorstruct)(
+      '==' 
+    | '!=' 
+    | '<' 
+    | '<=' 
+    | '>' 
+    | '>=' 
+  )
+( var_int_or_double_literal| string_literal) RIGHTBRACE LEFTPARANTHESIS (( ifloop)|)RIGHTPARANTHESIS)('else' LEFTPARANTHESIS (( ifloop)|) RIGHTPARANTHESIS)? ;
+ 
+ifloop 
+
+: (expr1|functionreturn)+
+;
+ 
+ 
+forstatement 
+:'for' LEFTBRACE variable POINT  int_literal 'to'  int_literal RIGHTBRACE LEFTPARANTHESIS (expr2)+ RIGHTPARANTHESIS;
+ 
+   functioncall returns [FunctionCallElement ret]
+ @init{ retval.ret = new FunctionCallElement();
+ }
+  :variable
+  '('((var_int_or_double_literal|string_literal) (',' (var_int_or_double_literal|string_literal))*)? ')'
+  END_OF_STATEMENT
+;
+ 
+ 
+  
+ 
+ 
+functiondefination 
+ 
+
+: (VARTYPE
+  variable
+  '('
+ (( arguments(',' arguments)*)?)
+ ')'
+'{' ((assignment|functioncall| scalarvardec 
+  | vectorvardec 
+  | matrixvardec 
+  | deletionofvar | print
+  | ifelse| functionreturn| parallelfor| forstatement)+)?
+'}')|'void'
+  variable 
+  '('
+ (( arguments(',' arguments)*)?)
+ ')'
+'{' ((assignment|functioncall| scalarvardec
+  | vectorvardec
+  | matrixvardec 
+  | deletionofvar | print 
+  | ifelse| functionreturn| parallelfor| forstatement)+)?
+'}'
+;
+ 
+ 
+dotproduct
+
+:  variable 'DOT'  variable
+;
+matrixtranspose 
+ 
+
+: 'T' LEFTBRACE variable ')'
+;
+ 
+matrixreference 
+
+:'Matrix' '<' (VARTYPE'>' variable)
+;
+ 
+vectorreference 
+
+:'Vector' '<' (VARTYPE'>' variable )
+;
+arguments 
+: (scalarargument 
+| matrixreference 
+| vectorreference );
+ 
+
+ 
+scalarargument 
+:
+((VARTYPE) variable
+)
+;
+ 
+comment 
+
+:'//'var_int_or_double_literal*;
+ 
+ 
+ 
+functionreturn 
+
+:'return' (var_int_or_double_literal) END_OF_STATEMENT
+;
+ 
+ 
+ 
+ 
+plotfunctions 
+
+: ('subPlot' '('
+( int_literal ) ','
+( variable ) ','
+( string_literal )','
+(('1D')|('2D')|('3D'(','( int_literal))?))
+')'END_OF_STATEMENT)
+| ('plot' '('
+(vll3= variable ) ','
+(vll4= string_literal )','
+(('1D')|('2D')|('3D'(','( int_literal))?))
+')'END_OF_STATEMENT)
+| ('resetPlot''('')'END_OF_STATEMENT)
+| ('setPlotAxis''('
+(double_literal)','
+((double_literal)',')
+((double_literal))
+')'END_OF_STATEMENT)
+|('setPlotAxis''('
+(double_literal)','
+((double_literal))
+')'END_OF_STATEMENT)
+|('setPlotAxis''('
+(double_literal)
+')'END_OF_STATEMENT)
+| ('setAxisTitle''('
+( string_literal)','
+((string_literal)',')
+((string_literal))
+')'END_OF_STATEMENT)
+| ('setAxisTitle''('
+( string_literal)','
+((string_literal))
+')'END_OF_STATEMENT)
+|('setAxisTitle''('
+( string_literal)
+')'END_OF_STATEMENT)
+|('setScaleMode''('
+SCALEMODE 
+')'
+END_OF_STATEMENT)
+;
+/*
+ * Lexer Rules
+ */
+ 
+END_OF_STATEMENT: ';';
+SCALEMODE: 'log' | 'linear' ;
+VARTYPE : 'int' | 'double';
+STRINGTYPE : 'string';
+DOT :'.';
+ASSIGNMENT: '=';
+PLUS: '+';
+MULTIPLY:'*';
+VARIABLE: ('a'..'z' | 'A'..'Z' )+;
+INT_LITERAL: ('0'..'9')+;
+DOUBLE_LITERAL:(INT_LITERAL DOT INT_LITERAL);
+WHITESPACE : (' ' | '\t' | '\n' | '\r' )+ {$channel = HIDDEN; } ;
+LEFTBRACE :'(';
+RIGHTBRACE:')';
+LEFTPARANTHESIS:'{';
+RIGHTPARANTHESIS:'}';
+POINT: '->';
+EQUALITYEXPRESSION: '==';
+NONEQUALITYEXPRESSION: '!=';
+LESSTHANEXPRESSION :'<';
+LESSTHANEQUALTOEXPRESSION:'<=';
+GREATERTHANEXPRESSION :'>';
+GREATERTHANEQUALTOEXPRESSION:'>='; 
