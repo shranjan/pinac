@@ -1,4 +1,4 @@
-// $ANTLR 3.1.3 Mar 18, 2009 10:09:25 spinach.g 2009-11-17 16:54:22
+// $ANTLR 3.1.3 Mar 18, 2009 10:09:25 spinach.g 2009-11-18 02:54:29
 
 
 using System.Collections.Generic;
@@ -46,23 +46,23 @@ public class spinachParser : Parser
 		"GREATERTHANEXPRESSION", 
 		"GREATERTHANEQUALTOEXPRESSION", 
 		"'\"'", 
-		"'Matrix'", 
+		"'matrix'", 
 		"'['", 
 		"']'", 
 		"','", 
-		"'Vector'", 
+		"'vector'", 
 		"'-'", 
 		"'struct'", 
 		"'delete'", 
 		"'print'", 
 		"'parallelfor'", 
 		"'to'", 
-		"'SYNC'", 
+		"'sync'", 
 		"'if'", 
 		"'else'", 
 		"'for'", 
 		"'void'", 
-		"'DOT'", 
+		"'dot'", 
 		"'T'", 
 		"'//'", 
 		"'return'", 
@@ -1126,7 +1126,7 @@ public class spinachParser : Parser
             	    {
             	        alt7 = 2;
             	    }
-            	    else if ( (LA7_1 == EOF || (LA7_1 >= VARIABLE && LA7_1 <= VARTYPE) || (LA7_1 >= END_OF_STATEMENT && LA7_1 <= STRINGTYPE) || LA7_1 == RIGHTBRACE || LA7_1 == RIGHTPARANTHESIS || (LA7_1 >= PLUS && LA7_1 <= MULTIPLY) || (LA7_1 >= EQUALITYEXPRESSION && LA7_1 <= 28) || (LA7_1 >= 31 && LA7_1 <= 37) || (LA7_1 >= 39 && LA7_1 <= 40) || (LA7_1 >= 42 && LA7_1 <= 43) || (LA7_1 >= 46 && LA7_1 <= 48) || (LA7_1 >= 52 && LA7_1 <= 56)) )
+            	    else if ( ((LA7_1 >= VARIABLE && LA7_1 <= DOUBLE_LITERAL) || LA7_1 == END_OF_STATEMENT || LA7_1 == RIGHTBRACE || (LA7_1 >= PLUS && LA7_1 <= MULTIPLY) || (LA7_1 >= EQUALITYEXPRESSION && LA7_1 <= 27) || LA7_1 == 31 || LA7_1 == 33 || LA7_1 == 46) )
             	    {
             	        alt7 = 1;
             	    }
@@ -1506,7 +1506,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "matrixvardec"
-    // spinach.g:96:1: matrixvardec returns [MatrixVariableDeclaration ret] : ( 'Matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) ) END_OF_STATEMENT ;
+    // spinach.g:96:1: matrixvardec returns [MatrixVariableDeclaration ret] : ( 'matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) ) END_OF_STATEMENT ;
     public spinachParser.matrixvardec_return matrixvardec() // throws RecognitionException [1]
     {   
         spinachParser.matrixvardec_return retval = new spinachParser.matrixvardec_return();
@@ -1571,13 +1571,13 @@ public class spinachParser : Parser
         	
         try 
     	{
-            // spinach.g:100:2: ( ( 'Matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) ) END_OF_STATEMENT )
-            // spinach.g:100:3: ( 'Matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) ) END_OF_STATEMENT
+            // spinach.g:100:2: ( ( 'matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) ) END_OF_STATEMENT )
+            // spinach.g:100:3: ( 'matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) ) END_OF_STATEMENT
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	// spinach.g:100:3: ( 'Matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) )
-            	// spinach.g:100:4: 'Matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) )
+            	// spinach.g:100:3: ( 'matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) )
+            	// spinach.g:100:4: 'matrix' '<' (el0= VARTYPE '>' '[' el1= int_literal ']' '[' el2= int_literal ']' (el3= variable ) ASSIGNMENT ( ( '[' ']' ) | ( '[' (el7= int_literal ( ',' el5= int_literal )* ) ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) )
             	{
             		string_literal23=(IToken)Match(input,28,FOLLOW_28_in_matrixvardec466); 
             			string_literal23_tree = (object)adaptor.Create(string_literal23);
@@ -1888,7 +1888,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "vectorvardec"
-    // spinach.g:111:1: vectorvardec returns [VectorVariableDeclaration ret] : ( 'Vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) END_OF_STATEMENT ;
+    // spinach.g:111:1: vectorvardec returns [VectorVariableDeclaration ret] : ( 'vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) END_OF_STATEMENT ;
     public spinachParser.vectorvardec_return vectorvardec() // throws RecognitionException [1]
     {   
         spinachParser.vectorvardec_return retval = new spinachParser.vectorvardec_return();
@@ -1947,13 +1947,13 @@ public class spinachParser : Parser
         	
         try 
     	{
-            // spinach.g:115:2: ( ( 'Vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) END_OF_STATEMENT )
-            // spinach.g:115:3: ( 'Vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) END_OF_STATEMENT
+            // spinach.g:115:2: ( ( 'vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) END_OF_STATEMENT )
+            // spinach.g:115:3: ( 'vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) ) END_OF_STATEMENT
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	// spinach.g:115:3: ( 'Vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) )
-            	// spinach.g:115:4: 'Vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' )
+            	// spinach.g:115:3: ( 'vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' ) )
+            	// spinach.g:115:4: 'vector' '<' VARTYPE '>' '[' el1= int_literal ']' el2= variable ASSIGNMENT ( ( '[' ']' ) | ( '[' el3= int_literal ( ',' el5= int_literal )* ']' ) | ( '[' el4= double_literal ( ',' el6= double_literal )* ) ']' )
             	{
             		string_literal40=(IToken)Match(input,32,FOLLOW_32_in_vectorvardec594); 
             			string_literal40_tree = (object)adaptor.Create(string_literal40);
@@ -4041,7 +4041,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "parallelfor"
-    // spinach.g:244:1: parallelfor returns [ParallelForElement ret] : 'parallelfor' LEFTBRACE r11= variable POINT r12= int_literal 'to' r13= int_literal RIGHTBRACE LEFTPARANTHESIS ( (e11= expr2 )+ ( ( 'SYNC' END_OF_STATEMENT ) | ) )+ RIGHTPARANTHESIS ;
+    // spinach.g:244:1: parallelfor returns [ParallelForElement ret] : 'parallelfor' LEFTBRACE r11= variable POINT r12= int_literal 'to' r13= int_literal RIGHTBRACE LEFTPARANTHESIS ( (e11= expr2 )+ ( ( 'sync' END_OF_STATEMENT ) | ) )+ RIGHTPARANTHESIS ;
     public spinachParser.parallelfor_return parallelfor() // throws RecognitionException [1]
     {   
         spinachParser.parallelfor_return retval = new spinachParser.parallelfor_return();
@@ -4082,8 +4082,8 @@ public class spinachParser : Parser
 
         try 
     	{
-            // spinach.g:247:2: ( 'parallelfor' LEFTBRACE r11= variable POINT r12= int_literal 'to' r13= int_literal RIGHTBRACE LEFTPARANTHESIS ( (e11= expr2 )+ ( ( 'SYNC' END_OF_STATEMENT ) | ) )+ RIGHTPARANTHESIS )
-            // spinach.g:247:4: 'parallelfor' LEFTBRACE r11= variable POINT r12= int_literal 'to' r13= int_literal RIGHTBRACE LEFTPARANTHESIS ( (e11= expr2 )+ ( ( 'SYNC' END_OF_STATEMENT ) | ) )+ RIGHTPARANTHESIS
+            // spinach.g:247:2: ( 'parallelfor' LEFTBRACE r11= variable POINT r12= int_literal 'to' r13= int_literal RIGHTBRACE LEFTPARANTHESIS ( (e11= expr2 )+ ( ( 'sync' END_OF_STATEMENT ) | ) )+ RIGHTPARANTHESIS )
+            // spinach.g:247:4: 'parallelfor' LEFTBRACE r11= variable POINT r12= int_literal 'to' r13= int_literal RIGHTBRACE LEFTPARANTHESIS ( (e11= expr2 )+ ( ( 'sync' END_OF_STATEMENT ) | ) )+ RIGHTPARANTHESIS
             {
             	root_0 = (object)adaptor.GetNilNode();
 
@@ -4129,7 +4129,7 @@ public class spinachParser : Parser
             		LEFTPARANTHESIS103_tree = (object)adaptor.Create(LEFTPARANTHESIS103);
             		adaptor.AddChild(root_0, LEFTPARANTHESIS103_tree);
 
-            	// spinach.g:247:228: ( (e11= expr2 )+ ( ( 'SYNC' END_OF_STATEMENT ) | ) )+
+            	// spinach.g:247:228: ( (e11= expr2 )+ ( ( 'sync' END_OF_STATEMENT ) | ) )+
             	int cnt31 = 0;
             	do 
             	{
@@ -4145,7 +4145,7 @@ public class spinachParser : Parser
             	    switch (alt31) 
             		{
             			case 1 :
-            			    // spinach.g:247:229: (e11= expr2 )+ ( ( 'SYNC' END_OF_STATEMENT ) | )
+            			    // spinach.g:247:229: (e11= expr2 )+ ( ( 'sync' END_OF_STATEMENT ) | )
             			    {
             			    	// spinach.g:247:229: (e11= expr2 )+
             			    	int cnt29 = 0;
@@ -4219,7 +4219,7 @@ public class spinachParser : Parser
             			    	loop29:
             			    		;	// Stops C# compiler whining that label 'loop29' has no statements
 
-            			    	// spinach.g:247:272: ( ( 'SYNC' END_OF_STATEMENT ) | )
+            			    	// spinach.g:247:272: ( ( 'sync' END_OF_STATEMENT ) | )
             			    	int alt30 = 2;
             			    	int LA30_0 = input.LA(1);
 
@@ -4241,10 +4241,10 @@ public class spinachParser : Parser
             			    	switch (alt30) 
             			    	{
             			    	    case 1 :
-            			    	        // spinach.g:247:273: ( 'SYNC' END_OF_STATEMENT )
+            			    	        // spinach.g:247:273: ( 'sync' END_OF_STATEMENT )
             			    	        {
-            			    	        	// spinach.g:247:273: ( 'SYNC' END_OF_STATEMENT )
-            			    	        	// spinach.g:247:274: 'SYNC' END_OF_STATEMENT
+            			    	        	// spinach.g:247:273: ( 'sync' END_OF_STATEMENT )
+            			    	        	// spinach.g:247:274: 'sync' END_OF_STATEMENT
             			    	        	{
             			    	        		string_literal104=(IToken)Match(input,39,FOLLOW_39_in_parallelfor1419); 
             			    	        			string_literal104_tree = (object)adaptor.Create(string_literal104);
@@ -5962,7 +5962,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "dotproduct"
-    // spinach.g:319:1: dotproduct returns [DotProductElement ret] : e11= variable 'DOT' e12= variable ;
+    // spinach.g:319:1: dotproduct returns [DotProductElement ret] : e11= variable 'dot' e12= variable ;
     public spinachParser.dotproduct_return dotproduct() // throws RecognitionException [1]
     {   
         spinachParser.dotproduct_return retval = new spinachParser.dotproduct_return();
@@ -5983,8 +5983,8 @@ public class spinachParser : Parser
 
         try 
     	{
-            // spinach.g:323:1: (e11= variable 'DOT' e12= variable )
-            // spinach.g:323:3: e11= variable 'DOT' e12= variable
+            // spinach.g:323:1: (e11= variable 'dot' e12= variable )
+            // spinach.g:323:3: e11= variable 'dot' e12= variable
             {
             	root_0 = (object)adaptor.GetNilNode();
 
@@ -6120,7 +6120,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "matrixreference"
-    // spinach.g:333:1: matrixreference returns [MatrixReference ret] : 'Matrix' '<' (el1= VARTYPE '>' el2= variable ) ;
+    // spinach.g:333:1: matrixreference returns [MatrixReference ret] : 'matrix' '<' (el1= VARTYPE '>' el2= variable ) ;
     public spinachParser.matrixreference_return matrixreference() // throws RecognitionException [1]
     {   
         spinachParser.matrixreference_return retval = new spinachParser.matrixreference_return();
@@ -6144,8 +6144,8 @@ public class spinachParser : Parser
 
         try 
     	{
-            // spinach.g:336:1: ( 'Matrix' '<' (el1= VARTYPE '>' el2= variable ) )
-            // spinach.g:336:2: 'Matrix' '<' (el1= VARTYPE '>' el2= variable )
+            // spinach.g:336:1: ( 'matrix' '<' (el1= VARTYPE '>' el2= variable ) )
+            // spinach.g:336:2: 'matrix' '<' (el1= VARTYPE '>' el2= variable )
             {
             	root_0 = (object)adaptor.GetNilNode();
 
@@ -6213,7 +6213,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "vectorreference"
-    // spinach.g:339:1: vectorreference returns [VectorReference ret] : 'Vector' '<' (el1= VARTYPE '>' el2= variable ) ;
+    // spinach.g:339:1: vectorreference returns [VectorReference ret] : 'vector' '<' (el1= VARTYPE '>' el2= variable ) ;
     public spinachParser.vectorreference_return vectorreference() // throws RecognitionException [1]
     {   
         spinachParser.vectorreference_return retval = new spinachParser.vectorreference_return();
@@ -6237,8 +6237,8 @@ public class spinachParser : Parser
 
         try 
     	{
-            // spinach.g:342:1: ( 'Vector' '<' (el1= VARTYPE '>' el2= variable ) )
-            // spinach.g:342:2: 'Vector' '<' (el1= VARTYPE '>' el2= variable )
+            // spinach.g:342:1: ( 'vector' '<' (el1= VARTYPE '>' el2= variable ) )
+            // spinach.g:342:2: 'vector' '<' (el1= VARTYPE '>' el2= variable )
             {
             	root_0 = (object)adaptor.GetNilNode();
 
@@ -6431,7 +6431,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "scalarargument"
-    // spinach.g:358:1: scalarargument returns [ScalarArgument ret] : ( (e11= VARTYPE ) e12= variable ) ;
+    // spinach.g:350:1: scalarargument returns [ScalarArgument ret] : ( (e11= VARTYPE ) e12= variable ) ;
     public spinachParser.scalarargument_return scalarargument() // throws RecognitionException [1]
     {   
         spinachParser.scalarargument_return retval = new spinachParser.scalarargument_return();
@@ -6449,18 +6449,18 @@ public class spinachParser : Parser
 
         try 
     	{
-            // spinach.g:360:2: ( ( (e11= VARTYPE ) e12= variable ) )
-            // spinach.g:361:1: ( (e11= VARTYPE ) e12= variable )
+            // spinach.g:352:2: ( ( (e11= VARTYPE ) e12= variable ) )
+            // spinach.g:353:1: ( (e11= VARTYPE ) e12= variable )
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	// spinach.g:361:1: ( (e11= VARTYPE ) e12= variable )
-            	// spinach.g:361:2: (e11= VARTYPE ) e12= variable
+            	// spinach.g:353:1: ( (e11= VARTYPE ) e12= variable )
+            	// spinach.g:353:2: (e11= VARTYPE ) e12= variable
             	{
-            		// spinach.g:361:2: (e11= VARTYPE )
-            		// spinach.g:361:3: e11= VARTYPE
+            		// spinach.g:353:2: (e11= VARTYPE )
+            		// spinach.g:353:3: e11= VARTYPE
             		{
-            			e11=(IToken)Match(input,VARTYPE,FOLLOW_VARTYPE_in_scalarargument2144); 
+            			e11=(IToken)Match(input,VARTYPE,FOLLOW_VARTYPE_in_scalarargument2136); 
             				e11_tree = (object)adaptor.Create(e11);
             				adaptor.AddChild(root_0, e11_tree);
 
@@ -6468,7 +6468,7 @@ public class spinachParser : Parser
 
             		}
 
-            		PushFollow(FOLLOW_variable_in_scalarargument2151);
+            		PushFollow(FOLLOW_variable_in_scalarargument2143);
             		e12 = variable();
             		state.followingStackPointer--;
 
@@ -6512,7 +6512,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "comment"
-    // spinach.g:365:1: comment returns [CommentElement ret] : '//' ( var_int_or_double_literal )* ;
+    // spinach.g:357:1: comment returns [CommentElement ret] : '//' ( var_int_or_double_literal )* '//' ;
     public spinachParser.comment_return comment() // throws RecognitionException [1]
     {   
         spinachParser.comment_return retval = new spinachParser.comment_return();
@@ -6521,99 +6521,34 @@ public class spinachParser : Parser
         object root_0 = null;
 
         IToken string_literal186 = null;
+        IToken string_literal188 = null;
         spinachParser.var_int_or_double_literal_return var_int_or_double_literal187 = null;
 
 
         object string_literal186_tree=null;
+        object string_literal188_tree=null;
 
 
         retval.ret = new CommentElement();
 
         try 
     	{
-            // spinach.g:369:1: ( '//' ( var_int_or_double_literal )* )
-            // spinach.g:369:2: '//' ( var_int_or_double_literal )*
+            // spinach.g:361:1: ( '//' ( var_int_or_double_literal )* '//' )
+            // spinach.g:361:2: '//' ( var_int_or_double_literal )* '//'
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	string_literal186=(IToken)Match(input,46,FOLLOW_46_in_comment2170); 
+            	string_literal186=(IToken)Match(input,46,FOLLOW_46_in_comment2162); 
             		string_literal186_tree = (object)adaptor.Create(string_literal186);
             		adaptor.AddChild(root_0, string_literal186_tree);
 
-            	// spinach.g:369:6: ( var_int_or_double_literal )*
+            	// spinach.g:361:6: ( var_int_or_double_literal )*
             	do 
             	{
             	    int alt53 = 2;
             	    int LA53_0 = input.LA(1);
 
-            	    if ( (LA53_0 == VARIABLE) )
-            	    {
-            	        switch ( input.LA(2) ) 
-            	        {
-            	        case VARIABLE:
-            	        	{
-            	            int LA53_4 = input.LA(3);
-
-            	            if ( (LA53_4 == EOF || (LA53_4 >= VARIABLE && LA53_4 <= ASSIGNMENT) || (LA53_4 >= STRINGTYPE && LA53_4 <= LEFTBRACE) || LA53_4 == RIGHTPARANTHESIS || LA53_4 == DOT || (LA53_4 >= 28 && LA53_4 <= 29) || LA53_4 == 32 || (LA53_4 >= 34 && LA53_4 <= 37) || (LA53_4 >= 39 && LA53_4 <= 40) || (LA53_4 >= 42 && LA53_4 <= 43) || (LA53_4 >= 46 && LA53_4 <= 48) || (LA53_4 >= 52 && LA53_4 <= 56)) )
-            	            {
-            	                alt53 = 1;
-            	            }
-
-
-            	            }
-            	            break;
-            	        case DOT:
-            	        	{
-            	            int LA53_5 = input.LA(3);
-
-            	            if ( (LA53_5 == VARIABLE) )
-            	            {
-            	                int LA53_6 = input.LA(4);
-
-            	                if ( (LA53_6 == EOF || (LA53_6 >= VARIABLE && LA53_6 <= VARTYPE) || LA53_6 == STRINGTYPE || LA53_6 == RIGHTPARANTHESIS || LA53_6 == 28 || LA53_6 == 32 || (LA53_6 >= 34 && LA53_6 <= 37) || (LA53_6 >= 39 && LA53_6 <= 40) || (LA53_6 >= 42 && LA53_6 <= 43) || (LA53_6 >= 46 && LA53_6 <= 48) || (LA53_6 >= 52 && LA53_6 <= 56)) )
-            	                {
-            	                    alt53 = 1;
-            	                }
-
-
-            	            }
-
-
-            	            }
-            	            break;
-            	        case EOF:
-            	        case INT_LITERAL:
-            	        case DOUBLE_LITERAL:
-            	        case VARTYPE:
-            	        case STRINGTYPE:
-            	        case RIGHTPARANTHESIS:
-            	        case 28:
-            	        case 32:
-            	        case 34:
-            	        case 35:
-            	        case 36:
-            	        case 37:
-            	        case 39:
-            	        case 40:
-            	        case 42:
-            	        case 43:
-            	        case 46:
-            	        case 47:
-            	        case 48:
-            	        case 52:
-            	        case 53:
-            	        case 54:
-            	        case 55:
-            	        case 56:
-            	        	{
-            	            alt53 = 1;
-            	            }
-            	            break;
-
-            	        }
-
-            	    }
-            	    else if ( ((LA53_0 >= INT_LITERAL && LA53_0 <= DOUBLE_LITERAL)) )
+            	    if ( ((LA53_0 >= VARIABLE && LA53_0 <= DOUBLE_LITERAL)) )
             	    {
             	        alt53 = 1;
             	    }
@@ -6622,9 +6557,9 @@ public class spinachParser : Parser
             	    switch (alt53) 
             		{
             			case 1 :
-            			    // spinach.g:369:6: var_int_or_double_literal
+            			    // spinach.g:361:6: var_int_or_double_literal
             			    {
-            			    	PushFollow(FOLLOW_var_int_or_double_literal_in_comment2171);
+            			    	PushFollow(FOLLOW_var_int_or_double_literal_in_comment2163);
             			    	var_int_or_double_literal187 = var_int_or_double_literal();
             			    	state.followingStackPointer--;
 
@@ -6640,6 +6575,10 @@ public class spinachParser : Parser
 
             	loop53:
             		;	// Stops C# compiler whining that label 'loop53' has no statements
+
+            	string_literal188=(IToken)Match(input,46,FOLLOW_46_in_comment2166); 
+            		string_literal188_tree = (object)adaptor.Create(string_literal188);
+            		adaptor.AddChild(root_0, string_literal188_tree);
 
 
             }
@@ -6676,7 +6615,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "functionreturn"
-    // spinach.g:373:1: functionreturn returns [ReturnElement ret] : 'return' ( var_int_or_double_literal ) END_OF_STATEMENT ;
+    // spinach.g:365:1: functionreturn returns [ReturnElement ret] : 'return' ( var_int_or_double_literal ) END_OF_STATEMENT ;
     public spinachParser.functionreturn_return functionreturn() // throws RecognitionException [1]
     {   
         spinachParser.functionreturn_return retval = new spinachParser.functionreturn_return();
@@ -6684,43 +6623,43 @@ public class spinachParser : Parser
 
         object root_0 = null;
 
-        IToken string_literal188 = null;
-        IToken END_OF_STATEMENT190 = null;
-        spinachParser.var_int_or_double_literal_return var_int_or_double_literal189 = null;
+        IToken string_literal189 = null;
+        IToken END_OF_STATEMENT191 = null;
+        spinachParser.var_int_or_double_literal_return var_int_or_double_literal190 = null;
 
 
-        object string_literal188_tree=null;
-        object END_OF_STATEMENT190_tree=null;
+        object string_literal189_tree=null;
+        object END_OF_STATEMENT191_tree=null;
 
 
         retval.ret = new ReturnElement();
 
         try 
     	{
-            // spinach.g:377:1: ( 'return' ( var_int_or_double_literal ) END_OF_STATEMENT )
-            // spinach.g:377:2: 'return' ( var_int_or_double_literal ) END_OF_STATEMENT
+            // spinach.g:369:1: ( 'return' ( var_int_or_double_literal ) END_OF_STATEMENT )
+            // spinach.g:369:2: 'return' ( var_int_or_double_literal ) END_OF_STATEMENT
             {
             	root_0 = (object)adaptor.GetNilNode();
 
-            	string_literal188=(IToken)Match(input,47,FOLLOW_47_in_functionreturn2189); 
-            		string_literal188_tree = (object)adaptor.Create(string_literal188);
-            		adaptor.AddChild(root_0, string_literal188_tree);
+            	string_literal189=(IToken)Match(input,47,FOLLOW_47_in_functionreturn2183); 
+            		string_literal189_tree = (object)adaptor.Create(string_literal189);
+            		adaptor.AddChild(root_0, string_literal189_tree);
 
-            	// spinach.g:377:11: ( var_int_or_double_literal )
-            	// spinach.g:377:12: var_int_or_double_literal
+            	// spinach.g:369:11: ( var_int_or_double_literal )
+            	// spinach.g:369:12: var_int_or_double_literal
             	{
-            		PushFollow(FOLLOW_var_int_or_double_literal_in_functionreturn2192);
-            		var_int_or_double_literal189 = var_int_or_double_literal();
+            		PushFollow(FOLLOW_var_int_or_double_literal_in_functionreturn2186);
+            		var_int_or_double_literal190 = var_int_or_double_literal();
             		state.followingStackPointer--;
 
-            		adaptor.AddChild(root_0, var_int_or_double_literal189.Tree);
-            		retval.ret.setreturnvariable(((var_int_or_double_literal189 != null) ? var_int_or_double_literal189.ret : null));
+            		adaptor.AddChild(root_0, var_int_or_double_literal190.Tree);
+            		retval.ret.setreturnvariable(((var_int_or_double_literal190 != null) ? var_int_or_double_literal190.ret : null));
 
             	}
 
-            	END_OF_STATEMENT190=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_functionreturn2196); 
-            		END_OF_STATEMENT190_tree = (object)adaptor.Create(END_OF_STATEMENT190);
-            		adaptor.AddChild(root_0, END_OF_STATEMENT190_tree);
+            	END_OF_STATEMENT191=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_functionreturn2190); 
+            		END_OF_STATEMENT191_tree = (object)adaptor.Create(END_OF_STATEMENT191);
+            		adaptor.AddChild(root_0, END_OF_STATEMENT191_tree);
 
 
             }
@@ -6757,7 +6696,7 @@ public class spinachParser : Parser
     };
 
     // $ANTLR start "plotfunctions"
-    // spinach.g:383:1: plotfunctions returns [PlotFunctionElement ret] : ( ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'resetPlot' '(' ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT ) | ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT ) );
+    // spinach.g:375:1: plotfunctions returns [PlotFunctionElement ret] : ( ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'resetPlot' '(' ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT ) | ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT ) );
     public spinachParser.plotfunctions_return plotfunctions() // throws RecognitionException [1]
     {   
         spinachParser.plotfunctions_return retval = new spinachParser.plotfunctions_return();
@@ -6765,66 +6704,66 @@ public class spinachParser : Parser
 
         object root_0 = null;
 
-        IToken string_literal191 = null;
-        IToken char_literal192 = null;
+        IToken string_literal192 = null;
         IToken char_literal193 = null;
         IToken char_literal194 = null;
         IToken char_literal195 = null;
-        IToken string_literal196 = null;
+        IToken char_literal196 = null;
         IToken string_literal197 = null;
         IToken string_literal198 = null;
-        IToken char_literal199 = null;
+        IToken string_literal199 = null;
         IToken char_literal200 = null;
-        IToken END_OF_STATEMENT201 = null;
-        IToken string_literal202 = null;
-        IToken char_literal203 = null;
+        IToken char_literal201 = null;
+        IToken END_OF_STATEMENT202 = null;
+        IToken string_literal203 = null;
         IToken char_literal204 = null;
         IToken char_literal205 = null;
-        IToken string_literal206 = null;
+        IToken char_literal206 = null;
         IToken string_literal207 = null;
         IToken string_literal208 = null;
-        IToken char_literal209 = null;
+        IToken string_literal209 = null;
         IToken char_literal210 = null;
-        IToken END_OF_STATEMENT211 = null;
-        IToken string_literal212 = null;
-        IToken char_literal213 = null;
+        IToken char_literal211 = null;
+        IToken END_OF_STATEMENT212 = null;
+        IToken string_literal213 = null;
         IToken char_literal214 = null;
-        IToken END_OF_STATEMENT215 = null;
-        IToken string_literal216 = null;
-        IToken char_literal217 = null;
+        IToken char_literal215 = null;
+        IToken END_OF_STATEMENT216 = null;
+        IToken string_literal217 = null;
         IToken char_literal218 = null;
         IToken char_literal219 = null;
         IToken char_literal220 = null;
-        IToken END_OF_STATEMENT221 = null;
-        IToken string_literal222 = null;
-        IToken char_literal223 = null;
+        IToken char_literal221 = null;
+        IToken END_OF_STATEMENT222 = null;
+        IToken string_literal223 = null;
         IToken char_literal224 = null;
         IToken char_literal225 = null;
-        IToken END_OF_STATEMENT226 = null;
-        IToken string_literal227 = null;
-        IToken char_literal228 = null;
+        IToken char_literal226 = null;
+        IToken END_OF_STATEMENT227 = null;
+        IToken string_literal228 = null;
         IToken char_literal229 = null;
-        IToken END_OF_STATEMENT230 = null;
-        IToken string_literal231 = null;
-        IToken char_literal232 = null;
+        IToken char_literal230 = null;
+        IToken END_OF_STATEMENT231 = null;
+        IToken string_literal232 = null;
         IToken char_literal233 = null;
         IToken char_literal234 = null;
         IToken char_literal235 = null;
-        IToken END_OF_STATEMENT236 = null;
-        IToken string_literal237 = null;
-        IToken char_literal238 = null;
+        IToken char_literal236 = null;
+        IToken END_OF_STATEMENT237 = null;
+        IToken string_literal238 = null;
         IToken char_literal239 = null;
         IToken char_literal240 = null;
-        IToken END_OF_STATEMENT241 = null;
-        IToken string_literal242 = null;
-        IToken char_literal243 = null;
+        IToken char_literal241 = null;
+        IToken END_OF_STATEMENT242 = null;
+        IToken string_literal243 = null;
         IToken char_literal244 = null;
-        IToken END_OF_STATEMENT245 = null;
-        IToken string_literal246 = null;
-        IToken char_literal247 = null;
-        IToken SCALEMODE248 = null;
-        IToken char_literal249 = null;
-        IToken END_OF_STATEMENT250 = null;
+        IToken char_literal245 = null;
+        IToken END_OF_STATEMENT246 = null;
+        IToken string_literal247 = null;
+        IToken char_literal248 = null;
+        IToken SCALEMODE249 = null;
+        IToken char_literal250 = null;
+        IToken END_OF_STATEMENT251 = null;
         spinachParser.int_literal_return el1 = null;
 
         spinachParser.variable_return vll1 = null;
@@ -6850,97 +6789,97 @@ public class spinachParser : Parser
         spinachParser.string_literal_return vl3 = null;
 
 
-        object string_literal191_tree=null;
-        object char_literal192_tree=null;
+        object string_literal192_tree=null;
         object char_literal193_tree=null;
         object char_literal194_tree=null;
         object char_literal195_tree=null;
-        object string_literal196_tree=null;
+        object char_literal196_tree=null;
         object string_literal197_tree=null;
         object string_literal198_tree=null;
-        object char_literal199_tree=null;
+        object string_literal199_tree=null;
         object char_literal200_tree=null;
-        object END_OF_STATEMENT201_tree=null;
-        object string_literal202_tree=null;
-        object char_literal203_tree=null;
+        object char_literal201_tree=null;
+        object END_OF_STATEMENT202_tree=null;
+        object string_literal203_tree=null;
         object char_literal204_tree=null;
         object char_literal205_tree=null;
-        object string_literal206_tree=null;
+        object char_literal206_tree=null;
         object string_literal207_tree=null;
         object string_literal208_tree=null;
-        object char_literal209_tree=null;
+        object string_literal209_tree=null;
         object char_literal210_tree=null;
-        object END_OF_STATEMENT211_tree=null;
-        object string_literal212_tree=null;
-        object char_literal213_tree=null;
+        object char_literal211_tree=null;
+        object END_OF_STATEMENT212_tree=null;
+        object string_literal213_tree=null;
         object char_literal214_tree=null;
-        object END_OF_STATEMENT215_tree=null;
-        object string_literal216_tree=null;
-        object char_literal217_tree=null;
+        object char_literal215_tree=null;
+        object END_OF_STATEMENT216_tree=null;
+        object string_literal217_tree=null;
         object char_literal218_tree=null;
         object char_literal219_tree=null;
         object char_literal220_tree=null;
-        object END_OF_STATEMENT221_tree=null;
-        object string_literal222_tree=null;
-        object char_literal223_tree=null;
+        object char_literal221_tree=null;
+        object END_OF_STATEMENT222_tree=null;
+        object string_literal223_tree=null;
         object char_literal224_tree=null;
         object char_literal225_tree=null;
-        object END_OF_STATEMENT226_tree=null;
-        object string_literal227_tree=null;
-        object char_literal228_tree=null;
+        object char_literal226_tree=null;
+        object END_OF_STATEMENT227_tree=null;
+        object string_literal228_tree=null;
         object char_literal229_tree=null;
-        object END_OF_STATEMENT230_tree=null;
-        object string_literal231_tree=null;
-        object char_literal232_tree=null;
+        object char_literal230_tree=null;
+        object END_OF_STATEMENT231_tree=null;
+        object string_literal232_tree=null;
         object char_literal233_tree=null;
         object char_literal234_tree=null;
         object char_literal235_tree=null;
-        object END_OF_STATEMENT236_tree=null;
-        object string_literal237_tree=null;
-        object char_literal238_tree=null;
+        object char_literal236_tree=null;
+        object END_OF_STATEMENT237_tree=null;
+        object string_literal238_tree=null;
         object char_literal239_tree=null;
         object char_literal240_tree=null;
-        object END_OF_STATEMENT241_tree=null;
-        object string_literal242_tree=null;
-        object char_literal243_tree=null;
+        object char_literal241_tree=null;
+        object END_OF_STATEMENT242_tree=null;
+        object string_literal243_tree=null;
         object char_literal244_tree=null;
-        object END_OF_STATEMENT245_tree=null;
-        object string_literal246_tree=null;
-        object char_literal247_tree=null;
-        object SCALEMODE248_tree=null;
-        object char_literal249_tree=null;
-        object END_OF_STATEMENT250_tree=null;
+        object char_literal245_tree=null;
+        object END_OF_STATEMENT246_tree=null;
+        object string_literal247_tree=null;
+        object char_literal248_tree=null;
+        object SCALEMODE249_tree=null;
+        object char_literal250_tree=null;
+        object END_OF_STATEMENT251_tree=null;
 
          retval.ret = new PlotFunctionElement();
 
         try 
     	{
-            // spinach.g:386:1: ( ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'resetPlot' '(' ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT ) | ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT ) )
+            // spinach.g:378:1: ( ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'resetPlot' '(' ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT ) | ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT ) )
             int alt58 = 10;
             alt58 = dfa58.Predict(input);
             switch (alt58) 
             {
                 case 1 :
-                    // spinach.g:386:3: ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT )
+                    // spinach.g:378:3: ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:386:3: ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT )
-                    	// spinach.g:386:4: 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT
+                    	// spinach.g:378:3: ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT )
+                    	// spinach.g:378:4: 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT
                     	{
-                    		string_literal191=(IToken)Match(input,48,FOLLOW_48_in_plotfunctions2220); 
-                    			string_literal191_tree = (object)adaptor.Create(string_literal191);
-                    			adaptor.AddChild(root_0, string_literal191_tree);
+                    		string_literal192=(IToken)Match(input,48,FOLLOW_48_in_plotfunctions2214); 
+                    			string_literal192_tree = (object)adaptor.Create(string_literal192);
+                    			adaptor.AddChild(root_0, string_literal192_tree);
 
                     		retval.ret.setPlotFunction("subPlot");
-                    		char_literal192=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2223); 
-                    			char_literal192_tree = (object)adaptor.Create(char_literal192);
-                    			adaptor.AddChild(root_0, char_literal192_tree);
+                    		char_literal193=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2217); 
+                    			char_literal193_tree = (object)adaptor.Create(char_literal193);
+                    			adaptor.AddChild(root_0, char_literal193_tree);
 
-                    		// spinach.g:387:1: (el1= int_literal )
-                    		// spinach.g:387:2: el1= int_literal
+                    		// spinach.g:379:1: (el1= int_literal )
+                    		// spinach.g:379:2: el1= int_literal
                     		{
-                    			PushFollow(FOLLOW_int_literal_in_plotfunctions2230);
+                    			PushFollow(FOLLOW_int_literal_in_plotfunctions2224);
                     			el1 = int_literal();
                     			state.followingStackPointer--;
 
@@ -6949,14 +6888,14 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal193=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2235); 
-                    			char_literal193_tree = (object)adaptor.Create(char_literal193);
-                    			adaptor.AddChild(root_0, char_literal193_tree);
+                    		char_literal194=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2229); 
+                    			char_literal194_tree = (object)adaptor.Create(char_literal194);
+                    			adaptor.AddChild(root_0, char_literal194_tree);
 
-                    		// spinach.g:388:1: (vll1= variable )
-                    		// spinach.g:388:2: vll1= variable
+                    		// spinach.g:380:1: (vll1= variable )
+                    		// spinach.g:380:2: vll1= variable
                     		{
-                    			PushFollow(FOLLOW_variable_in_plotfunctions2242);
+                    			PushFollow(FOLLOW_variable_in_plotfunctions2236);
                     			vll1 = variable();
                     			state.followingStackPointer--;
 
@@ -6965,14 +6904,14 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal194=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2247); 
-                    			char_literal194_tree = (object)adaptor.Create(char_literal194);
-                    			adaptor.AddChild(root_0, char_literal194_tree);
+                    		char_literal195=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2241); 
+                    			char_literal195_tree = (object)adaptor.Create(char_literal195);
+                    			adaptor.AddChild(root_0, char_literal195_tree);
 
-                    		// spinach.g:389:1: (vll2= string_literal )
-                    		// spinach.g:389:2: vll2= string_literal
+                    		// spinach.g:381:1: (vll2= string_literal )
+                    		// spinach.g:381:2: vll2= string_literal
                     		{
-                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2254);
+                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2248);
                     			vll2 = string_literal();
                     			state.followingStackPointer--;
 
@@ -6981,11 +6920,11 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal195=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2258); 
-                    			char_literal195_tree = (object)adaptor.Create(char_literal195);
-                    			adaptor.AddChild(root_0, char_literal195_tree);
+                    		char_literal196=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2252); 
+                    			char_literal196_tree = (object)adaptor.Create(char_literal196);
+                    			adaptor.AddChild(root_0, char_literal196_tree);
 
-                    		// spinach.g:390:1: ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) )
+                    		// spinach.g:382:1: ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) )
                     		int alt55 = 3;
                     		switch ( input.LA(1) ) 
                     		{
@@ -7014,14 +6953,14 @@ public class spinachParser : Parser
                     		switch (alt55) 
                     		{
                     		    case 1 :
-                    		        // spinach.g:390:2: ( '1D' )
+                    		        // spinach.g:382:2: ( '1D' )
                     		        {
-                    		        	// spinach.g:390:2: ( '1D' )
-                    		        	// spinach.g:390:3: '1D'
+                    		        	// spinach.g:382:2: ( '1D' )
+                    		        	// spinach.g:382:3: '1D'
                     		        	{
-                    		        		string_literal196=(IToken)Match(input,49,FOLLOW_49_in_plotfunctions2262); 
-                    		        			string_literal196_tree = (object)adaptor.Create(string_literal196);
-                    		        			adaptor.AddChild(root_0, string_literal196_tree);
+                    		        		string_literal197=(IToken)Match(input,49,FOLLOW_49_in_plotfunctions2256); 
+                    		        			string_literal197_tree = (object)adaptor.Create(string_literal197);
+                    		        			adaptor.AddChild(root_0, string_literal197_tree);
 
                     		        		retval.ret.setPlotType("1D");
 
@@ -7031,14 +6970,14 @@ public class spinachParser : Parser
                     		        }
                     		        break;
                     		    case 2 :
-                    		        // spinach.g:390:40: ( '2D' )
+                    		        // spinach.g:382:40: ( '2D' )
                     		        {
-                    		        	// spinach.g:390:40: ( '2D' )
-                    		        	// spinach.g:390:41: '2D'
+                    		        	// spinach.g:382:40: ( '2D' )
+                    		        	// spinach.g:382:41: '2D'
                     		        	{
-                    		        		string_literal197=(IToken)Match(input,50,FOLLOW_50_in_plotfunctions2267); 
-                    		        			string_literal197_tree = (object)adaptor.Create(string_literal197);
-                    		        			adaptor.AddChild(root_0, string_literal197_tree);
+                    		        		string_literal198=(IToken)Match(input,50,FOLLOW_50_in_plotfunctions2261); 
+                    		        			string_literal198_tree = (object)adaptor.Create(string_literal198);
+                    		        			adaptor.AddChild(root_0, string_literal198_tree);
 
                     		        		retval.ret.setPlotType("2D");
 
@@ -7048,17 +6987,17 @@ public class spinachParser : Parser
                     		        }
                     		        break;
                     		    case 3 :
-                    		        // spinach.g:390:78: ( '3D' ( ',' (el3= int_literal ) )? )
+                    		        // spinach.g:382:78: ( '3D' ( ',' (el3= int_literal ) )? )
                     		        {
-                    		        	// spinach.g:390:78: ( '3D' ( ',' (el3= int_literal ) )? )
-                    		        	// spinach.g:390:79: '3D' ( ',' (el3= int_literal ) )?
+                    		        	// spinach.g:382:78: ( '3D' ( ',' (el3= int_literal ) )? )
+                    		        	// spinach.g:382:79: '3D' ( ',' (el3= int_literal ) )?
                     		        	{
-                    		        		string_literal198=(IToken)Match(input,51,FOLLOW_51_in_plotfunctions2272); 
-                    		        			string_literal198_tree = (object)adaptor.Create(string_literal198);
-                    		        			adaptor.AddChild(root_0, string_literal198_tree);
+                    		        		string_literal199=(IToken)Match(input,51,FOLLOW_51_in_plotfunctions2266); 
+                    		        			string_literal199_tree = (object)adaptor.Create(string_literal199);
+                    		        			adaptor.AddChild(root_0, string_literal199_tree);
 
                     		        		retval.ret.setPlotType("3D");
-                    		        		// spinach.g:390:114: ( ',' (el3= int_literal ) )?
+                    		        		// spinach.g:382:114: ( ',' (el3= int_literal ) )?
                     		        		int alt54 = 2;
                     		        		int LA54_0 = input.LA(1);
 
@@ -7069,16 +7008,16 @@ public class spinachParser : Parser
                     		        		switch (alt54) 
                     		        		{
                     		        		    case 1 :
-                    		        		        // spinach.g:390:115: ',' (el3= int_literal )
+                    		        		        // spinach.g:382:115: ',' (el3= int_literal )
                     		        		        {
-                    		        		        	char_literal199=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2275); 
-                    		        		        		char_literal199_tree = (object)adaptor.Create(char_literal199);
-                    		        		        		adaptor.AddChild(root_0, char_literal199_tree);
+                    		        		        	char_literal200=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2269); 
+                    		        		        		char_literal200_tree = (object)adaptor.Create(char_literal200);
+                    		        		        		adaptor.AddChild(root_0, char_literal200_tree);
 
-                    		        		        	// spinach.g:390:118: (el3= int_literal )
-                    		        		        	// spinach.g:390:119: el3= int_literal
+                    		        		        	// spinach.g:382:118: (el3= int_literal )
+                    		        		        	// spinach.g:382:119: el3= int_literal
                     		        		        	{
-                    		        		        		PushFollow(FOLLOW_int_literal_in_plotfunctions2281);
+                    		        		        		PushFollow(FOLLOW_int_literal_in_plotfunctions2275);
                     		        		        		el3 = int_literal();
                     		        		        		state.followingStackPointer--;
 
@@ -7102,13 +7041,13 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal200=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2289); 
-                    			char_literal200_tree = (object)adaptor.Create(char_literal200);
-                    			adaptor.AddChild(root_0, char_literal200_tree);
+                    		char_literal201=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2283); 
+                    			char_literal201_tree = (object)adaptor.Create(char_literal201);
+                    			adaptor.AddChild(root_0, char_literal201_tree);
 
-                    		END_OF_STATEMENT201=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2290); 
-                    			END_OF_STATEMENT201_tree = (object)adaptor.Create(END_OF_STATEMENT201);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT201_tree);
+                    		END_OF_STATEMENT202=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2284); 
+                    			END_OF_STATEMENT202_tree = (object)adaptor.Create(END_OF_STATEMENT202);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT202_tree);
 
 
                     	}
@@ -7117,26 +7056,26 @@ public class spinachParser : Parser
                     }
                     break;
                 case 2 :
-                    // spinach.g:392:3: ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT )
+                    // spinach.g:384:3: ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:392:3: ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT )
-                    	// spinach.g:392:4: 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT
+                    	// spinach.g:384:3: ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT )
+                    	// spinach.g:384:4: 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT
                     	{
-                    		string_literal202=(IToken)Match(input,52,FOLLOW_52_in_plotfunctions2296); 
-                    			string_literal202_tree = (object)adaptor.Create(string_literal202);
-                    			adaptor.AddChild(root_0, string_literal202_tree);
+                    		string_literal203=(IToken)Match(input,52,FOLLOW_52_in_plotfunctions2290); 
+                    			string_literal203_tree = (object)adaptor.Create(string_literal203);
+                    			adaptor.AddChild(root_0, string_literal203_tree);
 
                     		retval.ret.setPlotFunction("plot");
-                    		char_literal203=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2299); 
-                    			char_literal203_tree = (object)adaptor.Create(char_literal203);
-                    			adaptor.AddChild(root_0, char_literal203_tree);
+                    		char_literal204=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2293); 
+                    			char_literal204_tree = (object)adaptor.Create(char_literal204);
+                    			adaptor.AddChild(root_0, char_literal204_tree);
 
-                    		// spinach.g:393:1: (vll3= variable )
-                    		// spinach.g:393:2: vll3= variable
+                    		// spinach.g:385:1: (vll3= variable )
+                    		// spinach.g:385:2: vll3= variable
                     		{
-                    			PushFollow(FOLLOW_variable_in_plotfunctions2305);
+                    			PushFollow(FOLLOW_variable_in_plotfunctions2299);
                     			vll3 = variable();
                     			state.followingStackPointer--;
 
@@ -7145,14 +7084,14 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal204=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2310); 
-                    			char_literal204_tree = (object)adaptor.Create(char_literal204);
-                    			adaptor.AddChild(root_0, char_literal204_tree);
+                    		char_literal205=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2304); 
+                    			char_literal205_tree = (object)adaptor.Create(char_literal205);
+                    			adaptor.AddChild(root_0, char_literal205_tree);
 
-                    		// spinach.g:394:1: (vll4= string_literal )
-                    		// spinach.g:394:2: vll4= string_literal
+                    		// spinach.g:386:1: (vll4= string_literal )
+                    		// spinach.g:386:2: vll4= string_literal
                     		{
-                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2316);
+                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2310);
                     			vll4 = string_literal();
                     			state.followingStackPointer--;
 
@@ -7161,11 +7100,11 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal205=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2320); 
-                    			char_literal205_tree = (object)adaptor.Create(char_literal205);
-                    			adaptor.AddChild(root_0, char_literal205_tree);
+                    		char_literal206=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2314); 
+                    			char_literal206_tree = (object)adaptor.Create(char_literal206);
+                    			adaptor.AddChild(root_0, char_literal206_tree);
 
-                    		// spinach.g:395:1: ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) )
+                    		// spinach.g:387:1: ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) )
                     		int alt57 = 3;
                     		switch ( input.LA(1) ) 
                     		{
@@ -7194,14 +7133,14 @@ public class spinachParser : Parser
                     		switch (alt57) 
                     		{
                     		    case 1 :
-                    		        // spinach.g:395:2: ( '1D' )
+                    		        // spinach.g:387:2: ( '1D' )
                     		        {
-                    		        	// spinach.g:395:2: ( '1D' )
-                    		        	// spinach.g:395:3: '1D'
+                    		        	// spinach.g:387:2: ( '1D' )
+                    		        	// spinach.g:387:3: '1D'
                     		        	{
-                    		        		string_literal206=(IToken)Match(input,49,FOLLOW_49_in_plotfunctions2324); 
-                    		        			string_literal206_tree = (object)adaptor.Create(string_literal206);
-                    		        			adaptor.AddChild(root_0, string_literal206_tree);
+                    		        		string_literal207=(IToken)Match(input,49,FOLLOW_49_in_plotfunctions2318); 
+                    		        			string_literal207_tree = (object)adaptor.Create(string_literal207);
+                    		        			adaptor.AddChild(root_0, string_literal207_tree);
 
                     		        		retval.ret.setPlotType("1D");
 
@@ -7211,14 +7150,14 @@ public class spinachParser : Parser
                     		        }
                     		        break;
                     		    case 2 :
-                    		        // spinach.g:395:40: ( '2D' )
+                    		        // spinach.g:387:40: ( '2D' )
                     		        {
-                    		        	// spinach.g:395:40: ( '2D' )
-                    		        	// spinach.g:395:41: '2D'
+                    		        	// spinach.g:387:40: ( '2D' )
+                    		        	// spinach.g:387:41: '2D'
                     		        	{
-                    		        		string_literal207=(IToken)Match(input,50,FOLLOW_50_in_plotfunctions2329); 
-                    		        			string_literal207_tree = (object)adaptor.Create(string_literal207);
-                    		        			adaptor.AddChild(root_0, string_literal207_tree);
+                    		        		string_literal208=(IToken)Match(input,50,FOLLOW_50_in_plotfunctions2323); 
+                    		        			string_literal208_tree = (object)adaptor.Create(string_literal208);
+                    		        			adaptor.AddChild(root_0, string_literal208_tree);
 
                     		        		retval.ret.setPlotType("2D");
 
@@ -7228,17 +7167,17 @@ public class spinachParser : Parser
                     		        }
                     		        break;
                     		    case 3 :
-                    		        // spinach.g:395:78: ( '3D' ( ',' (el3= int_literal ) )? )
+                    		        // spinach.g:387:78: ( '3D' ( ',' (el3= int_literal ) )? )
                     		        {
-                    		        	// spinach.g:395:78: ( '3D' ( ',' (el3= int_literal ) )? )
-                    		        	// spinach.g:395:79: '3D' ( ',' (el3= int_literal ) )?
+                    		        	// spinach.g:387:78: ( '3D' ( ',' (el3= int_literal ) )? )
+                    		        	// spinach.g:387:79: '3D' ( ',' (el3= int_literal ) )?
                     		        	{
-                    		        		string_literal208=(IToken)Match(input,51,FOLLOW_51_in_plotfunctions2334); 
-                    		        			string_literal208_tree = (object)adaptor.Create(string_literal208);
-                    		        			adaptor.AddChild(root_0, string_literal208_tree);
+                    		        		string_literal209=(IToken)Match(input,51,FOLLOW_51_in_plotfunctions2328); 
+                    		        			string_literal209_tree = (object)adaptor.Create(string_literal209);
+                    		        			adaptor.AddChild(root_0, string_literal209_tree);
 
                     		        		retval.ret.setPlotType("3D");
-                    		        		// spinach.g:395:114: ( ',' (el3= int_literal ) )?
+                    		        		// spinach.g:387:114: ( ',' (el3= int_literal ) )?
                     		        		int alt56 = 2;
                     		        		int LA56_0 = input.LA(1);
 
@@ -7249,16 +7188,16 @@ public class spinachParser : Parser
                     		        		switch (alt56) 
                     		        		{
                     		        		    case 1 :
-                    		        		        // spinach.g:395:115: ',' (el3= int_literal )
+                    		        		        // spinach.g:387:115: ',' (el3= int_literal )
                     		        		        {
-                    		        		        	char_literal209=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2337); 
-                    		        		        		char_literal209_tree = (object)adaptor.Create(char_literal209);
-                    		        		        		adaptor.AddChild(root_0, char_literal209_tree);
+                    		        		        	char_literal210=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2331); 
+                    		        		        		char_literal210_tree = (object)adaptor.Create(char_literal210);
+                    		        		        		adaptor.AddChild(root_0, char_literal210_tree);
 
-                    		        		        	// spinach.g:395:118: (el3= int_literal )
-                    		        		        	// spinach.g:395:119: el3= int_literal
+                    		        		        	// spinach.g:387:118: (el3= int_literal )
+                    		        		        	// spinach.g:387:119: el3= int_literal
                     		        		        	{
-                    		        		        		PushFollow(FOLLOW_int_literal_in_plotfunctions2343);
+                    		        		        		PushFollow(FOLLOW_int_literal_in_plotfunctions2337);
                     		        		        		el3 = int_literal();
                     		        		        		state.followingStackPointer--;
 
@@ -7282,13 +7221,13 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal210=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2351); 
-                    			char_literal210_tree = (object)adaptor.Create(char_literal210);
-                    			adaptor.AddChild(root_0, char_literal210_tree);
+                    		char_literal211=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2345); 
+                    			char_literal211_tree = (object)adaptor.Create(char_literal211);
+                    			adaptor.AddChild(root_0, char_literal211_tree);
 
-                    		END_OF_STATEMENT211=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2352); 
-                    			END_OF_STATEMENT211_tree = (object)adaptor.Create(END_OF_STATEMENT211);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT211_tree);
+                    		END_OF_STATEMENT212=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2346); 
+                    			END_OF_STATEMENT212_tree = (object)adaptor.Create(END_OF_STATEMENT212);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT212_tree);
 
 
                     	}
@@ -7297,29 +7236,29 @@ public class spinachParser : Parser
                     }
                     break;
                 case 3 :
-                    // spinach.g:397:3: ( 'resetPlot' '(' ')' END_OF_STATEMENT )
+                    // spinach.g:389:3: ( 'resetPlot' '(' ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:397:3: ( 'resetPlot' '(' ')' END_OF_STATEMENT )
-                    	// spinach.g:397:4: 'resetPlot' '(' ')' END_OF_STATEMENT
+                    	// spinach.g:389:3: ( 'resetPlot' '(' ')' END_OF_STATEMENT )
+                    	// spinach.g:389:4: 'resetPlot' '(' ')' END_OF_STATEMENT
                     	{
-                    		string_literal212=(IToken)Match(input,53,FOLLOW_53_in_plotfunctions2358); 
-                    			string_literal212_tree = (object)adaptor.Create(string_literal212);
-                    			adaptor.AddChild(root_0, string_literal212_tree);
+                    		string_literal213=(IToken)Match(input,53,FOLLOW_53_in_plotfunctions2352); 
+                    			string_literal213_tree = (object)adaptor.Create(string_literal213);
+                    			adaptor.AddChild(root_0, string_literal213_tree);
 
-                    		char_literal213=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2359); 
-                    			char_literal213_tree = (object)adaptor.Create(char_literal213);
-                    			adaptor.AddChild(root_0, char_literal213_tree);
-
-                    		char_literal214=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2360); 
+                    		char_literal214=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2353); 
                     			char_literal214_tree = (object)adaptor.Create(char_literal214);
                     			adaptor.AddChild(root_0, char_literal214_tree);
 
+                    		char_literal215=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2354); 
+                    			char_literal215_tree = (object)adaptor.Create(char_literal215);
+                    			adaptor.AddChild(root_0, char_literal215_tree);
+
                     		retval.ret.setPlotFunction("resetPlot");
-                    		END_OF_STATEMENT215=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2362); 
-                    			END_OF_STATEMENT215_tree = (object)adaptor.Create(END_OF_STATEMENT215);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT215_tree);
+                    		END_OF_STATEMENT216=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2356); 
+                    			END_OF_STATEMENT216_tree = (object)adaptor.Create(END_OF_STATEMENT216);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT216_tree);
 
 
                     	}
@@ -7328,26 +7267,26 @@ public class spinachParser : Parser
                     }
                     break;
                 case 4 :
-                    // spinach.g:398:3: ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT )
+                    // spinach.g:390:3: ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:398:3: ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT )
-                    	// spinach.g:398:4: 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT
+                    	// spinach.g:390:3: ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT )
+                    	// spinach.g:390:4: 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT
                     	{
-                    		string_literal216=(IToken)Match(input,54,FOLLOW_54_in_plotfunctions2368); 
-                    			string_literal216_tree = (object)adaptor.Create(string_literal216);
-                    			adaptor.AddChild(root_0, string_literal216_tree);
+                    		string_literal217=(IToken)Match(input,54,FOLLOW_54_in_plotfunctions2362); 
+                    			string_literal217_tree = (object)adaptor.Create(string_literal217);
+                    			adaptor.AddChild(root_0, string_literal217_tree);
 
                     		retval.ret.setPlotFunction("setPlotAxis");
-                    		char_literal217=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2370); 
-                    			char_literal217_tree = (object)adaptor.Create(char_literal217);
-                    			adaptor.AddChild(root_0, char_literal217_tree);
+                    		char_literal218=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2364); 
+                    			char_literal218_tree = (object)adaptor.Create(char_literal218);
+                    			adaptor.AddChild(root_0, char_literal218_tree);
 
-                    		// spinach.g:399:1: (ell2= double_literal )
-                    		// spinach.g:399:2: ell2= double_literal
+                    		// spinach.g:391:1: (ell2= double_literal )
+                    		// spinach.g:391:2: ell2= double_literal
                     		{
-                    			PushFollow(FOLLOW_double_literal_in_plotfunctions2376);
+                    			PushFollow(FOLLOW_double_literal_in_plotfunctions2370);
                     			ell2 = double_literal();
                     			state.followingStackPointer--;
 
@@ -7356,17 +7295,17 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal218=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2379); 
-                    			char_literal218_tree = (object)adaptor.Create(char_literal218);
-                    			adaptor.AddChild(root_0, char_literal218_tree);
+                    		char_literal219=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2373); 
+                    			char_literal219_tree = (object)adaptor.Create(char_literal219);
+                    			adaptor.AddChild(root_0, char_literal219_tree);
 
-                    		// spinach.g:400:1: ( (ell3= double_literal ) ',' )
-                    		// spinach.g:400:2: (ell3= double_literal ) ','
+                    		// spinach.g:392:1: ( (ell3= double_literal ) ',' )
+                    		// spinach.g:392:2: (ell3= double_literal ) ','
                     		{
-                    			// spinach.g:400:2: (ell3= double_literal )
-                    			// spinach.g:400:3: ell3= double_literal
+                    			// spinach.g:392:2: (ell3= double_literal )
+                    			// spinach.g:392:3: ell3= double_literal
                     			{
-                    				PushFollow(FOLLOW_double_literal_in_plotfunctions2385);
+                    				PushFollow(FOLLOW_double_literal_in_plotfunctions2379);
                     				ell3 = double_literal();
                     				state.followingStackPointer--;
 
@@ -7375,20 +7314,20 @@ public class spinachParser : Parser
 
                     			}
 
-                    			char_literal219=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2388); 
-                    				char_literal219_tree = (object)adaptor.Create(char_literal219);
-                    				adaptor.AddChild(root_0, char_literal219_tree);
+                    			char_literal220=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2382); 
+                    				char_literal220_tree = (object)adaptor.Create(char_literal220);
+                    				adaptor.AddChild(root_0, char_literal220_tree);
 
 
                     		}
 
-                    		// spinach.g:401:1: ( (el4= double_literal ) )
-                    		// spinach.g:401:2: (el4= double_literal )
+                    		// spinach.g:393:1: ( (el4= double_literal ) )
+                    		// spinach.g:393:2: (el4= double_literal )
                     		{
-                    			// spinach.g:401:2: (el4= double_literal )
-                    			// spinach.g:401:3: el4= double_literal
+                    			// spinach.g:393:2: (el4= double_literal )
+                    			// spinach.g:393:3: el4= double_literal
                     			{
-                    				PushFollow(FOLLOW_double_literal_in_plotfunctions2395);
+                    				PushFollow(FOLLOW_double_literal_in_plotfunctions2389);
                     				el4 = double_literal();
                     				state.followingStackPointer--;
 
@@ -7400,13 +7339,13 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal220=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2400); 
-                    			char_literal220_tree = (object)adaptor.Create(char_literal220);
-                    			adaptor.AddChild(root_0, char_literal220_tree);
+                    		char_literal221=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2394); 
+                    			char_literal221_tree = (object)adaptor.Create(char_literal221);
+                    			adaptor.AddChild(root_0, char_literal221_tree);
 
-                    		END_OF_STATEMENT221=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2401); 
-                    			END_OF_STATEMENT221_tree = (object)adaptor.Create(END_OF_STATEMENT221);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT221_tree);
+                    		END_OF_STATEMENT222=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2395); 
+                    			END_OF_STATEMENT222_tree = (object)adaptor.Create(END_OF_STATEMENT222);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT222_tree);
 
 
                     	}
@@ -7415,26 +7354,26 @@ public class spinachParser : Parser
                     }
                     break;
                 case 5 :
-                    // spinach.g:403:2: ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT )
+                    // spinach.g:395:2: ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:403:2: ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT )
-                    	// spinach.g:403:3: 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT
+                    	// spinach.g:395:2: ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT )
+                    	// spinach.g:395:3: 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT
                     	{
-                    		string_literal222=(IToken)Match(input,54,FOLLOW_54_in_plotfunctions2406); 
-                    			string_literal222_tree = (object)adaptor.Create(string_literal222);
-                    			adaptor.AddChild(root_0, string_literal222_tree);
+                    		string_literal223=(IToken)Match(input,54,FOLLOW_54_in_plotfunctions2400); 
+                    			string_literal223_tree = (object)adaptor.Create(string_literal223);
+                    			adaptor.AddChild(root_0, string_literal223_tree);
 
                     		retval.ret.setPlotFunction("setPlotAxis");
-                    		char_literal223=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2408); 
-                    			char_literal223_tree = (object)adaptor.Create(char_literal223);
-                    			adaptor.AddChild(root_0, char_literal223_tree);
+                    		char_literal224=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2402); 
+                    			char_literal224_tree = (object)adaptor.Create(char_literal224);
+                    			adaptor.AddChild(root_0, char_literal224_tree);
 
-                    		// spinach.g:404:1: (ell2= double_literal )
-                    		// spinach.g:404:2: ell2= double_literal
+                    		// spinach.g:396:1: (ell2= double_literal )
+                    		// spinach.g:396:2: ell2= double_literal
                     		{
-                    			PushFollow(FOLLOW_double_literal_in_plotfunctions2414);
+                    			PushFollow(FOLLOW_double_literal_in_plotfunctions2408);
                     			ell2 = double_literal();
                     			state.followingStackPointer--;
 
@@ -7443,17 +7382,17 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal224=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2417); 
-                    			char_literal224_tree = (object)adaptor.Create(char_literal224);
-                    			adaptor.AddChild(root_0, char_literal224_tree);
+                    		char_literal225=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2411); 
+                    			char_literal225_tree = (object)adaptor.Create(char_literal225);
+                    			adaptor.AddChild(root_0, char_literal225_tree);
 
-                    		// spinach.g:405:1: ( (ell3= double_literal ) )
-                    		// spinach.g:405:2: (ell3= double_literal )
+                    		// spinach.g:397:1: ( (ell3= double_literal ) )
+                    		// spinach.g:397:2: (ell3= double_literal )
                     		{
-                    			// spinach.g:405:2: (ell3= double_literal )
-                    			// spinach.g:405:3: ell3= double_literal
+                    			// spinach.g:397:2: (ell3= double_literal )
+                    			// spinach.g:397:3: ell3= double_literal
                     			{
-                    				PushFollow(FOLLOW_double_literal_in_plotfunctions2423);
+                    				PushFollow(FOLLOW_double_literal_in_plotfunctions2417);
                     				ell3 = double_literal();
                     				state.followingStackPointer--;
 
@@ -7465,13 +7404,13 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal225=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2428); 
-                    			char_literal225_tree = (object)adaptor.Create(char_literal225);
-                    			adaptor.AddChild(root_0, char_literal225_tree);
+                    		char_literal226=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2422); 
+                    			char_literal226_tree = (object)adaptor.Create(char_literal226);
+                    			adaptor.AddChild(root_0, char_literal226_tree);
 
-                    		END_OF_STATEMENT226=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2429); 
-                    			END_OF_STATEMENT226_tree = (object)adaptor.Create(END_OF_STATEMENT226);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT226_tree);
+                    		END_OF_STATEMENT227=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2423); 
+                    			END_OF_STATEMENT227_tree = (object)adaptor.Create(END_OF_STATEMENT227);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT227_tree);
 
 
                     	}
@@ -7480,26 +7419,26 @@ public class spinachParser : Parser
                     }
                     break;
                 case 6 :
-                    // spinach.g:407:2: ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT )
+                    // spinach.g:399:2: ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:407:2: ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT )
-                    	// spinach.g:407:3: 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT
+                    	// spinach.g:399:2: ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT )
+                    	// spinach.g:399:3: 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT
                     	{
-                    		string_literal227=(IToken)Match(input,54,FOLLOW_54_in_plotfunctions2434); 
-                    			string_literal227_tree = (object)adaptor.Create(string_literal227);
-                    			adaptor.AddChild(root_0, string_literal227_tree);
+                    		string_literal228=(IToken)Match(input,54,FOLLOW_54_in_plotfunctions2428); 
+                    			string_literal228_tree = (object)adaptor.Create(string_literal228);
+                    			adaptor.AddChild(root_0, string_literal228_tree);
 
                     		retval.ret.setPlotFunction("setPlotAxis");
-                    		char_literal228=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2436); 
-                    			char_literal228_tree = (object)adaptor.Create(char_literal228);
-                    			adaptor.AddChild(root_0, char_literal228_tree);
+                    		char_literal229=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2430); 
+                    			char_literal229_tree = (object)adaptor.Create(char_literal229);
+                    			adaptor.AddChild(root_0, char_literal229_tree);
 
-                    		// spinach.g:408:1: (ell2= double_literal )
-                    		// spinach.g:408:2: ell2= double_literal
+                    		// spinach.g:400:1: (ell2= double_literal )
+                    		// spinach.g:400:2: ell2= double_literal
                     		{
-                    			PushFollow(FOLLOW_double_literal_in_plotfunctions2442);
+                    			PushFollow(FOLLOW_double_literal_in_plotfunctions2436);
                     			ell2 = double_literal();
                     			state.followingStackPointer--;
 
@@ -7508,13 +7447,13 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal229=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2446); 
-                    			char_literal229_tree = (object)adaptor.Create(char_literal229);
-                    			adaptor.AddChild(root_0, char_literal229_tree);
+                    		char_literal230=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2440); 
+                    			char_literal230_tree = (object)adaptor.Create(char_literal230);
+                    			adaptor.AddChild(root_0, char_literal230_tree);
 
-                    		END_OF_STATEMENT230=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2447); 
-                    			END_OF_STATEMENT230_tree = (object)adaptor.Create(END_OF_STATEMENT230);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT230_tree);
+                    		END_OF_STATEMENT231=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2441); 
+                    			END_OF_STATEMENT231_tree = (object)adaptor.Create(END_OF_STATEMENT231);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT231_tree);
 
 
                     	}
@@ -7523,26 +7462,26 @@ public class spinachParser : Parser
                     }
                     break;
                 case 7 :
-                    // spinach.g:410:3: ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT )
+                    // spinach.g:402:3: ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:410:3: ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT )
-                    	// spinach.g:410:4: 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT
+                    	// spinach.g:402:3: ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT )
+                    	// spinach.g:402:4: 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT
                     	{
-                    		string_literal231=(IToken)Match(input,55,FOLLOW_55_in_plotfunctions2453); 
-                    			string_literal231_tree = (object)adaptor.Create(string_literal231);
-                    			adaptor.AddChild(root_0, string_literal231_tree);
+                    		string_literal232=(IToken)Match(input,55,FOLLOW_55_in_plotfunctions2447); 
+                    			string_literal232_tree = (object)adaptor.Create(string_literal232);
+                    			adaptor.AddChild(root_0, string_literal232_tree);
 
                     		retval.ret.setPlotFunction("setAxisTitle");
-                    		char_literal232=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2455); 
-                    			char_literal232_tree = (object)adaptor.Create(char_literal232);
-                    			adaptor.AddChild(root_0, char_literal232_tree);
+                    		char_literal233=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2449); 
+                    			char_literal233_tree = (object)adaptor.Create(char_literal233);
+                    			adaptor.AddChild(root_0, char_literal233_tree);
 
-                    		// spinach.g:411:1: (vl1= string_literal )
-                    		// spinach.g:411:2: vl1= string_literal
+                    		// spinach.g:403:1: (vl1= string_literal )
+                    		// spinach.g:403:2: vl1= string_literal
                     		{
-                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2461);
+                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2455);
                     			vl1 = string_literal();
                     			state.followingStackPointer--;
 
@@ -7551,17 +7490,17 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal233=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2464); 
-                    			char_literal233_tree = (object)adaptor.Create(char_literal233);
-                    			adaptor.AddChild(root_0, char_literal233_tree);
+                    		char_literal234=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2458); 
+                    			char_literal234_tree = (object)adaptor.Create(char_literal234);
+                    			adaptor.AddChild(root_0, char_literal234_tree);
 
-                    		// spinach.g:412:1: ( (vl2= string_literal ) ',' )
-                    		// spinach.g:412:2: (vl2= string_literal ) ','
+                    		// spinach.g:404:1: ( (vl2= string_literal ) ',' )
+                    		// spinach.g:404:2: (vl2= string_literal ) ','
                     		{
-                    			// spinach.g:412:2: (vl2= string_literal )
-                    			// spinach.g:412:3: vl2= string_literal
+                    			// spinach.g:404:2: (vl2= string_literal )
+                    			// spinach.g:404:3: vl2= string_literal
                     			{
-                    				PushFollow(FOLLOW_string_literal_in_plotfunctions2471);
+                    				PushFollow(FOLLOW_string_literal_in_plotfunctions2465);
                     				vl2 = string_literal();
                     				state.followingStackPointer--;
 
@@ -7570,20 +7509,20 @@ public class spinachParser : Parser
 
                     			}
 
-                    			char_literal234=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2474); 
-                    				char_literal234_tree = (object)adaptor.Create(char_literal234);
-                    				adaptor.AddChild(root_0, char_literal234_tree);
+                    			char_literal235=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2468); 
+                    				char_literal235_tree = (object)adaptor.Create(char_literal235);
+                    				adaptor.AddChild(root_0, char_literal235_tree);
 
 
                     		}
 
-                    		// spinach.g:413:1: ( (vl3= string_literal ) )
-                    		// spinach.g:413:2: (vl3= string_literal )
+                    		// spinach.g:405:1: ( (vl3= string_literal ) )
+                    		// spinach.g:405:2: (vl3= string_literal )
                     		{
-                    			// spinach.g:413:2: (vl3= string_literal )
-                    			// spinach.g:413:3: vl3= string_literal
+                    			// spinach.g:405:2: (vl3= string_literal )
+                    			// spinach.g:405:3: vl3= string_literal
                     			{
-                    				PushFollow(FOLLOW_string_literal_in_plotfunctions2482);
+                    				PushFollow(FOLLOW_string_literal_in_plotfunctions2476);
                     				vl3 = string_literal();
                     				state.followingStackPointer--;
 
@@ -7595,13 +7534,13 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal235=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2487); 
-                    			char_literal235_tree = (object)adaptor.Create(char_literal235);
-                    			adaptor.AddChild(root_0, char_literal235_tree);
+                    		char_literal236=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2481); 
+                    			char_literal236_tree = (object)adaptor.Create(char_literal236);
+                    			adaptor.AddChild(root_0, char_literal236_tree);
 
-                    		END_OF_STATEMENT236=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2488); 
-                    			END_OF_STATEMENT236_tree = (object)adaptor.Create(END_OF_STATEMENT236);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT236_tree);
+                    		END_OF_STATEMENT237=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2482); 
+                    			END_OF_STATEMENT237_tree = (object)adaptor.Create(END_OF_STATEMENT237);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT237_tree);
 
 
                     	}
@@ -7610,26 +7549,26 @@ public class spinachParser : Parser
                     }
                     break;
                 case 8 :
-                    // spinach.g:415:3: ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT )
+                    // spinach.g:407:3: ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:415:3: ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT )
-                    	// spinach.g:415:4: 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT
+                    	// spinach.g:407:3: ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT )
+                    	// spinach.g:407:4: 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT
                     	{
-                    		string_literal237=(IToken)Match(input,55,FOLLOW_55_in_plotfunctions2494); 
-                    			string_literal237_tree = (object)adaptor.Create(string_literal237);
-                    			adaptor.AddChild(root_0, string_literal237_tree);
+                    		string_literal238=(IToken)Match(input,55,FOLLOW_55_in_plotfunctions2488); 
+                    			string_literal238_tree = (object)adaptor.Create(string_literal238);
+                    			adaptor.AddChild(root_0, string_literal238_tree);
 
                     		retval.ret.setPlotFunction("setAxisTitle");
-                    		char_literal238=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2496); 
-                    			char_literal238_tree = (object)adaptor.Create(char_literal238);
-                    			adaptor.AddChild(root_0, char_literal238_tree);
+                    		char_literal239=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2490); 
+                    			char_literal239_tree = (object)adaptor.Create(char_literal239);
+                    			adaptor.AddChild(root_0, char_literal239_tree);
 
-                    		// spinach.g:416:1: (vl1= string_literal )
-                    		// spinach.g:416:2: vl1= string_literal
+                    		// spinach.g:408:1: (vl1= string_literal )
+                    		// spinach.g:408:2: vl1= string_literal
                     		{
-                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2502);
+                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2496);
                     			vl1 = string_literal();
                     			state.followingStackPointer--;
 
@@ -7638,17 +7577,17 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal239=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2505); 
-                    			char_literal239_tree = (object)adaptor.Create(char_literal239);
-                    			adaptor.AddChild(root_0, char_literal239_tree);
+                    		char_literal240=(IToken)Match(input,31,FOLLOW_31_in_plotfunctions2499); 
+                    			char_literal240_tree = (object)adaptor.Create(char_literal240);
+                    			adaptor.AddChild(root_0, char_literal240_tree);
 
-                    		// spinach.g:417:1: ( (vl2= string_literal ) )
-                    		// spinach.g:417:2: (vl2= string_literal )
+                    		// spinach.g:409:1: ( (vl2= string_literal ) )
+                    		// spinach.g:409:2: (vl2= string_literal )
                     		{
-                    			// spinach.g:417:2: (vl2= string_literal )
-                    			// spinach.g:417:3: vl2= string_literal
+                    			// spinach.g:409:2: (vl2= string_literal )
+                    			// spinach.g:409:3: vl2= string_literal
                     			{
-                    				PushFollow(FOLLOW_string_literal_in_plotfunctions2512);
+                    				PushFollow(FOLLOW_string_literal_in_plotfunctions2506);
                     				vl2 = string_literal();
                     				state.followingStackPointer--;
 
@@ -7660,13 +7599,13 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal240=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2517); 
-                    			char_literal240_tree = (object)adaptor.Create(char_literal240);
-                    			adaptor.AddChild(root_0, char_literal240_tree);
+                    		char_literal241=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2511); 
+                    			char_literal241_tree = (object)adaptor.Create(char_literal241);
+                    			adaptor.AddChild(root_0, char_literal241_tree);
 
-                    		END_OF_STATEMENT241=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2518); 
-                    			END_OF_STATEMENT241_tree = (object)adaptor.Create(END_OF_STATEMENT241);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT241_tree);
+                    		END_OF_STATEMENT242=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2512); 
+                    			END_OF_STATEMENT242_tree = (object)adaptor.Create(END_OF_STATEMENT242);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT242_tree);
 
 
                     	}
@@ -7675,26 +7614,26 @@ public class spinachParser : Parser
                     }
                     break;
                 case 9 :
-                    // spinach.g:419:2: ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT )
+                    // spinach.g:411:2: ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:419:2: ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT )
-                    	// spinach.g:419:3: 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT
+                    	// spinach.g:411:2: ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT )
+                    	// spinach.g:411:3: 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT
                     	{
-                    		string_literal242=(IToken)Match(input,55,FOLLOW_55_in_plotfunctions2523); 
-                    			string_literal242_tree = (object)adaptor.Create(string_literal242);
-                    			adaptor.AddChild(root_0, string_literal242_tree);
+                    		string_literal243=(IToken)Match(input,55,FOLLOW_55_in_plotfunctions2517); 
+                    			string_literal243_tree = (object)adaptor.Create(string_literal243);
+                    			adaptor.AddChild(root_0, string_literal243_tree);
 
                     		retval.ret.setPlotFunction("setAxisTitle");
-                    		char_literal243=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2525); 
-                    			char_literal243_tree = (object)adaptor.Create(char_literal243);
-                    			adaptor.AddChild(root_0, char_literal243_tree);
+                    		char_literal244=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2519); 
+                    			char_literal244_tree = (object)adaptor.Create(char_literal244);
+                    			adaptor.AddChild(root_0, char_literal244_tree);
 
-                    		// spinach.g:420:1: (vl1= string_literal )
-                    		// spinach.g:420:2: vl1= string_literal
+                    		// spinach.g:412:1: (vl1= string_literal )
+                    		// spinach.g:412:2: vl1= string_literal
                     		{
-                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2531);
+                    			PushFollow(FOLLOW_string_literal_in_plotfunctions2525);
                     			vl1 = string_literal();
                     			state.followingStackPointer--;
 
@@ -7703,13 +7642,13 @@ public class spinachParser : Parser
 
                     		}
 
-                    		char_literal244=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2535); 
-                    			char_literal244_tree = (object)adaptor.Create(char_literal244);
-                    			adaptor.AddChild(root_0, char_literal244_tree);
+                    		char_literal245=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2529); 
+                    			char_literal245_tree = (object)adaptor.Create(char_literal245);
+                    			adaptor.AddChild(root_0, char_literal245_tree);
 
-                    		END_OF_STATEMENT245=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2536); 
-                    			END_OF_STATEMENT245_tree = (object)adaptor.Create(END_OF_STATEMENT245);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT245_tree);
+                    		END_OF_STATEMENT246=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2530); 
+                    			END_OF_STATEMENT246_tree = (object)adaptor.Create(END_OF_STATEMENT246);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT246_tree);
 
 
                     	}
@@ -7718,34 +7657,34 @@ public class spinachParser : Parser
                     }
                     break;
                 case 10 :
-                    // spinach.g:422:2: ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT )
+                    // spinach.g:414:2: ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT )
                     {
                     	root_0 = (object)adaptor.GetNilNode();
 
-                    	// spinach.g:422:2: ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT )
-                    	// spinach.g:422:3: 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT
+                    	// spinach.g:414:2: ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT )
+                    	// spinach.g:414:3: 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT
                     	{
-                    		string_literal246=(IToken)Match(input,56,FOLLOW_56_in_plotfunctions2541); 
-                    			string_literal246_tree = (object)adaptor.Create(string_literal246);
-                    			adaptor.AddChild(root_0, string_literal246_tree);
+                    		string_literal247=(IToken)Match(input,56,FOLLOW_56_in_plotfunctions2535); 
+                    			string_literal247_tree = (object)adaptor.Create(string_literal247);
+                    			adaptor.AddChild(root_0, string_literal247_tree);
 
-                    		char_literal247=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2542); 
-                    			char_literal247_tree = (object)adaptor.Create(char_literal247);
-                    			adaptor.AddChild(root_0, char_literal247_tree);
+                    		char_literal248=(IToken)Match(input,LEFTBRACE,FOLLOW_LEFTBRACE_in_plotfunctions2536); 
+                    			char_literal248_tree = (object)adaptor.Create(char_literal248);
+                    			adaptor.AddChild(root_0, char_literal248_tree);
 
                     		retval.ret.setPlotFunction("setScaleMode");
-                    		SCALEMODE248=(IToken)Match(input,SCALEMODE,FOLLOW_SCALEMODE_in_plotfunctions2545); 
-                    			SCALEMODE248_tree = (object)adaptor.Create(SCALEMODE248);
-                    			adaptor.AddChild(root_0, SCALEMODE248_tree);
+                    		SCALEMODE249=(IToken)Match(input,SCALEMODE,FOLLOW_SCALEMODE_in_plotfunctions2539); 
+                    			SCALEMODE249_tree = (object)adaptor.Create(SCALEMODE249);
+                    			adaptor.AddChild(root_0, SCALEMODE249_tree);
 
-                    		retval.ret.setScaleMode(SCALEMODE248.Text);
-                    		char_literal249=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2549); 
-                    			char_literal249_tree = (object)adaptor.Create(char_literal249);
-                    			adaptor.AddChild(root_0, char_literal249_tree);
+                    		retval.ret.setScaleMode(SCALEMODE249.Text);
+                    		char_literal250=(IToken)Match(input,RIGHTBRACE,FOLLOW_RIGHTBRACE_in_plotfunctions2543); 
+                    			char_literal250_tree = (object)adaptor.Create(char_literal250);
+                    			adaptor.AddChild(root_0, char_literal250_tree);
 
-                    		END_OF_STATEMENT250=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2551); 
-                    			END_OF_STATEMENT250_tree = (object)adaptor.Create(END_OF_STATEMENT250);
-                    			adaptor.AddChild(root_0, END_OF_STATEMENT250_tree);
+                    		END_OF_STATEMENT251=(IToken)Match(input,END_OF_STATEMENT,FOLLOW_END_OF_STATEMENT_in_plotfunctions2545); 
+                    			END_OF_STATEMENT251_tree = (object)adaptor.Create(END_OF_STATEMENT251);
+                    			adaptor.AddChild(root_0, END_OF_STATEMENT251_tree);
 
 
                     	}
@@ -8110,16 +8049,16 @@ public class spinachParser : Parser
         "\x21\uffff";
     const string DFA58_minS =
         "\x01\x30\x03\uffff\x02\x0b\x01\uffff\x01\x06\x01\x1b\x01\x0d\x01"+
-        "\x04\x01\x06\x01\uffff\x03\x04\x02\x0d\x01\x04\x01\x1b\x03\uffff"+
-        "\x05\x04\x01\x0d\x01\x04\x02\uffff\x01\x04";
+        "\x04\x01\x06\x01\uffff\x03\x04\x02\x0d\x01\x04\x01\uffff\x01\x1b"+
+        "\x02\uffff\x05\x04\x01\x0d\x01\x04\x02\uffff\x01\x04";
     const string DFA58_maxS =
         "\x01\x38\x03\uffff\x02\x0b\x01\uffff\x01\x06\x01\x1b\x01\x1f\x01"+
-        "\x1b\x01\x06\x01\uffff\x03\x1b\x02\x1f\x01\x04\x01\x1b\x03\uffff"+
-        "\x05\x1b\x01\x1f\x01\x04\x02\uffff\x01\x1b";
+        "\x1b\x01\x06\x01\uffff\x03\x1b\x02\x1f\x01\x04\x01\uffff\x01\x1b"+
+        "\x02\uffff\x05\x1b\x01\x1f\x01\x04\x02\uffff\x01\x1b";
     const string DFA58_acceptS =
         "\x01\uffff\x01\x01\x01\x02\x01\x03\x02\uffff\x01\x0a\x05\uffff"+
-        "\x01\x06\x07\uffff\x01\x09\x01\x04\x01\x05\x07\uffff\x01\x08\x01"+
-        "\x07\x01\uffff";
+        "\x01\x06\x06\uffff\x01\x09\x01\uffff\x01\x04\x01\x05\x07\uffff\x01"+
+        "\x08\x01\x07\x01\uffff";
     const string DFA58_specialS =
         "\x21\uffff}>";
     static readonly string[] DFA58_transitionS = {
@@ -8139,11 +8078,11 @@ public class spinachParser : Parser
             "\x01\x0f\x01\x0d\x01\x0e\x14\uffff\x01\x10",
             "\x01\x0f\x01\x0d\x01\x0e\x14\uffff\x01\x10",
             "\x01\x0f\x01\x0d\x01\x0e\x0a\uffff\x01\x12\x09\uffff\x01\x10",
-            "\x01\x14\x11\uffff\x01\x13",
+            "\x01\x13\x11\uffff\x01\x14",
             "\x01\x16\x11\uffff\x01\x15",
             "\x01\x17",
-            "\x01\x18",
             "",
+            "\x01\x18",
             "",
             "",
             "\x01\x0f\x01\x0d\x01\x0e\x14\uffff\x01\x10",
@@ -8184,7 +8123,7 @@ public class spinachParser : Parser
 
         override public string Description
         {
-            get { return "383:1: plotfunctions returns [PlotFunctionElement ret] : ( ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'resetPlot' '(' ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT ) | ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT ) );"; }
+            get { return "375:1: plotfunctions returns [PlotFunctionElement ret] : ( ( 'subPlot' '(' (el1= int_literal ) ',' (vll1= variable ) ',' (vll2= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'plot' '(' (vll3= variable ) ',' (vll4= string_literal ) ',' ( ( '1D' ) | ( '2D' ) | ( '3D' ( ',' (el3= int_literal ) )? ) ) ')' END_OF_STATEMENT ) | ( 'resetPlot' '(' ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ',' ) ( (el4= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ',' ( (ell3= double_literal ) ) ')' END_OF_STATEMENT ) | ( 'setPlotAxis' '(' (ell2= double_literal ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ',' ) ( (vl3= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ',' ( (vl2= string_literal ) ) ')' END_OF_STATEMENT ) | ( 'setAxisTitle' '(' (vl1= string_literal ) ')' END_OF_STATEMENT ) | ( 'setScaleMode' '(' SCALEMODE ')' END_OF_STATEMENT ) );"; }
         }
 
     }
@@ -8449,91 +8388,92 @@ public class spinachParser : Parser
     public static readonly BitSet FOLLOW_scalarargument_in_arguments2100 = new BitSet(new ulong[]{0x0000000000000002UL});
     public static readonly BitSet FOLLOW_matrixreference_in_arguments2106 = new BitSet(new ulong[]{0x0000000000000002UL});
     public static readonly BitSet FOLLOW_vectorreference_in_arguments2112 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_VARTYPE_in_scalarargument2144 = new BitSet(new ulong[]{0x0000000000000010UL});
-    public static readonly BitSet FOLLOW_variable_in_scalarargument2151 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_46_in_comment2170 = new BitSet(new ulong[]{0x0000000000000072UL});
-    public static readonly BitSet FOLLOW_var_int_or_double_literal_in_comment2171 = new BitSet(new ulong[]{0x0000000000000072UL});
-    public static readonly BitSet FOLLOW_47_in_functionreturn2189 = new BitSet(new ulong[]{0x0000000000000070UL});
-    public static readonly BitSet FOLLOW_var_int_or_double_literal_in_functionreturn2192 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_functionreturn2196 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_48_in_plotfunctions2220 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2223 = new BitSet(new ulong[]{0x0000000000000020UL});
-    public static readonly BitSet FOLLOW_int_literal_in_plotfunctions2230 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2235 = new BitSet(new ulong[]{0x0000000000000010UL});
-    public static readonly BitSet FOLLOW_variable_in_plotfunctions2242 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2247 = new BitSet(new ulong[]{0x0000200008000870UL});
-    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2254 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2258 = new BitSet(new ulong[]{0x000E000000000000UL});
-    public static readonly BitSet FOLLOW_49_in_plotfunctions2262 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_50_in_plotfunctions2267 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_51_in_plotfunctions2272 = new BitSet(new ulong[]{0x0000000080002000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2275 = new BitSet(new ulong[]{0x0000000000000020UL});
-    public static readonly BitSet FOLLOW_int_literal_in_plotfunctions2281 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2289 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2290 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_52_in_plotfunctions2296 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2299 = new BitSet(new ulong[]{0x0000000000000010UL});
-    public static readonly BitSet FOLLOW_variable_in_plotfunctions2305 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2310 = new BitSet(new ulong[]{0x0000200008000870UL});
-    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2316 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2320 = new BitSet(new ulong[]{0x000E000000000000UL});
-    public static readonly BitSet FOLLOW_49_in_plotfunctions2324 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_50_in_plotfunctions2329 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_51_in_plotfunctions2334 = new BitSet(new ulong[]{0x0000000080002000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2337 = new BitSet(new ulong[]{0x0000000000000020UL});
-    public static readonly BitSet FOLLOW_int_literal_in_plotfunctions2343 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2351 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2352 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_53_in_plotfunctions2358 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2359 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2360 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2362 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_54_in_plotfunctions2368 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2370 = new BitSet(new ulong[]{0x0000000000000040UL});
-    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2376 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2379 = new BitSet(new ulong[]{0x0000000000000040UL});
-    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2385 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2388 = new BitSet(new ulong[]{0x0000000000000040UL});
-    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2395 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2400 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2401 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_54_in_plotfunctions2406 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2408 = new BitSet(new ulong[]{0x0000000000000040UL});
-    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2414 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2417 = new BitSet(new ulong[]{0x0000000000000040UL});
-    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2423 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2428 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2429 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_54_in_plotfunctions2434 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2436 = new BitSet(new ulong[]{0x0000000000000040UL});
-    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2442 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2446 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2447 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_55_in_plotfunctions2453 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2455 = new BitSet(new ulong[]{0x0000200008000870UL});
-    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2461 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2464 = new BitSet(new ulong[]{0x0000200008000870UL});
-    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2471 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2474 = new BitSet(new ulong[]{0x0000200008000870UL});
-    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2482 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2487 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2488 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_55_in_plotfunctions2494 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2496 = new BitSet(new ulong[]{0x0000200008000870UL});
-    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2502 = new BitSet(new ulong[]{0x0000000080000000UL});
-    public static readonly BitSet FOLLOW_31_in_plotfunctions2505 = new BitSet(new ulong[]{0x0000200008000870UL});
-    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2512 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2517 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2518 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_55_in_plotfunctions2523 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2525 = new BitSet(new ulong[]{0x0000200008000870UL});
-    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2531 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2535 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2536 = new BitSet(new ulong[]{0x0000000000000002UL});
-    public static readonly BitSet FOLLOW_56_in_plotfunctions2541 = new BitSet(new ulong[]{0x0000000000000800UL});
-    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2542 = new BitSet(new ulong[]{0x0000000000010000UL});
-    public static readonly BitSet FOLLOW_SCALEMODE_in_plotfunctions2545 = new BitSet(new ulong[]{0x0000000000002000UL});
-    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2549 = new BitSet(new ulong[]{0x0000000000000200UL});
-    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2551 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_VARTYPE_in_scalarargument2136 = new BitSet(new ulong[]{0x0000000000000010UL});
+    public static readonly BitSet FOLLOW_variable_in_scalarargument2143 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_46_in_comment2162 = new BitSet(new ulong[]{0x0000400000000070UL});
+    public static readonly BitSet FOLLOW_var_int_or_double_literal_in_comment2163 = new BitSet(new ulong[]{0x0000400000000070UL});
+    public static readonly BitSet FOLLOW_46_in_comment2166 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_47_in_functionreturn2183 = new BitSet(new ulong[]{0x0000000000000070UL});
+    public static readonly BitSet FOLLOW_var_int_or_double_literal_in_functionreturn2186 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_functionreturn2190 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_48_in_plotfunctions2214 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2217 = new BitSet(new ulong[]{0x0000000000000020UL});
+    public static readonly BitSet FOLLOW_int_literal_in_plotfunctions2224 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2229 = new BitSet(new ulong[]{0x0000000000000010UL});
+    public static readonly BitSet FOLLOW_variable_in_plotfunctions2236 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2241 = new BitSet(new ulong[]{0x0000200008000870UL});
+    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2248 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2252 = new BitSet(new ulong[]{0x000E000000000000UL});
+    public static readonly BitSet FOLLOW_49_in_plotfunctions2256 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_50_in_plotfunctions2261 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_51_in_plotfunctions2266 = new BitSet(new ulong[]{0x0000000080002000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2269 = new BitSet(new ulong[]{0x0000000000000020UL});
+    public static readonly BitSet FOLLOW_int_literal_in_plotfunctions2275 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2283 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2284 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_52_in_plotfunctions2290 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2293 = new BitSet(new ulong[]{0x0000000000000010UL});
+    public static readonly BitSet FOLLOW_variable_in_plotfunctions2299 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2304 = new BitSet(new ulong[]{0x0000200008000870UL});
+    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2310 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2314 = new BitSet(new ulong[]{0x000E000000000000UL});
+    public static readonly BitSet FOLLOW_49_in_plotfunctions2318 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_50_in_plotfunctions2323 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_51_in_plotfunctions2328 = new BitSet(new ulong[]{0x0000000080002000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2331 = new BitSet(new ulong[]{0x0000000000000020UL});
+    public static readonly BitSet FOLLOW_int_literal_in_plotfunctions2337 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2345 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2346 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_53_in_plotfunctions2352 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2353 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2354 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2356 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_54_in_plotfunctions2362 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2364 = new BitSet(new ulong[]{0x0000000000000040UL});
+    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2370 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2373 = new BitSet(new ulong[]{0x0000000000000040UL});
+    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2379 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2382 = new BitSet(new ulong[]{0x0000000000000040UL});
+    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2389 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2394 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2395 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_54_in_plotfunctions2400 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2402 = new BitSet(new ulong[]{0x0000000000000040UL});
+    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2408 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2411 = new BitSet(new ulong[]{0x0000000000000040UL});
+    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2417 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2422 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2423 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_54_in_plotfunctions2428 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2430 = new BitSet(new ulong[]{0x0000000000000040UL});
+    public static readonly BitSet FOLLOW_double_literal_in_plotfunctions2436 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2440 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2441 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_55_in_plotfunctions2447 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2449 = new BitSet(new ulong[]{0x0000200008000870UL});
+    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2455 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2458 = new BitSet(new ulong[]{0x0000200008000870UL});
+    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2465 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2468 = new BitSet(new ulong[]{0x0000200008000870UL});
+    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2476 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2481 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2482 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_55_in_plotfunctions2488 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2490 = new BitSet(new ulong[]{0x0000200008000870UL});
+    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2496 = new BitSet(new ulong[]{0x0000000080000000UL});
+    public static readonly BitSet FOLLOW_31_in_plotfunctions2499 = new BitSet(new ulong[]{0x0000200008000870UL});
+    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2506 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2511 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2512 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_55_in_plotfunctions2517 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2519 = new BitSet(new ulong[]{0x0000200008000870UL});
+    public static readonly BitSet FOLLOW_string_literal_in_plotfunctions2525 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2529 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2530 = new BitSet(new ulong[]{0x0000000000000002UL});
+    public static readonly BitSet FOLLOW_56_in_plotfunctions2535 = new BitSet(new ulong[]{0x0000000000000800UL});
+    public static readonly BitSet FOLLOW_LEFTBRACE_in_plotfunctions2536 = new BitSet(new ulong[]{0x0000000000010000UL});
+    public static readonly BitSet FOLLOW_SCALEMODE_in_plotfunctions2539 = new BitSet(new ulong[]{0x0000000000002000UL});
+    public static readonly BitSet FOLLOW_RIGHTBRACE_in_plotfunctions2543 = new BitSet(new ulong[]{0x0000000000000200UL});
+    public static readonly BitSet FOLLOW_END_OF_STATEMENT_in_plotfunctions2545 = new BitSet(new ulong[]{0x0000000000000002UL});
 
 }

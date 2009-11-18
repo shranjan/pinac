@@ -38,7 +38,7 @@ using System.Text;
             keys.Add("log");
             keys.Add("linear");
             keys.Add("string");
-            keys.Add("DOT");
+            keys.Add("dot");
             keys.Add("for");
             keys.Add("if");
             keys.Add("else");
@@ -52,13 +52,13 @@ using System.Text;
             keys.Add("setAxisTitle");
             keys.Add("setScaleMode");
             keys.Add("return");
-            keys.Add("SYNC");
+            keys.Add("sync");
             keys.Add("to");
             keys.Add("print");
             keys.Add("struct");
             keys.Add("T");
-            keys.Add("Vector");
-            keys.Add("Matrix");
+            keys.Add("vector");
+            keys.Add("matrix");
         }
 
     }

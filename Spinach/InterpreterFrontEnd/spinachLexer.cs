@@ -1,4 +1,4 @@
-// $ANTLR 3.1.3 Mar 18, 2009 10:09:25 spinach.g 2009-11-17 16:54:25
+// $ANTLR 3.1.3 Mar 18, 2009 10:09:25 spinach.g 2009-11-18 02:54:30
 
 
 using System.Collections.Generic;
@@ -118,10 +118,10 @@ public class spinachLexer : Lexer {
     		{
             int _type = T__28;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:12:7: ( 'Matrix' )
-            // spinach.g:12:9: 'Matrix'
+            // spinach.g:12:7: ( 'matrix' )
+            // spinach.g:12:9: 'matrix'
             {
-            	Match("Matrix"); 
+            	Match("matrix"); 
 
 
             }
@@ -211,10 +211,10 @@ public class spinachLexer : Lexer {
     		{
             int _type = T__32;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:16:7: ( 'Vector' )
-            // spinach.g:16:9: 'Vector'
+            // spinach.g:16:7: ( 'vector' )
+            // spinach.g:16:9: 'vector'
             {
-            	Match("Vector"); 
+            	Match("vector"); 
 
 
             }
@@ -378,10 +378,10 @@ public class spinachLexer : Lexer {
     		{
             int _type = T__39;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:23:7: ( 'SYNC' )
-            // spinach.g:23:9: 'SYNC'
+            // spinach.g:23:7: ( 'sync' )
+            // spinach.g:23:9: 'sync'
             {
-            	Match("SYNC"); 
+            	Match("sync"); 
 
 
             }
@@ -498,10 +498,10 @@ public class spinachLexer : Lexer {
     		{
             int _type = T__44;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:28:7: ( 'DOT' )
-            // spinach.g:28:9: 'DOT'
+            // spinach.g:28:7: ( 'dot' )
+            // spinach.g:28:9: 'dot'
             {
-            	Match("DOT"); 
+            	Match("dot"); 
 
 
             }
@@ -809,8 +809,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = END_OF_STATEMENT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:431:17: ( ';' )
-            // spinach.g:431:19: ';'
+            // spinach.g:423:17: ( ';' )
+            // spinach.g:423:19: ';'
             {
             	Match(';'); 
 
@@ -832,7 +832,7 @@ public class spinachLexer : Lexer {
     		{
             int _type = SCALEMODE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:432:10: ( 'log' | 'linear' )
+            // spinach.g:424:10: ( 'log' | 'linear' )
             int alt1 = 2;
             int LA1_0 = input.LA(1);
 
@@ -866,7 +866,7 @@ public class spinachLexer : Lexer {
             switch (alt1) 
             {
                 case 1 :
-                    // spinach.g:432:12: 'log'
+                    // spinach.g:424:12: 'log'
                     {
                     	Match("log"); 
 
@@ -874,7 +874,7 @@ public class spinachLexer : Lexer {
                     }
                     break;
                 case 2 :
-                    // spinach.g:432:20: 'linear'
+                    // spinach.g:424:20: 'linear'
                     {
                     	Match("linear"); 
 
@@ -899,7 +899,7 @@ public class spinachLexer : Lexer {
     		{
             int _type = VARTYPE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:433:9: ( 'int' | 'double' )
+            // spinach.g:425:9: ( 'int' | 'double' )
             int alt2 = 2;
             int LA2_0 = input.LA(1);
 
@@ -921,7 +921,7 @@ public class spinachLexer : Lexer {
             switch (alt2) 
             {
                 case 1 :
-                    // spinach.g:433:11: 'int'
+                    // spinach.g:425:11: 'int'
                     {
                     	Match("int"); 
 
@@ -929,7 +929,7 @@ public class spinachLexer : Lexer {
                     }
                     break;
                 case 2 :
-                    // spinach.g:433:19: 'double'
+                    // spinach.g:425:19: 'double'
                     {
                     	Match("double"); 
 
@@ -954,8 +954,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = STRINGTYPE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:434:12: ( 'string' )
-            // spinach.g:434:14: 'string'
+            // spinach.g:426:12: ( 'string' )
+            // spinach.g:426:14: 'string'
             {
             	Match("string"); 
 
@@ -978,8 +978,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = DOT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:435:5: ( '.' )
-            // spinach.g:435:6: '.'
+            // spinach.g:427:5: ( '.' )
+            // spinach.g:427:6: '.'
             {
             	Match('.'); 
 
@@ -1001,8 +1001,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = ASSIGNMENT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:436:11: ( '=' )
-            // spinach.g:436:13: '='
+            // spinach.g:428:11: ( '=' )
+            // spinach.g:428:13: '='
             {
             	Match('='); 
 
@@ -1024,8 +1024,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = PLUS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:437:5: ( '+' )
-            // spinach.g:437:7: '+'
+            // spinach.g:429:5: ( '+' )
+            // spinach.g:429:7: '+'
             {
             	Match('+'); 
 
@@ -1047,8 +1047,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = MULTIPLY;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:438:9: ( '*' )
-            // spinach.g:438:10: '*'
+            // spinach.g:430:9: ( '*' )
+            // spinach.g:430:10: '*'
             {
             	Match('*'); 
 
@@ -1070,10 +1070,10 @@ public class spinachLexer : Lexer {
     		{
             int _type = VARIABLE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:439:9: ( ( 'a' .. 'z' | 'A' .. 'Z' )+ )
-            // spinach.g:439:11: ( 'a' .. 'z' | 'A' .. 'Z' )+
+            // spinach.g:431:9: ( ( 'a' .. 'z' | 'A' .. 'Z' )+ )
+            // spinach.g:431:11: ( 'a' .. 'z' | 'A' .. 'Z' )+
             {
-            	// spinach.g:439:11: ( 'a' .. 'z' | 'A' .. 'Z' )+
+            	// spinach.g:431:11: ( 'a' .. 'z' | 'A' .. 'Z' )+
             	int cnt3 = 0;
             	do 
             	{
@@ -1137,10 +1137,10 @@ public class spinachLexer : Lexer {
     		{
             int _type = INT_LITERAL;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:440:12: ( ( '0' .. '9' )+ )
-            // spinach.g:440:14: ( '0' .. '9' )+
+            // spinach.g:432:12: ( ( '0' .. '9' )+ )
+            // spinach.g:432:14: ( '0' .. '9' )+
             {
-            	// spinach.g:440:14: ( '0' .. '9' )+
+            	// spinach.g:432:14: ( '0' .. '9' )+
             	int cnt4 = 0;
             	do 
             	{
@@ -1156,7 +1156,7 @@ public class spinachLexer : Lexer {
             	    switch (alt4) 
             		{
             			case 1 :
-            			    // spinach.g:440:15: '0' .. '9'
+            			    // spinach.g:432:15: '0' .. '9'
             			    {
             			    	MatchRange('0','9'); 
 
@@ -1194,11 +1194,11 @@ public class spinachLexer : Lexer {
     		{
             int _type = DOUBLE_LITERAL;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:441:15: ( ( INT_LITERAL DOT INT_LITERAL ) )
-            // spinach.g:441:16: ( INT_LITERAL DOT INT_LITERAL )
+            // spinach.g:433:15: ( ( INT_LITERAL DOT INT_LITERAL ) )
+            // spinach.g:433:16: ( INT_LITERAL DOT INT_LITERAL )
             {
-            	// spinach.g:441:16: ( INT_LITERAL DOT INT_LITERAL )
-            	// spinach.g:441:17: INT_LITERAL DOT INT_LITERAL
+            	// spinach.g:433:16: ( INT_LITERAL DOT INT_LITERAL )
+            	// spinach.g:433:17: INT_LITERAL DOT INT_LITERAL
             	{
             		mINT_LITERAL(); 
             		mDOT(); 
@@ -1225,10 +1225,10 @@ public class spinachLexer : Lexer {
     		{
             int _type = WHITESPACE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:442:12: ( ( ' ' | '\\t' | '\\n' | '\\r' )+ )
-            // spinach.g:442:14: ( ' ' | '\\t' | '\\n' | '\\r' )+
+            // spinach.g:434:12: ( ( ' ' | '\\t' | '\\n' | '\\r' )+ )
+            // spinach.g:434:14: ( ' ' | '\\t' | '\\n' | '\\r' )+
             {
-            	// spinach.g:442:14: ( ' ' | '\\t' | '\\n' | '\\r' )+
+            	// spinach.g:434:14: ( ' ' | '\\t' | '\\n' | '\\r' )+
             	int cnt5 = 0;
             	do 
             	{
@@ -1293,8 +1293,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = LEFTBRACE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:443:11: ( '(' )
-            // spinach.g:443:12: '('
+            // spinach.g:435:11: ( '(' )
+            // spinach.g:435:12: '('
             {
             	Match('('); 
 
@@ -1316,8 +1316,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = RIGHTBRACE;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:444:11: ( ')' )
-            // spinach.g:444:12: ')'
+            // spinach.g:436:11: ( ')' )
+            // spinach.g:436:12: ')'
             {
             	Match(')'); 
 
@@ -1339,8 +1339,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = LEFTPARANTHESIS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:445:16: ( '{' )
-            // spinach.g:445:17: '{'
+            // spinach.g:437:16: ( '{' )
+            // spinach.g:437:17: '{'
             {
             	Match('{'); 
 
@@ -1362,8 +1362,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = RIGHTPARANTHESIS;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:446:17: ( '}' )
-            // spinach.g:446:18: '}'
+            // spinach.g:438:17: ( '}' )
+            // spinach.g:438:18: '}'
             {
             	Match('}'); 
 
@@ -1385,8 +1385,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = POINT;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:447:6: ( '->' )
-            // spinach.g:447:8: '->'
+            // spinach.g:439:6: ( '->' )
+            // spinach.g:439:8: '->'
             {
             	Match("->"); 
 
@@ -1409,8 +1409,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = EQUALITYEXPRESSION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:448:19: ( '==' )
-            // spinach.g:448:21: '=='
+            // spinach.g:440:19: ( '==' )
+            // spinach.g:440:21: '=='
             {
             	Match("=="); 
 
@@ -1433,8 +1433,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = NONEQUALITYEXPRESSION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:449:22: ( '!=' )
-            // spinach.g:449:24: '!='
+            // spinach.g:441:22: ( '!=' )
+            // spinach.g:441:24: '!='
             {
             	Match("!="); 
 
@@ -1457,8 +1457,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = LESSTHANEXPRESSION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:450:20: ( '<' )
-            // spinach.g:450:21: '<'
+            // spinach.g:442:20: ( '<' )
+            // spinach.g:442:21: '<'
             {
             	Match('<'); 
 
@@ -1480,8 +1480,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = LESSTHANEQUALTOEXPRESSION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:451:26: ( '<=' )
-            // spinach.g:451:27: '<='
+            // spinach.g:443:26: ( '<=' )
+            // spinach.g:443:27: '<='
             {
             	Match("<="); 
 
@@ -1504,8 +1504,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = GREATERTHANEXPRESSION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:452:23: ( '>' )
-            // spinach.g:452:24: '>'
+            // spinach.g:444:23: ( '>' )
+            // spinach.g:444:24: '>'
             {
             	Match('>'); 
 
@@ -1527,8 +1527,8 @@ public class spinachLexer : Lexer {
     		{
             int _type = GREATERTHANEQUALTOEXPRESSION;
     	int _channel = DEFAULT_TOKEN_CHANNEL;
-            // spinach.g:453:29: ( '>=' )
-            // spinach.g:453:30: '>='
+            // spinach.g:445:29: ( '>=' )
+            // spinach.g:445:30: '>='
             {
             	Match(">="); 
 
@@ -1935,274 +1935,268 @@ public class spinachLexer : Lexer {
 	}
 
     const string DFA6_eotS =
-        "\x02\uffff\x01\x1e\x03\uffff\x01\x1e\x01\x2b\x0a\x1e\x01\x3c\x01"+
-        "\uffff\x01\x1e\x03\x3f\x01\uffff\x01\x1e\x01\uffff\x01\x46\x03\uffff"+
-        "\x01\x3f\x06\uffff\x01\x48\x01\x4a\x02\x1e\x02\uffff\x08\x1e\x01"+
-        "\x55\x01\x1e\x01\x57\x05\x1e\x01\uffff\x01\x1e\x05\uffff\x02\x1e"+
-        "\x06\uffff\x0a\x1e\x01\uffff\x01\x1e\x01\uffff\x01\x6f\x01\x1e\x01"+
-        "\x71\x01\x1e\x01\x73\x02\x1e\x01\x76\x0d\x1e\x01\u0084\x01\u0085"+
-        "\x01\uffff\x01\u0086\x01\uffff\x01\u0087\x01\uffff\x02\x1e\x01\uffff"+
-        "\x0b\x1e\x01\u0095\x01\x1e\x04\uffff\x03\x1e\x01\u009a\x01\u009b"+
-        "\x01\u009c\x01\u009d\x04\x1e\x01\u00a2\x01\x6f\x01\uffff\x01\x1e"+
-        "\x01\u00a4\x01\x1e\x01\x76\x04\uffff\x01\u00a6\x03\x1e\x01\uffff"+
-        "\x01\x1e\x01\uffff\x01\x1e\x01\uffff\x09\x1e\x01\u00b5\x04\x1e\x01"+
-        "\uffff\x01\u00ba\x02\x1e\x01\u00bd\x01\uffff\x01\u00be\x01\u00bf"+
-        "\x03\uffff";
+        "\x02\uffff\x01\x1b\x03\uffff\x01\x1b\x01\x29\x07\x1b\x01\x38\x01"+
+        "\uffff\x01\x1b\x03\x3b\x01\uffff\x01\x1b\x01\uffff\x01\x42\x03\uffff"+
+        "\x01\x3b\x06\uffff\x01\x44\x01\x46\x03\x1b\x02\uffff\x09\x1b\x01"+
+        "\x54\x01\x55\x03\x1b\x01\uffff\x01\x1b\x05\uffff\x02\x1b\x06\uffff"+
+        "\x08\x1b\x01\x68\x04\x1b\x02\uffff\x01\x6d\x01\x1b\x01\x6f\x02\x1b"+
+        "\x01\x72\x03\x1b\x01\x76\x02\x1b\x01\x79\x05\x1b\x01\uffff\x03\x1b"+
+        "\x01\u0082\x01\uffff\x01\u0083\x01\uffff\x02\x1b\x01\uffff\x03\x1b"+
+        "\x01\uffff\x02\x1b\x01\uffff\x06\x1b\x01\u0091\x01\x1b\x02\uffff"+
+        "\x03\x1b\x01\u0096\x01\u0097\x01\u0098\x01\u0099\x04\x1b\x01\u009e"+
+        "\x01\x6d\x01\uffff\x01\x1b\x01\u00a0\x01\x1b\x01\x72\x04\uffff\x01"+
+        "\u00a2\x03\x1b\x01\uffff\x01\x1b\x01\uffff\x01\x1b\x01\uffff\x09"+
+        "\x1b\x01\u00b1\x04\x1b\x01\uffff\x01\u00b6\x02\x1b\x01\u00b9\x01"+
+        "\uffff\x01\u00ba\x01\u00bb\x03\uffff";
     const string DFA6_eofS =
-        "\u00c0\uffff";
+        "\u00bc\uffff";
     const string DFA6_minS =
         "\x01\x09\x01\uffff\x01\x61\x03\uffff\x01\x65\x01\x3e\x02\x65\x01"+
-        "\x61\x01\x6f\x01\x59\x01\x66\x01\x6c\x02\x6f\x01\x4f\x01\x41\x01"+
-        "\uffff\x01\x65\x03\x2e\x01\uffff\x01\x69\x01\uffff\x01\x3d\x03\uffff"+
-        "\x01\x2e\x06\uffff\x02\x3d\x01\x74\x01\x63\x02\uffff\x01\x72\x01"+
-        "\x62\x01\x74\x01\x6c\x01\x75\x01\x69\x01\x72\x01\x6f\x01\x41\x01"+
-        "\x4e\x01\x41\x01\x74\x01\x73\x01\x72\x01\x69\x01\x54\x01\uffff\x01"+
-        "\x73\x05\uffff\x01\x67\x01\x6e\x06\uffff\x01\x72\x01\x74\x01\x69"+
-        "\x01\x50\x01\x41\x01\x65\x01\x62\x01\x6e\x01\x61\x01\x74\x01\uffff"+
-        "\x01\x43\x01\uffff\x01\x41\x01\x65\x01\x41\x01\x64\x01\x41\x01\x75"+
-        "\x01\x65\x01\x41\x01\x65\x01\x69\x01\x6f\x01\x63\x01\x6e\x02\x6c"+
-        "\x01\x78\x01\x63\x01\x74\x01\x6c\x01\x74\x01\x6c\x02\x41\x01\uffff"+
-        "\x01\x41\x01\uffff\x01\x41\x01\uffff\x01\x72\x01\x74\x01\uffff\x01"+
-        "\x61\x01\x78\x01\x72\x01\x74\x01\x67\x02\x6f\x01\x69\x01\x61\x02"+
-        "\x65\x01\x41\x01\x6c\x04\uffff\x01\x6e\x01\x50\x01\x72\x04\x41\x02"+
-        "\x74\x01\x73\x01\x6c\x02\x41\x01\uffff\x01\x65\x01\x41\x01\x6c\x01"+
-        "\x41\x04\uffff\x02\x41\x01\x54\x01\x65\x01\uffff\x01\x6c\x01\uffff"+
-        "\x01\x6f\x01\uffff\x01\x78\x01\x69\x01\x4d\x01\x66\x01\x74\x01\x69"+
-        "\x01\x74\x02\x6f\x01\x41\x01\x73\x01\x6c\x01\x64\x01\x72\x01\uffff"+
-        "\x01\x41\x02\x65\x01\x41\x01\uffff\x02\x41\x03\uffff";
+        "\x61\x01\x6f\x01\x66\x01\x6c\x01\x6f\x01\x41\x01\uffff\x01\x65\x03"+
+        "\x2e\x01\uffff\x01\x69\x01\uffff\x01\x3d\x03\uffff\x01\x2e\x06\uffff"+
+        "\x02\x3d\x01\x74\x01\x63\x01\x69\x02\uffff\x01\x72\x01\x6e\x01\x62"+
+        "\x01\x74\x01\x6c\x01\x74\x01\x69\x01\x72\x01\x6f\x02\x41\x01\x74"+
+        "\x01\x73\x01\x72\x01\uffff\x01\x73\x05\uffff\x01\x67\x01\x6e\x06"+
+        "\uffff\x01\x72\x01\x74\x01\x64\x01\x69\x01\x63\x01\x50\x01\x41\x01"+
+        "\x65\x01\x41\x01\x62\x01\x6e\x01\x61\x01\x74\x02\uffff\x01\x41\x01"+
+        "\x65\x01\x41\x01\x75\x01\x65\x01\x41\x01\x65\x01\x69\x01\x6f\x01"+
+        "\x41\x01\x63\x01\x6e\x01\x41\x02\x6c\x01\x78\x01\x63\x01\x74\x01"+
+        "\uffff\x01\x6c\x01\x74\x01\x6c\x01\x41\x01\uffff\x01\x41\x01\uffff"+
+        "\x01\x72\x01\x74\x01\uffff\x01\x61\x01\x78\x01\x72\x01\uffff\x01"+
+        "\x74\x01\x67\x01\uffff\x02\x6f\x01\x69\x01\x61\x02\x65\x01\x41\x01"+
+        "\x6c\x02\uffff\x01\x6e\x01\x50\x01\x72\x04\x41\x02\x74\x01\x73\x01"+
+        "\x6c\x02\x41\x01\uffff\x01\x65\x01\x41\x01\x6c\x01\x41\x04\uffff"+
+        "\x02\x41\x01\x54\x01\x65\x01\uffff\x01\x6c\x01\uffff\x01\x6f\x01"+
+        "\uffff\x01\x78\x01\x69\x01\x4d\x01\x66\x01\x74\x01\x69\x01\x74\x02"+
+        "\x6f\x01\x41\x01\x73\x01\x6c\x01\x64\x01\x72\x01\uffff\x01\x41\x02"+
+        "\x65\x01\x41\x01\uffff\x02\x41\x03\uffff";
     const string DFA6_maxS =
-        "\x01\x7d\x01\uffff\x01\x61\x03\uffff\x01\x65\x01\x3e\x01\x75\x01"+
-        "\x6f\x01\x72\x01\x6f\x01\x59\x01\x6e\x01\x6c\x02\x6f\x01\x4f\x01"+
-        "\x7a\x01\uffff\x01\x65\x03\x44\x01\uffff\x01\x6f\x01\uffff\x01\x3d"+
-        "\x03\uffff\x01\x39\x06\uffff\x02\x3d\x01\x74\x01\x63\x02\uffff\x01"+
-        "\x72\x01\x62\x01\x74\x01\x6c\x01\x75\x01\x69\x01\x72\x01\x6f\x01"+
-        "\x7a\x01\x4e\x01\x7a\x01\x74\x01\x73\x01\x72\x01\x69\x01\x54\x01"+
-        "\uffff\x01\x74\x05\uffff\x01\x67\x01\x6e\x06\uffff\x01\x72\x01\x74"+
-        "\x01\x75\x01\x50\x01\x53\x01\x65\x01\x62\x01\x6e\x01\x61\x01\x74"+
-        "\x01\uffff\x01\x43\x01\uffff\x01\x7a\x01\x65\x01\x7a\x01\x64\x01"+
-        "\x7a\x01\x75\x01\x65\x01\x7a\x01\x65\x01\x69\x01\x6f\x01\x63\x01"+
-        "\x6e\x02\x6c\x01\x78\x01\x63\x01\x74\x01\x6c\x01\x74\x01\x6c\x02"+
-        "\x7a\x01\uffff\x01\x7a\x01\uffff\x01\x7a\x01\uffff\x01\x72\x01\x74"+
-        "\x01\uffff\x01\x61\x01\x78\x01\x72\x01\x74\x01\x67\x02\x6f\x01\x69"+
-        "\x01\x61\x02\x65\x01\x7a\x01\x6c\x04\uffff\x01\x6e\x01\x50\x01\x72"+
-        "\x04\x7a\x02\x74\x01\x73\x01\x6c\x02\x7a\x01\uffff\x01\x65\x01\x7a"+
-        "\x01\x6c\x01\x7a\x04\uffff\x01\x7a\x01\x41\x01\x54\x01\x65\x01\uffff"+
-        "\x01\x6c\x01\uffff\x01\x6f\x01\uffff\x01\x78\x01\x69\x01\x4d\x01"+
-        "\x66\x01\x74\x01\x69\x01\x74\x02\x6f\x01\x7a\x01\x73\x01\x6c\x01"+
-        "\x64\x01\x72\x01\uffff\x01\x7a\x02\x65\x01\x7a\x01\uffff\x02\x7a"+
-        "\x03\uffff";
+        "\x01\x7d\x01\uffff\x01\x61\x03\uffff\x01\x6f\x01\x3e\x01\x79\x01"+
+        "\x6f\x01\x72\x01\x6f\x01\x6e\x01\x6c\x01\x6f\x01\x7a\x01\uffff\x01"+
+        "\x65\x03\x44\x01\uffff\x01\x6f\x01\uffff\x01\x3d\x03\uffff\x01\x39"+
+        "\x06\uffff\x02\x3d\x01\x74\x01\x63\x01\x69\x02\uffff\x01\x72\x01"+
+        "\x6e\x01\x62\x01\x74\x01\x6c\x01\x75\x01\x69\x01\x72\x01\x6f\x02"+
+        "\x7a\x01\x74\x01\x73\x01\x72\x01\uffff\x01\x74\x05\uffff\x01\x67"+
+        "\x01\x6e\x06\uffff\x01\x72\x01\x74\x01\x64\x01\x75\x01\x63\x01\x50"+
+        "\x01\x53\x01\x65\x01\x7a\x01\x62\x01\x6e\x01\x61\x01\x74\x02\uffff"+
+        "\x01\x7a\x01\x65\x01\x7a\x01\x75\x01\x65\x01\x7a\x01\x65\x01\x69"+
+        "\x01\x6f\x01\x7a\x01\x63\x01\x6e\x01\x7a\x02\x6c\x01\x78\x01\x63"+
+        "\x01\x74\x01\uffff\x01\x6c\x01\x74\x01\x6c\x01\x7a\x01\uffff\x01"+
+        "\x7a\x01\uffff\x01\x72\x01\x74\x01\uffff\x01\x61\x01\x78\x01\x72"+
+        "\x01\uffff\x01\x74\x01\x67\x01\uffff\x02\x6f\x01\x69\x01\x61\x02"+
+        "\x65\x01\x7a\x01\x6c\x02\uffff\x01\x6e\x01\x50\x01\x72\x04\x7a\x02"+
+        "\x74\x01\x73\x01\x6c\x02\x7a\x01\uffff\x01\x65\x01\x7a\x01\x6c\x01"+
+        "\x7a\x04\uffff\x01\x7a\x01\x41\x01\x54\x01\x65\x01\uffff\x01\x6c"+
+        "\x01\uffff\x01\x6f\x01\uffff\x01\x78\x01\x69\x01\x4d\x01\x66\x01"+
+        "\x74\x01\x69\x01\x74\x02\x6f\x01\x7a\x01\x73\x01\x6c\x01\x64\x01"+
+        "\x72\x01\uffff\x01\x7a\x02\x65\x01\x7a\x01\uffff\x02\x7a\x03\uffff";
     const string DFA6_acceptS =
-        "\x01\uffff\x01\x01\x01\uffff\x01\x03\x01\x04\x01\x05\x0d\uffff"+
+        "\x01\uffff\x01\x01\x01\uffff\x01\x03\x01\x04\x01\x05\x0a\uffff"+
         "\x01\x14\x04\uffff\x01\x1f\x01\uffff\x01\x23\x01\uffff\x01\x25\x01"+
         "\x26\x01\x27\x01\uffff\x01\x2a\x01\x2b\x01\x2c\x01\x2d\x01\x2e\x01"+
-        "\x31\x04\uffff\x01\x2f\x01\x07\x10\uffff\x01\x13\x01\uffff\x01\x17"+
+        "\x31\x05\uffff\x01\x2f\x01\x07\x0e\uffff\x01\x13\x01\uffff\x01\x17"+
         "\x01\x28\x01\x29\x01\x18\x01\x19\x02\uffff\x01\x30\x01\x24\x01\x33"+
-        "\x01\x32\x01\x35\x01\x34\x0a\uffff\x01\x0c\x01\uffff\x01\x0e\x17"+
-        "\uffff\x01\x21\x01\uffff\x01\x10\x01\uffff\x01\x12\x02\uffff\x01"+
-        "\x20\x0d\uffff\x01\x1a\x01\x0d\x01\x0f\x01\x11\x0d\uffff\x01\x0a"+
-        "\x04\uffff\x01\x02\x01\x06\x01\x08\x01\x22\x04\uffff\x01\x09\x01"+
-        "\uffff\x01\x15\x01\uffff\x01\x16\x0e\uffff\x01\x1b\x04\uffff\x01"+
-        "\x1c\x02\uffff\x01\x0b\x01\x1d\x01\x1e";
+        "\x01\x32\x01\x35\x01\x34\x0d\uffff\x01\x0c\x01\x0e\x12\uffff\x01"+
+        "\x12\x04\uffff\x01\x21\x01\uffff\x01\x10\x02\uffff\x01\x20\x03\uffff"+
+        "\x01\x11\x02\uffff\x01\x0d\x08\uffff\x01\x1a\x01\x0f\x0d\uffff\x01"+
+        "\x0a\x04\uffff\x01\x02\x01\x06\x01\x08\x01\x22\x04\uffff\x01\x09"+
+        "\x01\uffff\x01\x15\x01\uffff\x01\x16\x0e\uffff\x01\x1b\x04\uffff"+
+        "\x01\x1c\x02\uffff\x01\x0b\x01\x1d\x01\x1e";
     const string DFA6_specialS =
-        "\u00c0\uffff}>";
+        "\u00bc\uffff}>";
     static readonly string[] DFA6_transitionS = {
-            "\x02\x20\x02\uffff\x01\x20\x12\uffff\x01\x20\x01\x25\x01\x01"+
-            "\x05\uffff\x01\x21\x01\x22\x01\x1d\x01\x1c\x01\x05\x01\x07\x01"+
-            "\x1a\x01\x13\x01\x1f\x01\x15\x01\x16\x01\x17\x06\x1f\x01\uffff"+
-            "\x01\x18\x01\x26\x01\x1b\x01\x27\x02\uffff\x03\x1e\x01\x11\x08"+
-            "\x1e\x01\x02\x05\x1e\x01\x0c\x01\x12\x01\x1e\x01\x06\x04\x1e"+
-            "\x01\x03\x01\uffff\x01\x04\x03\uffff\x03\x1e\x01\x09\x01\x0e"+
-            "\x01\x0f\x02\x1e\x01\x0d\x02\x1e\x01\x19\x03\x1e\x01\x0a\x01"+
-            "\x1e\x01\x14\x01\x08\x01\x0b\x01\x1e\x01\x10\x04\x1e\x01\x23"+
-            "\x01\uffff\x01\x24",
+            "\x02\x1d\x02\uffff\x01\x1d\x12\uffff\x01\x1d\x01\x22\x01\x01"+
+            "\x05\uffff\x01\x1e\x01\x1f\x01\x1a\x01\x19\x01\x05\x01\x07\x01"+
+            "\x17\x01\x10\x01\x1c\x01\x12\x01\x13\x01\x14\x06\x1c\x01\uffff"+
+            "\x01\x15\x01\x23\x01\x18\x01\x24\x02\uffff\x13\x1b\x01\x0f\x06"+
+            "\x1b\x01\x03\x01\uffff\x01\x04\x03\uffff\x03\x1b\x01\x09\x01"+
+            "\x0d\x01\x0e\x02\x1b\x01\x0c\x02\x1b\x01\x16\x01\x02\x02\x1b"+
+            "\x01\x0a\x01\x1b\x01\x11\x01\x08\x01\x0b\x01\x1b\x01\x06\x04"+
+            "\x1b\x01\x20\x01\uffff\x01\x21",
             "",
+            "\x01\x25",
+            "",
+            "",
+            "",
+            "\x01\x26\x09\uffff\x01\x27",
             "\x01\x28",
+            "\x01\x2d\x0e\uffff\x01\x2a\x01\x2c\x03\uffff\x01\x2b",
+            "\x01\x2e\x09\uffff\x01\x2f",
+            "\x01\x31\x0a\uffff\x01\x32\x05\uffff\x01\x30",
+            "\x01\x33",
+            "\x01\x34\x07\uffff\x01\x35",
+            "\x01\x36",
+            "\x01\x37",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "",
-            "",
-            "",
-            "\x01\x29",
-            "\x01\x2a",
-            "\x01\x2e\x0e\uffff\x01\x2c\x01\x2d",
-            "\x01\x2f\x09\uffff\x01\x30",
-            "\x01\x32\x0a\uffff\x01\x33\x05\uffff\x01\x31",
-            "\x01\x34",
-            "\x01\x35",
-            "\x01\x36\x07\uffff\x01\x37",
-            "\x01\x38",
             "\x01\x39",
-            "\x01\x3a",
-            "\x01\x3b",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x01\x3c\x01\uffff\x0a\x1c\x0a\uffff\x01\x3a",
+            "\x01\x3c\x01\uffff\x0a\x1c\x0a\uffff\x01\x3d",
+            "\x01\x3c\x01\uffff\x0a\x1c\x0a\uffff\x01\x3e",
             "",
-            "\x01\x3d",
-            "\x01\x40\x01\uffff\x0a\x1f\x0a\uffff\x01\x3e",
-            "\x01\x40\x01\uffff\x0a\x1f\x0a\uffff\x01\x41",
-            "\x01\x40\x01\uffff\x0a\x1f\x0a\uffff\x01\x42",
+            "\x01\x40\x05\uffff\x01\x3f",
             "",
-            "\x01\x44\x05\uffff\x01\x43",
+            "\x01\x41",
             "",
+            "",
+            "",
+            "\x01\x3c\x01\uffff\x0a\x1c",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\x01\x43",
             "\x01\x45",
-            "",
-            "",
-            "",
-            "\x01\x40\x01\uffff\x0a\x1f",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\x01\x47",
+            "\x01\x48",
             "\x01\x49",
+            "",
+            "",
+            "\x01\x4a",
             "\x01\x4b",
             "\x01\x4c",
-            "",
-            "",
             "\x01\x4d",
             "\x01\x4e",
-            "\x01\x4f",
-            "\x01\x50",
+            "\x01\x4f\x01\x50",
             "\x01\x51",
             "\x01\x52",
             "\x01\x53",
-            "\x01\x54",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\x56",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x01\x57",
             "\x01\x58",
-            "\x01\x59",
-            "\x01\x5a",
+            "",
+            "\x01\x5a\x01\x59",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\x01\x5b",
             "\x01\x5c",
             "",
-            "\x01\x5e\x01\x5d",
             "",
             "",
             "",
             "",
             "",
+            "\x01\x5d",
+            "\x01\x5e",
             "\x01\x5f",
-            "\x01\x60",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\x01\x61",
+            "\x01\x61\x0b\uffff\x01\x60",
             "\x01\x62",
-            "\x01\x64\x0b\uffff\x01\x63",
-            "\x01\x65",
-            "\x01\x67\x0e\uffff\x01\x66\x02\uffff\x01\x68",
+            "\x01\x63",
+            "\x01\x65\x0e\uffff\x01\x64\x02\uffff\x01\x66",
+            "\x01\x67",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\x69",
             "\x01\x6a",
             "\x01\x6b",
             "\x01\x6c",
-            "\x01\x6d",
             "",
+            "",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\x6e",
-            "",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\x70",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x01\x72",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x01\x71",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
+            "\x01\x73",
             "\x01\x74",
             "\x01\x75",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\x77",
             "\x01\x78",
-            "\x01\x79",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\x7a",
             "\x01\x7b",
             "\x01\x7c",
             "\x01\x7d",
             "\x01\x7e",
+            "",
             "\x01\x7f",
             "\x01\u0080",
             "\x01\u0081",
-            "\x01\u0082",
-            "\x01\u0083",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x01\u0084",
+            "\x01\u0085",
             "",
+            "\x01\u0086",
+            "\x01\u0087",
             "\x01\u0088",
-            "\x01\u0089",
             "",
+            "\x01\u0089",
             "\x01\u008a",
+            "",
             "\x01\u008b",
             "\x01\u008c",
             "\x01\u008d",
             "\x01\u008e",
             "\x01\u008f",
             "\x01\u0090",
-            "\x01\u0091",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\u0092",
+            "",
+            "",
             "\x01\u0093",
             "\x01\u0094",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x01\u0096",
+            "\x01\u0095",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
+            "\x01\u009a",
+            "\x01\u009b",
+            "\x01\u009c",
+            "\x01\u009d",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "",
-            "",
-            "",
-            "",
-            "\x01\u0097",
-            "\x01\u0098",
-            "\x01\u0099",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x01\u009e",
             "\x01\u009f",
-            "\x01\u00a0",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\u00a1",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "",
+            "",
+            "",
+            "",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\u00a3",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x01\u00a4",
             "\x01\u00a5",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
             "",
+            "\x01\u00a6",
             "",
-            "",
-            "",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
             "\x01\u00a7",
+            "",
             "\x01\u00a8",
             "\x01\u00a9",
-            "",
             "\x01\u00aa",
-            "",
             "\x01\u00ab",
-            "",
             "\x01\u00ac",
             "\x01\u00ad",
             "\x01\u00ae",
             "\x01\u00af",
             "\x01\u00b0",
-            "\x01\u00b1",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\u00b2",
             "\x01\u00b3",
             "\x01\u00b4",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x01\u00b6",
+            "\x01\u00b5",
+            "",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "\x01\u00b7",
             "\x01\u00b8",
-            "\x01\u00b9",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x01\u00bb",
-            "\x01\u00bc",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
-            "\x1a\x1e\x06\uffff\x1a\x1e",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
+            "\x1a\x1b\x06\uffff\x1a\x1b",
             "",
             "",
             ""

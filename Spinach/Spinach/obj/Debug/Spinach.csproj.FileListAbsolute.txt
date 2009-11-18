@@ -40,3 +40,5 @@ C:\Users\shashi\Desktop\pinac\Spinach\Spinach\obj\Debug\Spinach.Properties.Resou
 C:\Users\shashi\Desktop\pinac\Spinach\Spinach\obj\Debug\Spinach.csproj.GenerateResource.Cache
 C:\Users\shashi\Desktop\pinac\Spinach\Spinach\obj\Debug\Spinach.exe
 C:\Users\shashi\Desktop\pinac\Spinach\Spinach\obj\Debug\Spinach.pdb
+C:\Users\Jegan\Desktop\pinac\Spinach\Spinach\obj\Debug\Spinach.exe
+C:\Users\Jegan\Desktop\pinac\Spinach\Spinach\obj\Debug\Spinach.pdb

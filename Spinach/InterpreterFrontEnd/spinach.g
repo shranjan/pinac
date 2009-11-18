@@ -97,7 +97,7 @@ matrixvardec returns [MatrixVariableDeclaration ret]
 @init {
 	retval.ret = new MatrixVariableDeclaration();
 	}
-	:('Matrix' '<' 
+	:('matrix' '<' 
 	(el0=VARTYPE{ retval.ret.setType($el0.text);}'>' '['el1=int_literal { retval.ret.setRow($el1.ret);}']'
 	'[' el2=int_literal { retval.ret.setColumn($el2.ret);}']'
 	 (el3= variable { retval.ret.setVar($el3.ret);})
@@ -112,7 +112,7 @@ vectorvardec returns [VectorVariableDeclaration ret]
 @init {
 	retval.ret = new VectorVariableDeclaration();
 	}
-	:('Vector' '<' VARTYPE { retval.ret.setType($VARTYPE.text);}'>' '['el1=int_literal {retval.ret.setRange($el1.ret);}']'
+	:('vector' '<' VARTYPE { retval.ret.setType($VARTYPE.text);}'>' '['el1=int_literal {retval.ret.setRange($el1.ret);}']'
 	 el2=variable {retval.ret.setText($el2.ret);} 
 	 ASSIGNMENT 
 	 (('['']')|
@@ -244,7 +244,7 @@ print returns [PrintOperationElement ret]
 parallelfor returns [ParallelForElement ret]
 @init {
   retval.ret = new ParallelForElement();
-}: 'parallelfor'LEFTBRACE r11 = variable{retval.ret.RANGEVARIABLE = $r11.ret;} POINT r12 = int_literal{retval.ret.STARTINGRANGE = $r12.ret;} 'to' r13= int_literal{retval.ret.ENDINGRANGE = $r13.ret;} RIGHTBRACE LEFTPARANTHESIS  ((e11=expr2{retval.ret.ADDCODE =$e11.ret;})+(('SYNC'{retval.ret.syncfunction();} END_OF_STATEMENT)|{retval.ret.syncfunction();}))+ RIGHTPARANTHESIS
+}: 'parallelfor'LEFTBRACE r11 = variable{retval.ret.RANGEVARIABLE = $r11.ret;} POINT r12 = int_literal{retval.ret.STARTINGRANGE = $r12.ret;} 'to' r13= int_literal{retval.ret.ENDINGRANGE = $r13.ret;} RIGHTBRACE LEFTPARANTHESIS  ((e11=expr2{retval.ret.ADDCODE =$e11.ret;})+(('sync'{retval.ret.syncfunction();} END_OF_STATEMENT)|{retval.ret.syncfunction();}))+ RIGHTPARANTHESIS
 ;
 
 ifelse returns [IfStatementElement ret]
@@ -320,7 +320,7 @@ dotproduct returns [DotProductElement ret]
 @init{
 retval.ret = new DotProductElement ();
 }
-: e11 = variable {retval.ret.setLhs($e11.ret); } 'DOT' e12 = variable {retval.ret.setRhs($e12.ret); }
+: e11 = variable {retval.ret.setLhs($e11.ret); } 'dot' e12 = variable {retval.ret.setRhs($e12.ret); }
 ;
 matrixtranspose returns [MatrixTranspose ret]
 
@@ -333,27 +333,19 @@ retval.ret = new MatrixTranspose();
 matrixreference returns [MatrixReference ret]
 @init{ retval.ret = new MatrixReference();
 }
-:'Matrix' '<' (el1=VARTYPE{retval.ret.settype($el1.text);}'>' el2=variable {retval.ret.setvariable($el2.ret);})
+:'matrix' '<' (el1=VARTYPE{retval.ret.settype($el1.text);}'>' el2=variable {retval.ret.setvariable($el2.ret);})
 ;
 
 vectorreference returns [VectorReference ret]
 @init{ retval.ret = new VectorReference();
 }
-:'Vector' '<' (el1=VARTYPE{retval.ret.settype($el1.text);}'>' el2=variable {retval.ret.setvariable($el2.ret);})
+:'vector' '<' (el1=VARTYPE{retval.ret.settype($el1.text);}'>' el2=variable {retval.ret.setvariable($el2.ret);})
 ;
 arguments returns [Element ret]
 : (scalarargument { retval.ret = $scalarargument.ret; }
 | matrixreference {retval.ret = $matrixreference.ret; }
 | vectorreference {retval.ret = $vectorreference.ret;});
 
-//functiondeclaration returns [DeclarationElement ret]
-//@init { retval.ret = new DeclarationElement();
-//}
-//:((e11 =VARTYPE{retval.ret.settype($e11.text);}) e12 =variable
-//{retval.ret.setvariable($e12.ret); }
-//|('Matrix''<' el1=VARTYPE {retval.ret.settype($el1.text);}'>'
-//el2=variable {retval.ret.setvariable($el2.ret);}))
-//;
 
 scalarargument returns [ScalarArgument ret]
 @init{retval.ret = new ScalarArgument();
@@ -366,7 +358,7 @@ comment returns [CommentElement ret]
 @init{
 retval.ret = new CommentElement();
 }
-:'//'var_int_or_double_literal*;
+:'//'var_int_or_double_literal* '//';
 
 
 
