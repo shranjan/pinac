@@ -1,6 +1,7 @@
 ///-- Interpreter Front End team.
 ///-- version 1.1  Date: 11/08/09
 ///-- version 1.2  Date: 11/09/09  -- Updated vectorelem, matrixelem, plot grammar, struct propertices Name changed, removed commented code, modified for and if-else body loop
+///-- version 1.3 Updated for loop to have declarations, comment is changed, matrix declarations are changed to have empty values, struct is changed to be empty.
 
 
 grammar spinach;

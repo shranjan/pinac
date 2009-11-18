@@ -27,6 +27,9 @@
  * Compiler Command:
  *   csc /target:exe /Test_PARALLELFOR define: ParallelForStatementElement.cs Element.cs
  */
+//Version control
+//Version 1.1: parallel for will now check if the code inside the parallel for is parallelizable. It would chk it for if statement and for statements.
+
 
 //#define TEST_PARALLELFOR
 

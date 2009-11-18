@@ -11,6 +11,7 @@
 //Version history:
 //
 //version 1.2: kuldeep made change to struct keyword. (version number correspondes to grammar file)
+//version 1.3: Srinivasan made changes to make all the keywords to lowercase.
 
 
 
@@ -73,7 +74,7 @@ class test1
     {
         Keywords keys = new  Keywords();
         List<string> k = new List<string>();
-       k = keys.getkeywords();
+        k = keys.getkeywords();
     }
     }   
 #endif

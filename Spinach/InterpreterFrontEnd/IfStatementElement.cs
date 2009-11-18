@@ -28,6 +28,8 @@
  * Compiler Command:
  *   csc /target:exe /Test_IF define: IfStatementElement.cs Element.cs
  */
+//Version control
+//Version 1.1: This will have a boolean IsParallelizable which will be set false if the if statement is inside the parallelfor and has some matrix and vector declarations.
 
 //#define TEST_IF
 using System;
