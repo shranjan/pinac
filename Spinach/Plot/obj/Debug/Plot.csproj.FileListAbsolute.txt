@@ -1,0 +1,27 @@
+C:\Users\JAGADISH PRADEEP\Desktop\Integration\Spinach\Plot\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\JAGADISH PRADEEP\Desktop\Integration\Spinach\Plot\bin\Debug\Plot.dll
+C:\Users\JAGADISH PRADEEP\Desktop\Integration\Spinach\Plot\bin\Debug\Plot.pdb
+C:\Users\JAGADISH PRADEEP\Desktop\Integration\Spinach\Plot\obj\Debug\Plot.dll
+C:\Users\JAGADISH PRADEEP\Desktop\Integration\Spinach\Plot\obj\Debug\Plot.pdb
+C:\Users\JAGADISH PRADEEP\Desktop\SPINACH\pinac\Spinach\Plot\bin\Debug\Plot.dll
+C:\Users\JAGADISH PRADEEP\Desktop\SPINACH\pinac\Spinach\Plot\bin\Debug\Plot.pdb
+C:\Users\JAGADISH PRADEEP\Desktop\SPINACH\pinac\Spinach\Plot\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\JAGADISH PRADEEP\Desktop\SPINACH\pinac\Spinach\Plot\obj\Debug\Plot.dll
+C:\Users\JAGADISH PRADEEP\Desktop\SPINACH\pinac\Spinach\Plot\obj\Debug\Plot.pdb
+H:\EarlyMorning\pinac\Spinach\Plot\bin\Debug\Plot.dll
+H:\EarlyMorning\pinac\Spinach\Plot\bin\Debug\Plot.pdb
+H:\EarlyMorning\pinac\Spinach\Plot\obj\Debug\ResolveAssemblyReference.cache
+H:\EarlyMorning\pinac\Spinach\Plot\obj\Debug\Plot.dll
+H:\EarlyMorning\pinac\Spinach\Plot\obj\Debug\Plot.pdb
+C:\Users\Abhay Ketkar\.ssh\pinac\Spinach\Plot\bin\Debug\Plot.dll
+C:\Users\Abhay Ketkar\.ssh\pinac\Spinach\Plot\bin\Debug\Plot.pdb
+C:\Users\Abhay Ketkar\.ssh\pinac\Spinach\Plot\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Abhay Ketkar\.ssh\pinac\Spinach\Plot\obj\Debug\Plot.dll
+C:\Users\Abhay Ketkar\.ssh\pinac\Spinach\Plot\obj\Debug\Plot.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\Plot\bin\Debug\Plot.dll
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\Plot\bin\Debug\Plot.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\Plot\obj\Debug\ResolveAssemblyReference.cache
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\Plot\obj\Debug\Plot.dll
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\Plot\obj\Debug\Plot.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\SPINACH_DLLS\Plot.dll
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\SPINACH_DLLS\Plot.pdb
