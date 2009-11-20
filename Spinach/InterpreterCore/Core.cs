@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////
-// Core.cs: Implements a vistor that interprets the syntax tree.
+// Core.cs: Executive for core processing of the SPINACH code.
 // 
 // version: 1.0
 // Description: part of the interpreter example for the visitor design
@@ -15,17 +15,17 @@
 /*
  * Module Operations
  * ================= 
- * This file provides functionalities which interprets the tree, according to the 
- * elements present in it, i.e. it invokes addition functionality if it encounters
- * a '+' symbol, multiplication functionality if '*' symbol is encontered, etc. 
- * Similarly,it invokes variable, integer, assignment, matrix assignment, print and 
- * for loop functionalities as and when these are encountered. The functionalities 
- * associated with these various operations, will further go into the tree to evaluate 
- * them.
+ * This file provides APIs to be used by other teams for communicating with 
+ * the core. It provides a setAST() function which receives the Abstract Syntax 
+ * Tree. Using this tree, we execute the entire code and perform semantic analysis
+ * as well.
+ * 
+ * We also send the code execution results and errors to the User Interface using 
+ * sendres() and result().
  * 
  * Public Interface
  * ================
- * Core interp_visitor = new Core();  
+ * Core core = new Core();  
  *                       // will create an instance of this class and allocate memory
  * 
  */
@@ -49,11 +49,11 @@ using System.Threading;
 
 namespace Spinach
 {
-    public class Core 
+    public class Core
     {
         InterpreterVisitor interp_visitor;
-        
-       // PrintVisitor print_visitor=new PrintVisitor(this);
+
+        // PrintVisitor print_visitor=new PrintVisitor(this);
         public delegate void errorcoremsg(int code, string errormsg);
         public event errorcoremsg errorcore_;
 
@@ -61,7 +61,7 @@ namespace Spinach
         public event resultcore rescore_;
 
         private int flag = -1;
- 
+
         public void sendres(int code, string errormsg)
         {
             if (errorcore_ != null)
@@ -80,20 +80,20 @@ namespace Spinach
         //List<Element> elements;
         public Core(PlotReceiver r)
         {
-           interp_visitor=new InterpreterVisitor();
+            interp_visitor = new InterpreterVisitor();
             interp_visitor.errorcore_ += new InterpreterVisitor.errorcoremsg(sendres);
-             interp_visitor.rescore_ += new InterpreterVisitor.resultcore(result);
-             interp_visitor.setPlotObj(r);
+            interp_visitor.rescore_ += new InterpreterVisitor.resultcore(result);
+            interp_visitor.setPlotObj(r);
         }
         public void setAST(List<Element> elements)
         {
             //  element = ele;
-            for (int i = 0; i < elements.Count && flag!=1; i++)
+            for (int i = 0; i < elements.Count && flag != 1; i++)
             {
                 Element curr = elements[i];
-               // curr.Accept(print_visitor);
+                // curr.Accept(print_visitor);
                 curr.Accept(interp_visitor);
-            }  
+            }
         }
 
         public void clearVarMap()
@@ -103,6 +103,6 @@ namespace Spinach
         }
 
 
-        }
+    }
 
 }

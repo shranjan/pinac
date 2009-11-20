@@ -1,32 +1,39 @@
-
-////////////////////////////////////////////////////////////////////////
-// Core.cs: Implements a vistor that interprets the syntax tree.
+/////////////////////////////////////////////////////////////////////////////////
+// InterpreterVisitor.cs: Implements a vistor that interprets the syntax tree.
 // 
-// version: 1.0
+// version: 1.1
 // Description: part of the interpreter example for the visitor design
 //  pattern.
 // Language:    C++/CLI, Visual Studio 2008 .Net Framework 3.5             
 // Platform:    Dell Inspiron 1525, Windows Vista Business, SP 1       
-// Application: Pr#2, CSE 784, Spring 2009                              
+// Application: SPINACH Project, CSE 784, Spring 2009                              
 // Authors:     Rajika Tandon (ratandon@syr.edu)
 //              Sushma Thimmappa (skyasara@syr.edu)
 //              Rucha Bapat (rmbapat@syr.edu)            
 // Source:      Phil Pratt-Szeliga (pcpratts@syr.edu)
-////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 /*
  * Module Operations
  * ================= 
  * This file provides functionalities which interprets the tree, according to the 
- * elements present in it, i.e. it invokes addition functionality if it encounters
- * a '+' symbol, multiplication functionality if '*' symbol is encontered, etc. 
- * Similarly,it invokes variable, integer, assignment, matrix assignment, print and 
- * for loop functionalities as and when these are encountered. The functionalities 
- * associated with these various operations, will further go into the tree to evaluate 
- * them.
+ * elements present in it, i.e. it performs compuatation of an expression involving
+ * addition, multiplication and subtraction of int/doubles, as well as, addition, 
+ * subtraction and multiplication of matrices. 
+ * 
+ * Similarly,it invokes variable, integer, 
+ * double, string, assignment, matrix assignment, print, functions, if-else, structures, 
+ * for-loop, parallel-for loop and for loop functionalities as and when these are 
+ * encountered. 
+ * 
+ * Moreover, the plot object (received from InterpreterExec), commands and 
+ * data, are set using setPlotObj() and VisitPlotFunctionElement() functions to be communicated 
+ * to the Plotting team. 
+ * The functionalities associated with these various operations, will 
+ * further go into the tree to evaluate them.
  * 
  * Public Interface
  * ================
- * Core interp_visitor = new Core();  
+ * InterpreterNisitor interp_visitor = new InterpreterNisitor();  
  *                       // will create an instance of this class and allocate memory
  * 
  */
@@ -38,6 +45,8 @@
  * 
  * Maintenance History
  * ===================
+ * ver 1.1 : 12 Nov 09
+ *   - completed if-else functionality based on the new grammar 
  * ver 1.0 : 10 Nov 09
  *   - first release
  * 
@@ -78,14 +87,14 @@ namespace Spinach
             if (p != null)
                 p.checklist();
         }
- 
+
         Hashtable mVariableMap;
         Stack<int> mStack;
         Stack<Object> mat_stack;
         List<int> mList;
         List<int> rcList;
-        
-       // PrintVisitor print_visitor=new PrintVisitor(this);
+
+        // PrintVisitor print_visitor=new PrintVisitor(this);
         //List<Element> elements;
 
         public void clearMap()
@@ -253,7 +262,7 @@ namespace Spinach
                             for (int j = 0; j < trans_col; j++)
                             {
                                 Console.Write("\t" + trans[i, j]);
-                          //      result("\t" + trans[i, j].ToString());
+                                //      result("\t" + trans[i, j].ToString());
                             }
                             Console.Write("\n");
                             //result("\n");
@@ -288,7 +297,7 @@ namespace Spinach
                             for (int j = 0; j < trans_col; j++)
                             {
                                 Console.Write("\t" + trans[i, j]);
-                          //      result( "\t" + trans[i, j].ToString());
+                                //      result( "\t" + trans[i, j].ToString());
 
                             }
                             Console.Write("\n");
@@ -320,11 +329,11 @@ namespace Spinach
         //Delete  from symbol table
         public override void VisitDeleteElement(DeleteVariable element)
         {
-            if(mVariableMap.ContainsKey(element.getVar().getText()))
-                    mVariableMap.Remove(element.getVar().getText());
+            if (mVariableMap.ContainsKey(element.getVar().getText()))
+                mVariableMap.Remove(element.getVar().getText());
             else
             {
-                sendres(112, "Variable not declared, cannot be deleted\n");  
+                sendres(112, "Variable not declared, cannot be deleted\n");
             }
         }
 
@@ -631,7 +640,7 @@ namespace Spinach
             if (mVariableMap.ContainsKey(p.getData().getText()))
             {
                 double[,] temp = ((MatrixVariableDeclaration)(mVariableMap[p.getData().getText()])).getdoubleValue();
-                p1.Data = p.getData().getText() == null ? null :temp;
+                p1.Data = p.getData().getText() == null ? null : temp;
             }
             p1.Mode = p.getMode() == null ? 0 : int.Parse(p.getMode().getText());
             p1.Dimensions = p.getPlotType() == null ? 0 : p.getPlotType() == "2D" ? 2 : 3;
@@ -689,8 +698,8 @@ namespace Spinach
                     {
                         if ((IntegerElement)(element.getMode()) != null)
                         {
-                            Console.Write("Invalid argumenet.. Mode is not required.. Try again.. ");
-                            sendres(112, "Invalid argumenet.. Mode is not required.. Try again.. ");
+                            Console.Write("Invalid argument.. Mode is not required.. Try again.. ");
+                            sendres(112, "Invalid argument.. Mode is not required.. Try again.. ");
                             return;
                         }
                     }
@@ -729,7 +738,7 @@ namespace Spinach
             }
 
         }
-    
+
 
         public override void VisitReturnElement(ReturnElement element)
         {
@@ -917,7 +926,7 @@ namespace Spinach
         public override void VisitAssignmentOperationElement(AssignmentOperationElement element)
         {
             StructAssignDeclaration temp;
-            StructDeclaration structTemp=null;
+            StructDeclaration structTemp = null;
             int flag = -1;
 
             //Handle struct
@@ -930,15 +939,15 @@ namespace Spinach
                     flag = 1;
                 }
                 else
-                    sendres(112,"Structure " + ((VariableElement)(temp.getObjName())).getText()+" not found\n");
-                    
+                    sendres(112, "Structure " + ((VariableElement)(temp.getObjName())).getText() + " not found\n");
+
                 Element rhs = element.getRhs();
                 VisitElement(rhs);
                 if (mat_stack.Count > 0 && flag == 1)
                 {
                     Object obj = getTopOfStack_Matrix();
                     List<ScalarVariableDeclaration> l1 = structTemp.getVarType();
-                    for(int i=0;i<l1.Count;i++)
+                    for (int i = 0; i < l1.Count; i++)
                         if (l1[i].getVar().getText() == ((VariableElement)temp.getDataMember()).getText())
                         {
                             if (obj is IntegerElement)
@@ -1005,7 +1014,7 @@ namespace Spinach
 
         //Set the single matrix element
         public void HandleSingleMatrixElement(AssignmentOperationElement element)
-        {            
+        {
             MatrixElement temp = (MatrixElement)(element.getLhs());
             MatrixVariableDeclaration matTemp = null;
             int row = int.Parse(((IntegerElement)(temp.getRow())).getText());
@@ -1268,11 +1277,11 @@ namespace Spinach
             {
                 if (element.getChildElement() is VariableElement)
                     PrintVariable(element.getChildElement());
-                else if(element.getChildElement() is IntegerElement)
+                else if (element.getChildElement() is IntegerElement)
                     result(((IntegerElement)element.getChildElement()).getText() + "\n");
-                else if(element.getChildElement() is DoubleElement)
+                else if (element.getChildElement() is DoubleElement)
                     result(((DoubleElement)element.getChildElement()).getText() + "\n");
-                else if(element.getChildElement() is StringElement)
+                else if (element.getChildElement() is StringElement)
                     result(((StringElement)element.getChildElement()).getText() + "\n");
             }
             catch (Exception e) { sendres(112, "Invalid variable\n"); e.GetType(); }
@@ -1312,7 +1321,7 @@ namespace Spinach
             }
 
             else sendres(112, "Variable not declared\n");
-  
+
         }
         private void PrintStruct(Object obj)
         {
@@ -1340,59 +1349,60 @@ namespace Spinach
         }
         private void PrintMatrix(Object obj)
         {
-                            MatrixVariableDeclaration elem = (MatrixVariableDeclaration)(obj);
-                            string type = elem.getType();
-                            int row = int.Parse(elem.getRow().getText());
-                            int col = int.Parse(elem.getColumn().getText());
-                            Console.Write("\nMatrix Type : ");
-                            Console.Write(type); Console.Write("\n");
-                            Console.Write(" Rows : "); Console.Write(row); Console.Write("\n");
-                            Console.Write(" Columns : "); Console.Write(col);
-                            result("\nMatrix Type : " + type + "\n" + "Rows:" + row.ToString() + "\n" + "Columns:" + col.ToString());
-                            string mat_type = elem.getType();
-                            if (mat_type == "int")
-                            {
-                                int[,] elements = elem.getintValue();
-                                if (elements != null)
-                                {
-                                    result("\nMatrix Elements are : \n");
-                                    for (int i = 0; i < row; i++)
-                                    {
-                                        for (int j = 0; j < col; j++)
-                                        {
-                                            Console.Write(elements[i, j]);
-                                            Console.Write("\t");
-                                            result(elements[i, j].ToString() + "\t");
-                                        }
-                                        Console.Write("\n");
-                                        result("\n");
-                                    }
-                                }
-                            }
-                            else if (mat_type == "double")
-                            {
-                                double[,] elemenets = elem.getdoubleValue();
-                                if (elemenets != null)
-                                {
-                                    result("\nMatrix Elements are : \n");
-                                    for (int i = 0; i < row; i++)
-                                    {
-                                        for (int j = 0; j < col; j++)
-                                        {
-                                            Console.Write(elemenets[i, j]);
-                                            result(elemenets[i, j].ToString());
-                                            Console.Write("\t");
-                                            result("\t");
-                                        }
-                                        Console.Write("\n");
-                                        result("\n");
-                                    }
-                                }
-                            }
-                            Console.Write("\n");
-                            result("\n");
+            MatrixVariableDeclaration elem = (MatrixVariableDeclaration)(obj);
+            string type = elem.getType();
+            int row = int.Parse(elem.getRow().getText());
+            int col = int.Parse(elem.getColumn().getText());
+            Console.Write("\nMatrix Type : ");
+            Console.Write(type); Console.Write("\n");
+            Console.Write(" Rows : "); Console.Write(row); Console.Write("\n");
+            Console.Write(" Columns : "); Console.Write(col);
+            result("\nMatrix Type : " + type + "\n" + "Rows:" + row.ToString() + "\n" + "Columns:" + col.ToString());
+            string mat_type = elem.getType();
+            if (mat_type == "int")
+            {
+                int[,] elements = elem.getintValue();
+                if (elements != null)
+                {
+                    result("\nMatrix Elements are : \n");
+                    for (int i = 0; i < row; i++)
+                    {
+                        for (int j = 0; j < col; j++)
+                        {
+                            Console.Write(elements[i, j]);
+                            Console.Write("\t");
+                            result(elements[i, j].ToString() + "\t");
+                        }
+                        Console.Write("\n");
+                        result("\n");
+                    }
+                }
+            }
+            else if (mat_type == "double")
+            {
+                double[,] elemenets = elem.getdoubleValue();
+                if (elemenets != null)
+                {
+                    result("\nMatrix Elements are : \n");
+                    for (int i = 0; i < row; i++)
+                    {
+                        for (int j = 0; j < col; j++)
+                        {
+                            Console.Write(elemenets[i, j]);
+                            result(elemenets[i, j].ToString());
+                            Console.Write("\t");
+                            result("\t");
+                        }
+                        Console.Write("\n");
+                        result("\n");
+                    }
+                }
+            }
+            Console.Write("\n");
+            result("\n");
 
         }
+
         public String getIfElement(Element element)
         {
             if (element is IntegerElement)
@@ -1403,49 +1413,97 @@ namespace Spinach
             else if (element is VariableElement)
             {
                 VariableElement var_elem = (VariableElement)element;
-                return var_elem.getText();
+                if (mVariableMap.ContainsKey(var_elem.getText()) == true)
+                {
+                    Object obj = mVariableMap[var_elem.getText()];
+                    String str = getIfElement((Element)obj);
+                    return str;
+                }
             }
             else if (element is DoubleElement)
             {
                 DoubleElement double_elem = (DoubleElement)element;
                 return double_elem.getText();
             }
-            else
-                return null;
-            /*else if (element is StructAssignDeclaration)
+            else if (element is StringElement)
             {
-                StructAssignDeclaration range_elem = (StructAssignDeclaration)element;
-                return range_elem.;
-            }*/
+                StringElement string_elem = (StringElement)element;
+                return string_elem.getText();
+            }
+            else if (element is StructAssignDeclaration)
+            {
+                /* The following commemted will work when the front end team will provide structure hash map
+                 * and related APIs.
+                 * sendres(112, "Structure hash map not found.\n");                   
+                          return null;  // for time being
+                  StructAssignDeclaration struct_elem = (StructAssignDeclaration)element;
+                  StructDeclaration structTemp=null;
+       
+                  if (mVariableMap.ContainsKey(((VariableElement)(struct_elem.getObjName())).getText())) //getName()))
+                  {
+                      structTemp = (StructDeclaration)mVariableMap[((VariableElement)(struct_elem.getObjName())).getText()]; //.getName()];
+                     // String str = getIfElement((Element)obj); 
+                      for (x = 0; x < structTemp.getVarType().Count; x++)
+                      {
+                          VariableElement s = ((VariableElement)(struct_elem.getDataMember())).getText();
+                          // search s in structure's hash table
+                          // return (s.getText());                        
+                      }
+                  }
+                  else
+                      sendres(112, "Structure " + ((VariableElement)(struct_elem.getObjName())).getText() + " not found\n");                   
+                 */
+                sendres(112, "Program Error: Structure hash map not found.\n");
+                return null;  // for time being
+            }
+
+            //Console.WriteLine("\n Invalid if expression!");
+            sendres(112, "\n Invalid if expression!");
+            return null;
+
         }
 
 
         public override void VisitIfStatementElement(IfStatementElement element)
         {
-            String lhs = getIfElement(element.getLhs()); //.getConditionLhs());
-            String rhs = getIfElement(element.getRhs()); //.getConditionRhs());
+            String lhs = getIfElement(element.getLhs());
+            String rhs = getIfElement(element.getRhs());
+            Console.WriteLine("\n lhs = " + lhs + " rhs = " + rhs);
 
             if (lhs == null || rhs == null)
             { Console.WriteLine("\n Variable not allowed. "); return; }
-
-            if (mVariableMap.ContainsKey(lhs) == false || mVariableMap.ContainsKey(rhs) == false)
-                Console.WriteLine("\n Invalid Comparison.");
 
             if (
                  (element.OP == "eq" && String.Compare(lhs, rhs) == 0) ||
                  (element.OP == "ne" && String.Compare(lhs, rhs) != 0) ||
                  (element.OP == "lt" && String.Compare(lhs, rhs) < 0) ||
                  (element.OP == "le" && String.Compare(lhs, rhs) <= 0) ||
-                 (element.OP == "gt" && String.Compare(lhs, rhs) < 0) ||
+                 (element.OP == "gt" && String.Compare(lhs, rhs) > 0) ||
                  (element.OP == "ge" && String.Compare(lhs, rhs) >= 0)
                )
             {
                 Console.WriteLine("\n Loop condition true - entered true. ");
+                //sendres(120, "Loop condition true - entered true.\n");
+
+                for (int i = 0; i < element.IFCODE.Count; i++)
+                {
+                    Element curr = element.IFCODE[i];
+                    curr.Accept(this);
+                }
             }
             else
             {
                 if (element.ELSECODE.Count != 0)
-                { Console.WriteLine("\n Loop condition false - entered else. "); }
+                {
+                    Console.WriteLine("\n Loop condition false - entered else. ");
+                    //sendres(121, "Loop condition false - entered false.\n");
+
+                    for (int i = 0; i < element.ELSECODE.Count; i++)
+                    {
+                        Element curr = element.ELSECODE[i];
+                        curr.Accept(this);
+                    }
+                }
             }
 
             //throw new NotImplementedException();
@@ -1453,3 +1511,4 @@ namespace Spinach
 
     }
 }
+
