@@ -16,6 +16,10 @@ namespace Spinach
         public event ChatEventHandler ChatChanged;
         public delegate void ErrorEventHandler(int ErrorCode,string ErrorMsg);
         public event ErrorEventHandler ErrorChanged;
+        public delegate void PrivelageEventHandler(string[] strPrev);
+        public event PrivelageEventHandler AddPrev;
+        public event PrivelageEventHandler ChngPermission;
+        public event PrivelageEventHandler TransOwner;
 
 
       
@@ -61,30 +65,27 @@ namespace Spinach
                 else if (type == "Disconnect")
                     getDisconnectMsg(msg);
             }
-            else if (q1.ElementAt(0).Name.ToString() == "data")
-            {
-                SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                SwarmMemory sm = smc.InitializeThePeer(msg, GetIP() + ":" + GetPort());
-                InsertProg(sm.getPid().ToString(),sm);
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "newProg")
+            else if (q1.ElementAt(0).Name.ToString() == "NewProg")
             {
                 SwarmMemoryCaller smc = new SwarmMemoryCaller();
                 string[] temp=smc.addPermission(msg);
-                SwarmMemory sm = new SwarmMemory("-1", GetIP() + ":" + GetPort());
-                sm = GetProg(temp[0].ToString());
-                sm.adder(temp[2].ToString(), temp[3].ToString(), temp[4].ToString(), temp[1].ToString(),GetIP()+":"+GetPort());
-                InsertProg(temp[0].ToString(), sm);
+                if (AddPrev != null)
+                    AddPrev(temp);
             }
             else if (q1.ElementAt(0).Name.ToString() == "PermissionChange")
             {
                 SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                string[] temp=smc.changePermission(msg);
-                SwarmMemory sm = new SwarmMemory("-1", GetIP() + ":" + GetPort());
-                sm=GetProg(temp[0].ToString());
-                sm.changer(temp[1].ToString(), temp[2].ToString(), temp[3].ToString(), GetIP() + ":" + GetPort());
-                InsertProg(temp[0].ToString(), sm);
-            }            
+                string[] temp = smc.changePermission(msg);
+                if (ChngPermission != null)
+                    ChngPermission(temp);
+            }
+            else if (q1.ElementAt(0).Name.ToString() == "ChangeOwner")
+            {
+                SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                string[] temp = smc.changeOwner(msg);
+                if (TransOwner != null)
+                    TransOwner(temp);
+            }             
         }
 
         public void getConnectionRequestMsg(String msg)

@@ -1,0 +1,177 @@
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\Spinach.exe
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\Spinach.pdb
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\InterpreterExec.dll
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.dll
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\Plot.dll
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\InterpreterCore.dll
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\Antlr3.Runtime.dll
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.pdb
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\Plot.pdb
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\InterpreterExec.pdb
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\bin\Debug\InterpreterCore.pdb
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\AddUser.baml
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\Connection.baml
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\DeleteUser.baml
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\EditPermissions.baml
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\ProgConf.baml
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\ProgPlot.baml
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\ProgWin.baml
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\AddUser.g.cs
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\Connection.g.cs
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\DeleteUser.g.cs
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\EditPermissions.g.cs
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\ProgConf.g.cs
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\ProgPlot.g.cs
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\ProgWin.g.cs
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\App.g.cs
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\Spinach_MarkupCompile.cache
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\Spinach.g.resources
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\Spinach.Properties.Resources.resources
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\UserInterface.csproj.GenerateResource.Cache
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\Spinach.exe
+C:\Users\Shaonan Wang\zuzhu\pinac\Spinach\UserInterface\obj\Debug\Spinach.pdb
+G:\Spinach\UserInterface\obj\Debug\Spinach.exe
+G:\Spinach\UserInterface\obj\Debug\Spinach.pdb
+G:\Spinach\UserInterface\bin\Debug\Spinach.exe
+G:\Spinach\UserInterface\bin\Debug\Spinach.pdb
+G:\Spinach\UserInterface\bin\Debug\InterpreterExec.dll
+G:\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.dll
+G:\Spinach\UserInterface\bin\Debug\Plot.dll
+G:\Spinach\UserInterface\bin\Debug\SwarmComputing.dll
+G:\Spinach\UserInterface\bin\Debug\InterpreterCore.dll
+G:\Spinach\UserInterface\bin\Debug\Antlr3.Runtime.dll
+G:\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.pdb
+G:\Spinach\UserInterface\bin\Debug\InterpreterExec.pdb
+G:\Spinach\UserInterface\bin\Debug\InterpreterCore.pdb
+G:\Spinach\UserInterface\bin\Debug\Plot.pdb
+G:\Spinach\UserInterface\bin\Debug\SwarmComputing.pdb
+G:\Spinach\UserInterface\obj\Debug\ResolveAssemblyReference.cache
+G:\Spinach\UserInterface\obj\Debug\AddUser.baml
+G:\Spinach\UserInterface\obj\Debug\Connection.baml
+G:\Spinach\UserInterface\obj\Debug\DeleteUser.baml
+G:\Spinach\UserInterface\obj\Debug\EditPermissions.baml
+G:\Spinach\UserInterface\obj\Debug\ProgConf.baml
+G:\Spinach\UserInterface\obj\Debug\ProgPlot.baml
+G:\Spinach\UserInterface\obj\Debug\ProgWin.baml
+G:\Spinach\UserInterface\obj\Debug\AddUser.g.cs
+G:\Spinach\UserInterface\obj\Debug\Connection.g.cs
+G:\Spinach\UserInterface\obj\Debug\DeleteUser.g.cs
+G:\Spinach\UserInterface\obj\Debug\EditPermissions.g.cs
+G:\Spinach\UserInterface\obj\Debug\ProgConf.g.cs
+G:\Spinach\UserInterface\obj\Debug\ProgPlot.g.cs
+G:\Spinach\UserInterface\obj\Debug\ProgWin.g.cs
+G:\Spinach\UserInterface\obj\Debug\App.g.cs
+G:\Spinach\UserInterface\obj\Debug\Spinach_MarkupCompile.cache
+G:\Spinach\UserInterface\obj\Debug\Spinach.g.resources
+G:\Spinach\UserInterface\obj\Debug\Spinach.Properties.Resources.resources
+G:\Spinach\UserInterface\obj\Debug\UserInterface.csproj.GenerateResource.Cache
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\Spinach.exe
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\Spinach.pdb
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterExec.dll
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.dll
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\Plot.dll
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\SwarmComputing.dll
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterCore.dll
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\Antlr3.Runtime.dll
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.pdb
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterExec.pdb
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterCore.pdb
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\Plot.pdb
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\bin\Debug\SwarmComputing.pdb
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\ResolveAssemblyReference.cache
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\AddUser.baml
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\Connection.baml
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\DeleteUser.baml
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\EditPermissions.baml
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\ProgConf.baml
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\ProgPlot.baml
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\ProgWin.baml
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\AddUser.g.cs
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\Connection.g.cs
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\DeleteUser.g.cs
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\EditPermissions.g.cs
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\ProgConf.g.cs
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\ProgPlot.g.cs
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\ProgWin.g.cs
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\App.g.cs
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\Spinach_MarkupCompile.cache
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\Spinach.g.resources
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\Spinach.Properties.Resources.resources
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\UserInterface.csproj.GenerateResource.Cache
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\Spinach.exe
+\\stu02-fsrv.ad.syr.edu\rkrathod$\Desktop\Spinach\UserInterface\obj\Debug\Spinach.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\ResolveAssemblyReference.cache
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\AddUser.baml
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\Connection.baml
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\DeleteUser.baml
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\EditPermissions.baml
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\ProgConf.baml
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\ProgPlot.baml
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\ProgWin.baml
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\AddUser.g.cs
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\Connection.g.cs
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\DeleteUser.g.cs
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\EditPermissions.g.cs
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\ProgConf.g.cs
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\ProgPlot.g.cs
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\ProgWin.g.cs
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\App.g.cs
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\Spinach_MarkupCompile.cache
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\Spinach.g.resources
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\Spinach.Properties.Resources.resources
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\UserInterface.csproj.GenerateResource.Cache
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\Spinach.exe
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\Spinach.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterExec.dll
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.dll
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\Plot.dll
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\SwarmComputing.dll
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterCore.dll
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\Antlr3.Runtime.dll
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterExec.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\InterpreterCore.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\Plot.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\bin\Debug\SwarmComputing.pdb
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\Spinach.exe
+\\stu03-fsrv.ad.syr.edu\mtareen$\Desktop\Spinach\UserInterface\obj\Debug\Spinach.pdb
+I:\Latest\Spinach\UserInterface\obj\Debug\Spinach.exe
+I:\Latest\Spinach\UserInterface\obj\Debug\Spinach.pdb
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\Spinach.exe
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\Spinach.pdb
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\InterpreterExec.dll
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.dll
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\Plot.dll
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\SwarmComputing.dll
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\InterpreterCore.dll
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\Antlr3.Runtime.dll
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\InterpreterFrontEnd.pdb
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\InterpreterExec.pdb
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\InterpreterCore.pdb
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\Plot.pdb
+H:\SPINACH\pinac\Spinach\UserInterface\bin\Debug\SwarmComputing.pdb
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\ResolveAssemblyReference.cache
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\AddUser.baml
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\Connection.baml
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\DeleteUser.baml
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\EditPermissions.baml
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\ProgConf.baml
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\ProgPlot.baml
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\ProgWin.baml
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\AddUser.g.cs
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\Connection.g.cs
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\DeleteUser.g.cs
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\EditPermissions.g.cs
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\ProgConf.g.cs
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\ProgPlot.g.cs
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\ProgWin.g.cs
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\App.g.cs
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\Spinach_MarkupCompile.cache
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\Spinach.g.resources
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\Spinach.Properties.Resources.resources
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\UserInterface.csproj.GenerateResource.Cache
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\Spinach.exe
+H:\SPINACH\pinac\Spinach\UserInterface\obj\Debug\Spinach.pdb
+E:\Spinach\UserInterface\obj\Debug\Spinach.exe
+E:\Spinach\UserInterface\obj\Debug\Spinach.pdb

@@ -106,34 +106,40 @@ namespace Spinach
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
-                throw (e);
+                System.Windows.Forms.MessageBox.Show(e.Message, "Failed to send to single client.");
             }
         }
 
         public void SendMultiClient()
         {
-            if (table.Count > 1)
+            try
             {
-                int count = 0;
-                resetEvent = new ManualResetEvent[table.Count - 1];
-                foreach (string IPPort in table.Keys)
+                if (table.Count > 1)
                 {
-                    if (IPPort != selfip)
+                    int count = 0;
+                    resetEvent = new ManualResetEvent[table.Count - 1];
+                    foreach (string IPPort in table.Keys)
                     {
-                        resetEvent[count] = new ManualResetEvent(false);
-                        Peer mPeer = (Peer)table[IPPort];
-                        string ip = mPeer.mIP;
-                        int port = Int32.Parse(mPeer.mPort);
-                        BroadcastClient temp = new BroadcastClient(ip, port, MultiMsg);
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(temp.StartClient), (object)count);
-                        count++;
+                        if (IPPort != selfip)
+                        {
+                            resetEvent[count] = new ManualResetEvent(false);
+                            Peer mPeer = (Peer)table[IPPort];
+                            string ip = mPeer.mIP;
+                            int port = Int32.Parse(mPeer.mPort);
+                            BroadcastClient temp = new BroadcastClient(ip, port, MultiMsg);
+                            ThreadPool.QueueUserWorkItem(new WaitCallback(temp.StartClient), (object)count);
+                            count++;
+                        }
+                    }
+                    foreach (WaitHandle w in resetEvent)
+                    {
+                        w.WaitOne();
                     }
                 }
-                foreach (WaitHandle w in resetEvent)
-                {
-                    w.WaitOne();
-                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message, "Failed to send to multiple clients.");
             }
         }
         public void SendMultiClientChat()
@@ -269,7 +275,7 @@ namespace Spinach
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                System.Windows.Forms.MessageBox.Show(e.Message, "Send callback exception");
             }
         }
     }

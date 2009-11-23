@@ -107,6 +107,10 @@ namespace Spinach
                 IPtoPeer.Remove(ipport);
                 if(NametoIP.Contains(name))
                     NametoIP.Remove(name);
+                ///////////////////////
+                if (ListChanged != null)
+                    ListChanged(IPtoPeer);
+                /////////////////////////////
                 return 1;
             }
             else
@@ -150,20 +154,20 @@ namespace Spinach
             return temp;  
         }
 
-        public Hashtable GetPermission(String pid)
-        {
-            SwarmMemory temp=new SwarmMemory("-1","");
-            Hashtable result = new Hashtable();
-            if (Program.Contains(pid))
-                temp = (SwarmMemory)Program[pid];
-            result = temp.getPermissions();
-            foreach (DictionaryEntry item in result)
-            {
-                string[] temp1 = (string[])item.Value;
-                Console.WriteLine("IPPrt={0} read={1} write={2}", item.Key.ToString(), temp1[0], temp1[1]);
-            }
-            return result;
-        }
+        //public Hashtable GetPermission(String pid)
+        //{
+        //    SwarmMemory temp = new SwarmMemory("-1", "");
+        //    Hashtable result = new Hashtable();
+        //    if (Program.Contains(pid))
+        //        temp = (SwarmMemory)Program[pid];
+        //    result = temp.getPermissions();
+        //    foreach (DictionaryEntry item in result)
+        //    {
+        //        string[] temp1 = (string[])item.Value;
+        //        Console.WriteLine("IPPrt={0} read={1} write={2}", item.Key.ToString(), temp1[0], temp1[1]);
+        //    }
+        //    return result;
+        //}
         //public int CheckRun(String pid)
         //{
         //    return 0;

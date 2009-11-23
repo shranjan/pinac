@@ -37,11 +37,22 @@ namespace Spinach
         //private Core core = new Core();
         private List<string> swarmUserList;
         private List<string> progUserList;
+        private Dictionary<string, string> swarmUserTable = new Dictionary<string,string>();
         public editorType et;
         bool read, write;
+        private string PID;
+        private string owner;
 
         private PlotReceiver plot = new PlotReceiver();
         PngBitmapEncoder PBE = new PngBitmapEncoder();
+
+        //Swarm Memory related Declarations
+        private SwarmConnection SC;
+        private SwarmMemory SM;
+        private SwarmMemoryCaller SMcaller;
+        string IP = "";
+        string Port = "";
+
         private executor Controller;
         private string plotpath = "";
         private int isplotReady = 0; 
@@ -59,18 +70,49 @@ namespace Spinach
         //    err.ProgWinError+=new ErrorNotification(ShowError);
         //    keywords = FE.getKeywords();
         //}
-
-        public ProgWin(editorType e)
+        
+        public ProgWin(editorType e, SwarmConnection sconn, SwarmMemoryCaller smcaller, string ip, string port, string pid)
         {
             InitializeComponent();
             et = e;
             err.ProgWinError += new ErrorNotification(ShowError);
-            plot.image +=new PlotReceiver.BmpImage(EnablePlot);
+            plot.image += new PlotReceiver.BmpImage(EnablePlot);
             Controller = new executor(plot);
-            Controller.resEvent +=new executor.result(Display);
+            Controller.resEvent += new executor.result(Display);
             keywords = Controller.frontEnd.getKeywords();
             err.SetExecutorObject(Controller);
             err.SetPlotObject(plot);
+
+            //Swarm Operations
+            SC = sconn;
+            SMcaller = smcaller;
+            SM = new SwarmMemory(SC);
+            IP = ip;
+            Port = port;
+            PID = pid;
+            SM.createTheObjects(PID, IP, Port);                 //Finally the swarm memory object
+            SC.InsertProgtoSC(SM);
+        }
+
+        public SwarmMemory SMObj()
+        {
+            return SM;
+        }
+
+        public void setOwner(string uname)
+        {
+              Thread th = new Thread(new ThreadStart(
+              delegate()
+              {
+                  this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+                      delegate()
+                      {
+                          owner = uname;
+                          lblOwner.Content = "Owner: " + owner;
+                          SM.setOwner(owner);
+                      }));
+              }));
+              th.Start();
         }
 
         private void mnuFile_Click(object sender, RoutedEventArgs e)
@@ -132,7 +174,11 @@ namespace Spinach
         }
         private void mnuEdit_Click(object sender, RoutedEventArgs e)
         {
-            EditPermissions editPerm = new EditPermissions();
+            TextPointer start = rtbInput.Document.ContentStart;
+            TextPointer end = rtbInput.Document.ContentEnd;
+            TextRange tr = new TextRange(start, end);
+            EditPermissions editPerm = new EditPermissions(SM, IP, Port, tr.Text);
+            editPerm.setUserList(swarmUserTable);
             editPerm.ShowDialog();
         }
         private void mnuDelete_Click(object sender, RoutedEventArgs e)
@@ -144,6 +190,12 @@ namespace Spinach
         public void setUserList(List<string> list)
         {
             swarmUserList = list;
+            foreach (string s in swarmUserList)
+            {
+                string[] userInfo = s.Split(':');
+                string ipPort = userInfo[1].Trim() + ":" + userInfo[2].Trim();
+                swarmUserTable[ipPort] = userInfo[0].Trim();
+            }
         }
 
         public void setProgUserList(List<string> list)
@@ -162,10 +214,10 @@ namespace Spinach
         {
             if (et == editorType.collaborator)
             {
-                for (int i = 0; i < progUserList.Count; i++)
-                {
-                    lstUsers.Items.Add(progUserList[i]);
-                }
+                //for (int i = 0; i < progUserList.Count; i++)
+                //{
+                //    lstUsers.Items.Add(progUserList[i]);
+                //}
 
                 //This will disable the Access Control menu
                 mnuAccess.IsEnabled = false;
