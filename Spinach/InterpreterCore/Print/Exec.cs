@@ -8,7 +8,7 @@
 // language: C# .Net 3.5
 ////////////////////////////////////////////////////////////////////////
 
-#define TEST_EXECw
+#define TEST_EXEC
 
 using System;
 using System.Collections.Generic;
@@ -32,9 +32,8 @@ namespace Spinach
         }
         public executor(PlotReceiver plot)
         {
+            coreObject = new Core(plot);
             frontEnd = new exec();
-            coreObject = new Core();
-            coreObject.setPlotObject(plot);
             frontEnd.error_ +=new exec.errorreport(Onerror);
             frontEnd.astEvent += new Spinach.exec.ast(AST);
             coreObject.errorcore_ +=new Core.errorcoremsg(Onerror);
@@ -60,11 +59,6 @@ namespace Spinach
         public void AST(List<Element> elements)
         {
             coreObject.clearVarMap();
-            
-            //string str = " <root><Matrix><name>b</name><row>2</row><col>2</col><type>int</type><Elements><Element>1</Element><Element>2</Element><Element>3</Element><Element>4</Element></Elements></Matrix><Matrix><name>a</name><row>2</row><col>2</col><type>int</type><Elements><Element>1</Element><Element>2</Element><Element>3</Element><Element>4</Element></Elements></Matrix></root>";
-            //string body = "a[0][0]=b[0][0]+b[0][0];";
-
-            //coreObject.execParallel(body,str,1,2);
             coreObject.setAST(elements);
         }
     }

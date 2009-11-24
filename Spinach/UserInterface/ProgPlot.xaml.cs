@@ -18,18 +18,18 @@ namespace Spinach
     /// </summary>
     public partial class ProgPlot : Window
     {
-        string imagepath = "";
-        public ProgPlot(string path)
+        private PngBitmapEncoder PBE = new PngBitmapEncoder();
+        public ProgPlot(PngBitmapEncoder encoder)
         {
             InitializeComponent();
-            imagepath = path;
+            PBE = encoder;
         }
 
         private void frmPlot_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                imgPlot.Source = (ImageSource)new ImageSourceConverter().ConvertFromString(imagepath);
+                imgPlot.Source = PBE.Frames[0];
             }
             catch
             {
