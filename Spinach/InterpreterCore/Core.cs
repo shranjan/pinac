@@ -84,12 +84,21 @@ namespace Spinach
 
         
         public void execParallel(string body, string data, int start, int stop)
+<<<<<<< HEAD
         {
             interp_visitor.execParallel(body, data, start, stop);
         }
 
         public void setSwarm()
         {
+=======
+        {
+            interp_visitor.execParallel(body, data, start, stop);
+        }
+
+        public void setSwarm()
+        {
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
             interp_visitor.setSwarm();
         }
         //List<Element> elements;
