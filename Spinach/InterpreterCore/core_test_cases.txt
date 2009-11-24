@@ -38,7 +38,6 @@ if(a==15)
 print x;
 ------------------------
 
-
 Negative Cases
 ========================
 
@@ -71,7 +70,21 @@ if(a==b)
 { print a; } 
 else 
 { print b; }
+------------------------
 
+int a; 
+a=15;
+if(a==15)
+{ 
+  double x;
+  x=16.5;
+  print x; 
+}
+else
+{ 
+   print a;
+}
+------------------------
 
 Not Equal to
 ========================
@@ -147,6 +160,20 @@ if(a<=b)
 { print a; }
 else
 { print b; }
+
+int a; 
+a=15;
+if(a!=15)
+{ 
+  double x;
+  x=16.5;
+  print x; 
+}
+else
+{ 
+   print x;
+}
+------------------------
 
 
 NESTED CASES:
@@ -376,6 +403,24 @@ else
 print c;
 -----------------------
 
+int a; 
+a=15;
+if(a!=15)
+{ 
+  double x;
+  x=16.5;
+  print x;
+   
+}
+else
+{ 
+   print a;
+   string str;
+   str = "12";
+   if(s==str) 
+   { print a; }
+}
+------------------------
 
 /////////////////////////////////////////////////////////////////////////////////
 //     STRUCTURE's ASSIGNMENT FUNCTION YET TO BE PROVIDED BY FRONT END         //

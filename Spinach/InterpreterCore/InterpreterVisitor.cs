@@ -1,32 +1,40 @@
-
-////////////////////////////////////////////////////////////////////////
-// Core.cs: Implements a vistor that interprets the syntax tree.
+/////////////////////////////////////////////////////////////////////////////////
+// InterpreterVisitor.cs: Implements a vistor that interprets the syntax tree.
 // 
-// version: 1.0
+// version: 1.6
 // Description: part of the interpreter example for the visitor design
 //  pattern.
 // Language:    C++/CLI, Visual Studio 2008 .Net Framework 3.5             
 // Platform:    Dell Inspiron 1525, Windows Vista Business, SP 1       
-// Application: Pr#2, CSE 784, Spring 2009                              
+// Application: SPINACH Project, CSE 784, Spring 2009                              
 // Authors:     Rajika Tandon (ratandon@syr.edu)
 //              Sushma Thimmappa (skyasara@syr.edu)
 //              Rucha Bapat (rmbapat@syr.edu)            
+//              Srinivasan Sundararajan (ssunda04@syr.edu)
 // Source:      Phil Pratt-Szeliga (pcpratts@syr.edu)
-////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 /*
  * Module Operations
  * ================= 
  * This file provides functionalities which interprets the tree, according to the 
- * elements present in it, i.e. it invokes addition functionality if it encounters
- * a '+' symbol, multiplication functionality if '*' symbol is encontered, etc. 
- * Similarly,it invokes variable, integer, assignment, matrix assignment, print and 
- * for loop functionalities as and when these are encountered. The functionalities 
- * associated with these various operations, will further go into the tree to evaluate 
- * them.
+ * elements present in it, i.e. it performs compuatation of an expression involving
+ * addition, multiplication and subtraction of int/doubles, as well as, addition, 
+ * subtraction and multiplication of matrices. 
+ * 
+ * Similarly,it invokes variable, integer, 
+ * double, string, assignment, matrix assignment, print, functions, if-else, structures, 
+ * for-loop, parallel-for loop and for loop functionalities as and when these are 
+ * encountered. 
+ * 
+ * Moreover, the plot object (received from InterpreterExec), commands and 
+ * data, are set using setPlotObj() and VisitPlotFunctionElement() functions to be communicated 
+ * to the Plotting team. 
+ * The functionalities associated with these various operations, will 
+ * further go into the tree to evaluate them.
  * 
  * Public Interface
  * ================
- * Core interp_visitor = new Core();  
+ * InterpreterVisitor interp_visitor = new InterpreterVisitor();  
  *                       // will create an instance of this class and allocate memory
  * 
  */
@@ -38,6 +46,16 @@
  * 
  * Maintenance History
  * ===================
+ * ver 1.5 : 23 Nov 09
+ *   - function handling added
+ * ver 1.4 : 22 Nov 09
+ *   - for loop handling added
+ * ver 1.3 : 22 Nov 09
+ *   - if-else modified to incorporate parallel case
+ * ver 1.2 : 22 Nov 09
+ *   - parallel-for code added
+ * ver 1.1 : 12 Nov 09
+ *   - completed if-else functionality based on the new grammar 
  * ver 1.0 : 10 Nov 09
  *   - first release
  * 
@@ -94,9 +112,6 @@ namespace Spinach
             if (p != null)
                 p.checklist();
         }
-<<<<<<< HEAD
- 
-=======
 
         public void setFE(exec fe)
         {
@@ -107,7 +122,6 @@ namespace Spinach
         {
             parallelSwarm = 1;
         }
->>>>>>> ratandon-master
         Hashtable mVariableMap;
         Stack<Hashtable> scope;
         Stack<Hashtable> funcCall;
@@ -119,17 +133,23 @@ namespace Spinach
         List<int> rcList;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         
        // PrintVisitor print_visitor=new PrintVisitor(this);
         //List<Element> elements;
 =======
 >>>>>>> ratandon-master
 =======
+=======
+>>>>>>> ratandon-master
         int local;
         int functionFlag;
 
         // PrintVisitor print_visitor=new PrintVisitor(this);
         //List<Element> elements;
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
 >>>>>>> ratandon-master
 
         public void clearMap()
@@ -267,6 +287,7 @@ namespace Spinach
                         else if (mVariableMap[Var] is DoubleElement)
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
                             for (int j = 0; j < trans_col; j++)
                             {
                                 Console.Write("\t" + trans[i, j]);
@@ -276,6 +297,8 @@ namespace Spinach
                             //result("\n");
 
 =======
+=======
+>>>>>>> ratandon-master
                             matXml.WriteStartElement("Double");
                             matXml.WriteValue(((DoubleElement)mVariableMap[Var]).getText());
                             matXml.WriteEndElement();
@@ -285,6 +308,9 @@ namespace Spinach
                             matXml.WriteStartElement("String");
                             matXml.WriteValue(((StringElement)mVariableMap[Var]).getText());
                             matXml.WriteEndElement();
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
 >>>>>>> ratandon-master
                         }
                     }
@@ -300,6 +326,7 @@ namespace Spinach
                         else if (hash[Var] is DoubleElement)
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
                             for (int j = 0; j < trans_col; j++)
                             {
                                 Console.Write("\t" + trans[i, j]);
@@ -309,6 +336,8 @@ namespace Spinach
                             Console.Write("\n");
                             //result("\n");
 =======
+=======
+>>>>>>> ratandon-master
                             matXml.WriteStartElement("Double");
                             matXml.WriteValue(((DoubleElement)hash[Var]).getText());
                             matXml.WriteEndElement();
@@ -318,6 +347,9 @@ namespace Spinach
                             matXml.WriteStartElement("String");
                             matXml.WriteValue(((StringElement)hash[Var]).getText());
                             matXml.WriteEndElement();
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
 >>>>>>> ratandon-master
                         }
                     }
@@ -336,12 +368,15 @@ namespace Spinach
         private Hashtable getHashTable(string key)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             if(mVariableMap.ContainsKey(element.getVar().getText()))
                     mVariableMap.Remove(element.getVar().getText());
             else
             {
                 sendres(112, "Variable not declared, cannot be deleted\n");  
 =======
+=======
+>>>>>>> ratandon-master
             if (local == 0)
             {
                 if (mVariableMap.Count != 0)
@@ -353,6 +388,9 @@ namespace Spinach
                     }
                 }
                 return null;
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
 >>>>>>> ratandon-master
             }
             else if (functionFlag != 0)
@@ -1498,6 +1536,45 @@ namespace Spinach
                 {
                     int start = 0; int end = 0;
                     if (element.RANGEVARIABLE.getText() != null && element.STARTINGRANGE.getText() != null && element.ENDINGRANGE.getText() != null)
+<<<<<<< HEAD
+                    {
+                        try
+                        {
+                            start = int.Parse(element.STARTINGRANGE.getText());
+                            end = int.Parse(element.ENDINGRANGE.getText());
+                        }
+                        catch (Exception err)
+                        {
+                            sendres(113, "The range for the for loop is not set"); err.GetType();
+                        }
+                        if (end != 0)
+                        {
+                            if (start <= end)
+                            {
+                                if (!map_contains_matrix(element.RANGEVARIABLE.getText()))
+                                {
+                                    local++;
+                                    Hashtable localTable = new Hashtable();
+                                    scope.Push(localTable);
+                                    ScalarVariableDeclaration scalar_elem = new ScalarVariableDeclaration();
+                                    scalar_elem.setType("int");
+                                    scalar_elem.setVar(element.RANGEVARIABLE);
+                                    VisitElement(scalar_elem);
+                                    for (int i = start; i <= end; i++)
+                                    {
+                                        AssignmentOperationElement elem = new AssignmentOperationElement();
+                                        elem.setLhs(element.RANGEVARIABLE);
+                                        IntegerElement int_elem = new IntegerElement();
+                                        int_elem.setText(i.ToString());
+                                        elem.setRhs(int_elem);
+                                        VisitElement(elem);
+                                        List<Element> codeList = new List<Element>();
+                                        codeList = element.CODELIST;
+                                        for (int j = 0; j < codeList.Count; j++)
+                                        {
+                                            VisitElement(codeList[j]);
+                                        }
+=======
                     {
                         try
                         {
@@ -1738,8 +1815,18 @@ namespace Spinach
                                         }
                                         else
                                             sendres(112, "\n Return types mismatch.. \n");
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                                     }
+                                    scope.Pop();
+                                    local--;
                                 }
+<<<<<<< HEAD
+                                else
+                                    sendres(112, "The range variable in the for loop has already been used in the program. Please use a different variable.");
+                            }
+                            else
+                                sendres(112, "The starting index should be less than the ending index");
+=======
                                 //ScalarVariableDeclaration scalar = (ScalarVariableDeclaration)(elem);
                                 //VisitStructVar(scalar);
                             }
@@ -1882,15 +1969,21 @@ namespace Spinach
                         {
                             Console.Write(elemenets[i, j]);
                             Console.Write("\t");
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                         }
-                        Console.Write("\n");
                     }
+                    else
+                        sendres(112, "The ending index of the for loop cannot be zero");
+                }
+                catch (Exception err)
+                {
+                    sendres(113, "For loop cannot be executed. Please check for semantic errors"); err.GetType();
                 }
             }
-            Console.Write("\n");*/
-
-            //throw new NotImplementedException();
         }
+<<<<<<< HEAD
+        public override void VisitFunctionCallElement(FunctionCallElement element)
+=======
 
         private void ParallelAddition(AdditiveElement element)
         {
@@ -1917,6 +2010,595 @@ namespace Spinach
         }
 
         public override void VisitMultiplicationElement(MultiplicationElement element)
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+        {
+            try
+            {
+                functionFlag = local;
+                local++;
+                Hashtable local_table = new Hashtable();
+                Hashtable func = new Hashtable();
+                Element name = element.getfunctioncallname();
+                int temp_flag = 0;
+                int flag = 0;
+                int para_flag = 0;
+                FunctionElement temp;
+                if (element.getparameters().Count > 0)
+                {
+                    temp_flag = 1;
+                }
+                foreach (FunctionElement item in func_def)
+                {
+                    if (((VariableElement)item.getfunctionname()).getText() == ((VariableElement)name).getText())
+                    {
+                        flag = 1;
+                        temp = item;
+                        if (temp_flag == 1)
+                        {
+                            List<Element> arguments = element.getparameters();
+                            List<Element> parameters = item.getArguments();
+                            if (arguments.Count == parameters.Count)
+                            {
+                                for (int p = 0; p < arguments.Count; p++)
+                                {
+                                    if (GetTypeOfElement(arguments[p]) == GetTypeOfElement(parameters[p]))
+                                    {
+                                        para_flag = 1;
+                                        Element elem = null;
+                                        if (parameters[p] is ScalarArgument)
+                                            elem = ((ScalarArgument)parameters[p]).getvariable();
+                                        else if (parameters[p] is MatrixReference)
+                                            elem = ((MatrixReference)parameters[p]).getvariable();
+                                        else if (parameters[p] is VectorReference)
+                                            elem = ((VectorReference)parameters[p]).getvariable();
+                                        if (arguments[p] is IntegerElement)
+                                            local_table.Add(((VariableElement)elem).getText(), arguments[p]);
+                                        else if (arguments[p] is DoubleElement)
+                                            local_table.Add(((VariableElement)elem).getText(), arguments[p]);
+                                        else if (arguments[p] is VariableElement)
+                                        {
+                                            if (local == 0)
+                                            {
+                                                Element value = (Element)(mVariableMap[((VariableElement)elem).getText()]);
+                                                local_table.Add(((VariableElement)elem).getText(), value);
+                                            }
+                                            else
+                                            {
+                                                Hashtable temp_value = getHashTable(((VariableElement)arguments[p]).getText());
+                                                Element value = (Element)(temp_value[((VariableElement)arguments[p]).getText()]);
+                                                local_table.Add(((VariableElement)elem).getText(), value);
+                                            }
+                                        }
+                                    }
+                                }
+                                if (para_flag == 0)
+                                {
+                                    Console.Write("\n Parameters types do not match.. \n");
+                                    sendres(112, "\n Parameters types do not match.. \n");
+                                }
+                            }
+                            else
+                            {
+                                Console.Write("\n Parameters count do not match.. \n");
+                                sendres(112, "\n Parameters count do not match.. \n");
+                            }
+                        }
+                        scope.Push(local_table);
+                        List<Element> body = temp.getBody();
+                        for (int i = 0; i < body.Count; i++)
+                        {
+                            Element elem = body[i];
+                            int type = GetTypeOfElement(elem);
+                            if (type == 3) // matrix
+                            {
+                                MatrixVariableDeclaration mat_elem = (MatrixVariableDeclaration)(elem);
+                                VisitMatrixElement(mat_elem);
+                            }
+                            else if (type == 16)
+                            {
+                                VectorVariableDeclaration vec = (VectorVariableDeclaration)(elem);
+                                VisitVectorElement(vec);
+                            }
+                            else if (type == 9) // assignment
+                            {
+                                AssignmentOperationElement assign = (AssignmentOperationElement)(elem);
+                                VisitAssignmentOperationElement(assign);
+                            }
+                            else if (type == 0)  // print
+                            {
+                                PrintOperationElement print = (PrintOperationElement)(elem);
+                                VisitPrintOperationElement(print);
+                            }
+                            else if (type == 1) // scalar 
+                            {
+                                if (elem is IntegerElement)
+                                    VisitIntegerElement((IntegerElement)elem);
+                                else if (elem is ScalarVariableDeclaration)
+                                    VisitStructVar((ScalarVariableDeclaration)elem);
+                                else if (elem is ReturnElement)
+                                {
+
+                                    if (temp.getreturntype() == "void")
+                                        sendres(112, "\n Return type is void.. Cannot return.. \n");
+                                    else
+                                    {
+                                        /*   ReturnElement ret = (ReturnElement)(elem);
+                                           VisitReturnElement(ret);*/
+                                        ReturnElement ret = (ReturnElement)(elem);
+                                        Element ret_type = ret.getreturnvariable();
+
+                                        int retType = GetTypeOfElement(ret_type);
+
+                                        if (ret_type is VariableElement && temp.getreturntype() == "int" && retType == 1)
+                                        {    // if (retType == 1)
+                                            string var = ((VariableElement)ret_type).getText();
+
+                                            Object obj = scope.Peek()[var];
+                                            //return_var.Add(obj);
+                                            mat_stack.Push(obj);
+                                        }
+                                        else if (temp.getreturntype() == "int" && ret_type is IntegerElement && retType == 1)
+                                        {
+                                            //   rType = "int";
+                                            mat_stack.Push((IntegerElement)ret.getreturnvariable());
+                                        }
+                                        else if (temp.getreturntype() == "double" && ret_type is DoubleElement && retType == 2)
+                                        {
+                                            mat_stack.Push((DoubleElement)ret.getreturnvariable());
+                                        }
+                                        else
+                                            sendres(112, "\n Return types mismatch.. \n");
+                                    }
+                                }
+
+                                //ScalarVariableDeclaration scalar = (ScalarVariableDeclaration)(elem);
+                                //VisitStructVar(scalar);
+                            }
+                            else if (type == 2) // scalar 
+                            {
+                                if (elem is DoubleElement)
+                                    VisitDoubleElement((DoubleElement)elem);
+                                else if (elem is ScalarVariableDeclaration)
+                                    VisitStructVar((ScalarVariableDeclaration)elem);
+                                else if (elem is ReturnElement)
+                                {
+
+                                    if (temp.getreturntype() == "void")
+                                        sendres(112, "\n Return type is void.. Cannot return.. \n");
+                                    else
+                                    {
+                                        ReturnElement ret = (ReturnElement)(elem);
+                                        Element ret_type = ret.getreturnvariable();
+
+                                        int retType = GetTypeOfElement(ret_type);
+
+                                        if (temp.getreturntype() == "double" && ret_type is VariableElement && retType == 2)
+                                        {    // if (retType == 1)
+
+                                            string var = ((VariableElement)ret_type).getText();
+
+                                            Object obj = scope.Peek()[var];
+                                            //return_var.Add(obj);
+                                            mat_stack.Push(obj);
+                                        }
+
+                                        else if (temp.getreturntype() == "int" && ret_type is IntegerElement && retType == 1)
+                                        {
+                                            //   rType = "int";
+                                            mat_stack.Push((IntegerElement)ret.getreturnvariable());
+                                        }
+                                        else if (temp.getreturntype() == "double" && ret_type is DoubleElement && retType == 2)
+                                        {
+                                            mat_stack.Push((DoubleElement)ret.getreturnvariable());
+                                        }
+                                        else
+                                            sendres(112, "\n Return types mismatch.. \n");
+                                    }
+                                }
+                                //ScalarVariableDeclaration scalar = (ScalarVariableDeclaration)(elem);
+                                //VisitStructVar(scalar);
+                            }
+                            else if (type == 10) // function call
+                            {
+                                FunctionCallElement call = (FunctionCallElement)(elem);
+                                VisitFunctionCallElement(call);
+                            }
+                            else if (type == 11) // delete 
+                            {
+                                DeleteVariable del = (DeleteVariable)(elem);
+                                VisitDeleteElement(del);
+                            }
+                            else if (type == 12) // return element
+                            {
+
+                            }
+                            else
+                            {
+                            }
+<<<<<<< HEAD
+
+                        }
+                        // function body
+=======
+                        }
+                        else if (lhs_type == (int)datatypes.DoubleElement && rhs_type == (int)datatypes.DoubleElement)
+                            PerformDoubleMultiplication(obj_rhs, obj_lhs);
+                        else if (lhs_type == (int)datatypes.IntElement && rhs_type == (int)datatypes.IntElement)
+                            PerformIntMultiplication(obj_rhs, obj_lhs);
+                        else
+                        {
+                            Console.Write("Scalar and Matrix cannot be multiplied.. \n");
+                            sendres(112, "Scalar and Matrix cannot be multiplied.. ..\n");
+                        }
+                    }
+                    else
+                    {
+                        sendres(112, "Undeclared variables");
+                    }
+                }
+            }
+            //throw new NotImplementedException();
+        }
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+
+
+                    }
+                }
+<<<<<<< HEAD
+                if (flag == 0)
+=======
+            }
+            catch (Exception e) { sendres(112, "Unassigned variables\n"); e.GetType(); };
+        }
+
+        public override void VisitParallelForElement(ParallelForElement element)
+        {
+            try
+            {
+                inParallelFor = 1;
+                matStr = new StringWriter();
+                matXml = new XmlTextWriter(matStr);
+                matXml.Formatting = Formatting.Indented;
+                //matXml.WriteStartDocument();
+                matXml.WriteStartElement("root");
+                if (parallelVars != null && parallelVars.Count > 0)
+                    parallelVars.Clear();
+                parallelString.Remove(0, parallelString.Length);
+                List<Element> l1 = null;
+                for (int s = 0; element.PARALLELCODE.Count > 0 && s < element.PARALLELCODE.Count; s++)
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+                {
+                    Console.Write("\n Function not defined.. \n");
+                    sendres(112, "\n Function is not defined.. \n");
+                }
+<<<<<<< HEAD
+                scope.Pop();
+                local--;
+=======
+                inParallelFor = 0;
+                matXml.WriteEndElement();
+                CreateData(matStr.ToString());
+                //result(matStr.ToString());
+                //result(parallelString.ToString());
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+            }
+            catch (Exception e) { sendres(112, "Error in function"); e.GetType(); }
+        }
+<<<<<<< HEAD
+        /*
+        public override void VisitIfStatementElement(IfStatementElement element)
+        {
+            //throw new NotImplementedException();
+=======
+
+        private Plot convert_Ele_to_plot(PlotFunctionElement p)
+        {
+            Plot p1 = new Plot();
+            p1.Command = p.getPlotFunction();
+            p1.PaneNum = p.getPeno() == null ? 0 : int.Parse(p.getPeno().getText());
+
+            if (p.getData() != null && mVariableMap.ContainsKey(p.getData().getText()))
+            {
+                double[,] temp = ((MatrixVariableDeclaration)(mVariableMap[p.getData().getText()])).getdoubleValue();
+                p1.Data = p.getData().getText() == null ? null : temp;
+            }
+            p1.Mode = p.getMode() == null ? 0 : int.Parse(p.getMode().getText());
+            p1.Dimensions = p.getPlotType() == null ? 0 : p.getPlotType() == "2D" ? 2 : 3;
+            p1.PlotTitle = p.getTitle() == null ? "" : p.getTitle().getText();
+            p1.X_Fact = p.getXFact() == null ? 1.0 : double.Parse(p.getXFact().getText());
+            p1.Y_Fact = p.getYFact() == null ? 1.0 : double.Parse(p.getYFact().getText());
+            p1.Z_Fact = p.getZFact() == null ? 1.0 : double.Parse(p.getZFact().getText());
+            p1.X_Axis_Title = p.getXTitle() == null ? "" : p.getXTitle().getText();
+            p1.Y_Axis_Title = p.getYTitle() == null ? "" : p.getYTitle().getText();
+            p1.Z_Axis_Title = p.getZTitle() == null ? "" : p.getZTitle().getText();
+            p1.ScaleMode = p.getScaleMode() == null ? 1 : (p.getScaleMode() == "linear") ? 1 : 2;
+            return (p1);
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+        }
+        */
+        public override void VisitFunctionElement(FunctionElement element)
+        {
+            func_def.Push(element);
+
+           }
+        public override void VisitMatrixElement(MatrixVariableDeclaration element)
+        {
+<<<<<<< HEAD
+            string variable_name = element.getVar().getText();
+            string type = element.getType();
+            if (local == 0)
+            {
+
+                if (mVariableMap.Contains(variable_name))
+                {
+                    Console.Write(" \nSemantic Error.. ");
+                    sendres(112, "\nSemantic Error...\n");
+                    Console.Write("\n The matrix name you entered is already existing.. try again..");
+                    sendres(112, "\n The matrix name you entered is already existing.. try again..");
+                    return;
+                }
+                else
+                {
+                    mVariableMap.Add(variable_name, element);
+                }
+            }
+
+            else
+            {
+
+                if (scope.Peek().Count == 0)
+                    scope.Peek().Add(variable_name, element);
+                else
+                {
+                    if (scope.Peek().Contains(variable_name))
+                    {
+                        Console.Write(" \nSemantic Error.. ");
+                        sendres(112, "\nSemantic Error...\n");
+                        Console.Write("\n The matrix name you entered is already existing.. try again..");
+                        sendres(112, "\n The matrix name you entered is already existing.. try again..");
+                        return;
+                    }
+                    else
+                    {
+                        scope.Peek().Add(variable_name, element);
+                    }
+                }
+            }
+            /* if (mVariableMap.Count == 0)
+                 mVariableMap.Add(variable_name, element);
+             else
+             {
+                 if (mVariableMap.Contains(variable_name))
+                 {
+                     Console.Write(" \nSemantic Error.. ");
+                     sendres(112, "\nSemantic Error...\n");
+                     Console.Write("\n The matrix name you entered is already existing.. try again..");
+                     sendres(112, "\n The matrix name you entered is already existing.. try again..");
+                     return;
+                 }
+                 else
+                 {
+                     mVariableMap.Add(variable_name, element);
+                 }
+             } */
+            /*int row = int.Parse(element.getRow().getText());
+            int col = int.Parse(element.getColumn().getText());
+            Console.Write("\n Matrix name : ");
+            Console.Write(variable_name);
+            Console.Write("\nMatrix Type : ");
+            Console.Write(type); Console.Write("\n");
+            Console.Write(" Rows : "); Console.Write(row); Console.Write("\n");
+            Console.Write(" Columns : "); Console.Write(col);
+            string mat_type = element.getType();
+            if (mat_type == "int")
+            {
+                int[,] elements = element.getintValue();
+                Console.Write("\nMatrix Elements are : \n");
+                for (int i = 0; i < row; i++)
+                {
+                    for (int j = 0; j < col; j++)
+                    {
+                        Console.Write(elements[i, j]);
+                        Console.Write("\t");
+=======
+            if (element.getPlotFunction() == "plot" || element.getPlotFunction() == "subPlot")
+            {
+                if (mVariableMap.ContainsKey(element.getData().getText()))
+                {
+                    //   double[,] temp = ((MatrixVariableDeclaration)(mVariableMap[element.getData().getText()])).getdoubleValue();
+                    if (element.getPlotFunction() == "subPlot")
+                    {
+                        int pane = int.Parse(element.getPeno().getText()); //.getPane().getText());
+                        string plotType = element.getPlotType();
+
+                        if (pane > 4 || pane <= 0)
+                        {
+                            Console.Write("pane no. is not valid.. it lies between 1 to 4.. Try again..");
+                            sendres(112, "pane no. is not valid.. it lies between 1 to 4.. Try again..");
+                            return;
+                        }
+                        else if (plotType == "2D" || plotType == "1D")
+                        {
+                            if ((IntegerElement)(element.getMode()) != null)
+                            {
+                                Console.Write("Invalid argumenet.. Mode is not required.. Try again.. ");
+                                sendres(112, "Invalid argumenet.. Mode is not required.... Try again..");
+                                return;
+                            }
+                        }
+                        else if (plotType == "3D")
+                        {
+                            int mode = int.Parse(((IntegerElement)(element.getMode())).getText());
+                            if (mode > 3 || mode <= 0)
+                            {
+                                Console.Write("Invalid mode.. Give the input between 1..3 ");
+                                sendres(112, "Invalid mode.. Give the input between 1..3 ");
+                                return;
+                            }
+                        }
+                    }
+                    else if (element.getPlotFunction() == "plot")
+                    {
+                        string plotType = element.getPlotType();
+                        string data = element.getData().getText();
+                        if (plotType == "1D" || plotType == "2D")
+                        {
+                            if ((IntegerElement)(element.getMode()) != null)
+                            {
+                                Console.Write("Invalid argumenet.. Mode is not required.. Try again.. ");
+                                sendres(112, "Invalid argumenet.. Mode is not required.. Try again.. ");
+                                return;
+                            }
+                        }
+                        else if (plotType == "3D")
+                        {
+                            int mode = int.Parse(((IntegerElement)(element.getMode())).getText());
+                            if (mode >= 3 || mode <= 0)
+                            {
+                                Console.Write("Invalid mode.. Give the input between 1..3 ");
+                                sendres(112, "Invalid mode.. Give the input between 1..3 ");
+                                return;
+                            }
+
+                        }
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+                    }
+                    Console.Write("\n");
+                }
+<<<<<<< HEAD
+            }
+            else if (mat_type == "double")
+            {
+                double[,] elemenets = element.getdoubleValue();
+                if (elemenets != null)
+                {
+                    Console.Write("\n Matrix Elements are : \n");
+                    for (int i = 0; i < row; i++)
+                    {
+                        for (int j = 0; j < col; j++)
+                        {
+                            Console.Write(elemenets[i, j]);
+                            Console.Write("\t");
+                        }
+                        Console.Write("\n");
+                    }
+                }
+=======
+                else
+                {
+                    Console.Write("Plot data not declared.. Try again..");
+                    sendres(112, "Plot data not declared.. Try again..");
+                    return;
+                }
+            }
+
+            else if (element.getPlotFunction() == "setScaleMode")
+            {
+                string scaleMode = element.getScaleMode();
+                if (scaleMode != "log" || scaleMode != "linear")
+                {
+                    Console.Write("Invalid scale mode.. it should be either 'linear' or 'log'");
+                    sendres(112, "Invalid scale mode.. it should be either 'linear' or 'log'");
+                    return;
+                }
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+            }
+            Console.Write("\n");*/
+
+<<<<<<< HEAD
+            //throw new NotImplementedException();
+=======
+
+            Plot pr = new Plot();
+            pr = convert_Ele_to_plot(element);
+            p.writetolist(pr);
+
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+        }
+
+        private void ParallelAddition(AdditiveElement element)
+        {
+            VisitElement(element.getLhs());
+            parallelString.Append("+");
+            VisitElement(element.getRhs());
+
+        }
+
+        private void ParallelSub(SubtractionElement element)
+        {
+<<<<<<< HEAD
+            VisitElement(element.getLhs());
+            parallelString.Append("-");
+            VisitElement(element.getRhs());
+
+=======
+            //ReturnElement ret = (ReturnElement)(elem);
+            /* Element ret_type = element.getreturnvariable();
+             int retType = GetTypeOfElement(ret_type);
+             string rType = "";
+             if (retType == 1)
+                rType = "int";
+             else if (retType == 2)
+                 rType = "double";
+             if (temp.getreturntype() != rType)
+                 sendres(112, "\n Return types mismatch.. \n");*/
+
+
+            /* result("Returned Value : \n");
+             int ret_type = GetTypeOfElement(element);
+             if (ret_type == 1)
+             {
+                 string temp = (((VariableElement)element)).getText();
+                 if (map_contains_matrix(temp))
+                     result(scope.Peek()[temp].ToString());
+             }*/
+            /* int value = int.Parse(((IntegerElement)(element)).getText().ToString());
+         result(((VariableElement)element.getreturnvariable()).getText());*/
+            //throw new NotImplementedException();
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+        }
+
+        private void ParallelMul(MultiplicationElement element)
+        {
+<<<<<<< HEAD
+            VisitElement(element.getLhs());
+            parallelString.Append("*");
+            VisitElement(element.getRhs());
+
+        }
+
+        public override void VisitMultiplicationElement(MultiplicationElement element)
+=======
+            //throw new NotImplementedException();
+            string int_name = (element.getVar()).getText();
+            if (local == 0)
+            {
+                if (mVariableMap.Contains(int_name))
+                {
+                    Console.Write("Variable Already Declared\n");
+                    sendres(112, "Variable Already Declared\n");
+                }
+                else
+                    mVariableMap.Add(int_name, element);
+            }
+            else
+            {
+                if (scope.Peek().Count == 0)
+                    scope.Peek().Add(int_name, element);
+                else
+                {
+                    if (scope.Peek().Contains(int_name))
+                    {
+                        Console.Write("Variable Already Declared\n");
+                        sendres(112, "Variable Already Declared\n");
+                    }
+                    else
+                        scope.Peek().Add(int_name, element);
+                }
+            }
+        }
+        public override void VisitSubtractionElement(SubtractionElement element)
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
         {
             if (element.getRhs() == null)
             {
@@ -2102,6 +2784,7 @@ namespace Spinach
 
         public override void VisitParallelForElement(ParallelForElement element)
         {
+<<<<<<< HEAD
             try
             {
                 inParallelFor = 1;
@@ -2115,6 +2798,21 @@ namespace Spinach
                 parallelString.Remove(0, parallelString.Length);
                 List<Element> l1 = null;
                 for (int s = 0; element.PARALLELCODE.Count > 0 && s < element.PARALLELCODE.Count; s++)
+=======
+            string variable_name = element.getText().getText();
+            string type = element.getType();
+            if (local == 0)
+            {
+                if (mVariableMap.Contains(variable_name))
+                {
+                    Console.Write(" \nSemantic Error.. ");
+                    sendres(112, "\nSemantic Error...\n");
+                    Console.Write("\n The matrix name you entered is already existing.. try again..");
+                    sendres(112, "\n The matrix name you entered is already existing.. try again..");
+                    return;
+                }
+                else
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                 {
                     l1 = element.PARALLELCODE[s];
 
@@ -2133,6 +2831,7 @@ namespace Spinach
                 //result(matStr.ToString());
                 //result(parallelString.ToString());
             }
+<<<<<<< HEAD
             catch (Exception e) { sendres(112, "Parallel for:Error processing\n"); e.GetType(); }
 
             //throw new NotImplementedException();
@@ -2147,7 +2846,7 @@ namespace Spinach
             if (p.getData() != null && mVariableMap.ContainsKey(p.getData().getText()))
             {
                 double[,] temp = ((MatrixVariableDeclaration)(mVariableMap[p.getData().getText()])).getdoubleValue();
-                p1.Data = p.getData().getText() == null ? null :temp;
+                p1.Data = p.getData().getText() == null ? null : temp;
             }
             p1.Mode = p.getMode() == null ? 0 : int.Parse(p.getMode().getText());
             p1.Dimensions = p.getPlotType() == null ? 0 : p.getPlotType() == "2D" ? 2 : 3;
@@ -2230,13 +2929,100 @@ namespace Spinach
                     Console.Write("Plot data not declared.. Try again..");
                     sendres(112, "Plot data not declared.. Try again..");
                     return;
+=======
+            else
+            {
+                if (scope.Peek().Count == 0)
+                    scope.Peek().Add(variable_name, element);
+                else
+                {
+                    if (scope.Peek().Contains(variable_name))
+                    {
+                        Console.Write(" \nSemantic Error.. ");
+                        sendres(112, "\nSemantic Error...\n");
+                        Console.Write("\n The matrix name you entered is already existing.. try again..");
+                        sendres(112, "\n The matrix name you entered is already existing.. try again..");
+                        return;
+                    }
+                    else
+                    {
+                        scope.Peek().Add(variable_name, element);
+                    }
                 }
             }
+            string elem_type = "";
+            IntegerElement range = element.getRange();
+            List<int> int_elem = new List<int>();
+            List<double> double_elem = new List<double>();
+
+            if (element.getintValue() != null)
+            {
+                int_elem = element.getintValue();
+                elem_type = "int";
+
+            }
+            else if (element.getdoubleValue() != null)
+            {
+                double_elem = element.getdoubleValue();
+                elem_type = "double";
+            }
+            if (type != elem_type)
+                sendres(112, "\nType mismatch..\n");
+            else
+            {
+                if (elem_type == "int")
+                {
+                    int elem_count = int.Parse(range.getText());
+                    if (elem_count != int_elem.Count)
+                        sendres(112, "\nRange and number of elements do not match...\n");
+                }
+                else if (elem_type == "double")
+                {
+                    int elem_count = int.Parse(range.getText());
+                    if (elem_count != double_elem.Count)
+                        sendres(112, "\nRange and number of elements do not match...\n");
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
+                }
+                // if( int.Parse(range.getText())!= elements.Count)
+                // sendres(112, "\nRange and number of elements do not match...\n");
+            }
+<<<<<<< HEAD
 
             else if (element.getPlotFunction() == "setScaleMode")
             {
                 string scaleMode = element.getScaleMode();
                 if (scaleMode != "log" || scaleMode != "linear")
+=======
+            //throw new NotImplementedException();
+        }
+
+        //public override void VisitMatrixOperationElement(MatrixOperationElement element) { }
+        public override void VisitIntegerElement(IntegerElement element)
+        {
+            if (inParallelFor == 1)
+            {
+                parallelString.Append(element.getText());
+            }
+            else
+            {
+                mat_stack.Push(element);
+            }
+
+        }
+
+
+        public override void VisitAssignmentOperationElement(AssignmentOperationElement element)
+        {
+            StructAssignDeclaration temp;
+            StructDeclaration structTemp = null;
+            int flag = -1;
+
+            //Handle struct
+            if (GetTypeOfElement(element.getLhs()) == 4)
+            {
+                temp = (StructAssignDeclaration)(element.getLhs());
+                if (mVariableMap.ContainsKey(((VariableElement)(temp.getObjName())).getText())) //getName()))
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                 {
                     Console.Write("Invalid scale mode.. it should be either 'linear' or 'log'");
                     sendres(112, "Invalid scale mode.. it should be either 'linear' or 'log'");
@@ -2250,7 +3036,7 @@ namespace Spinach
             p.writetolist(pr);
 
         }
-    
+
 
         public override void VisitReturnElement(ReturnElement element)
         {
@@ -2286,8 +3072,23 @@ namespace Spinach
             {
                 if (mVariableMap.Contains(int_name))
                 {
+<<<<<<< HEAD
                     Console.Write("Variable Already Declared\n");
                     sendres(112, "Variable Already Declared\n");
+=======
+                    Object obj = getTopOfStack_Matrix();
+                    List<ScalarVariableDeclaration> l1 = structTemp.getVarType();
+                    for (int i = 0; i < l1.Count; i++)
+                        if (l1[i].getVar().getText() == ((VariableElement)temp.getDataMember()).getText())
+                        {
+                            if (obj is IntegerElement)
+                            {
+                                result("Struct member set:" + ((IntegerElement)obj).getText());
+                                finalResult.Append("Struct member set:" + ((IntegerElement)obj).getText());
+                            }
+                        }
+                    //temp.setObjName((Element)(obj));  //.setObj((Element)(obj));
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                 }
                 else
                     mVariableMap.Add(int_name, element);
@@ -2307,6 +3108,7 @@ namespace Spinach
                         scope.Peek().Add(int_name, element);
                 }
             }
+<<<<<<< HEAD
         }
         public override void VisitSubtractionElement(SubtractionElement element)
         {
@@ -2347,6 +3149,70 @@ namespace Spinach
                                     int rhs_row = int.Parse(((IntegerElement)(stk_rhs.getRow())).getText());
                                     int rhs_col = int.Parse(((IntegerElement)(stk_rhs.getColumn())).getText());
                                     if (lhs_row == rhs_row && lhs_col == rhs_col)
+=======
+            else if (GetTypeOfElement(element.getLhs()) == 15)
+                HandleSingleVectorElement(element);
+            else if (map_contains_matrix(((VariableElement)(element.getLhs())).getText()))
+            {
+                if (inParallelFor == 1)
+                {
+                    parallelString.Append((((VariableElement)(element.getLhs())).getText()));
+                    parallelString.Append("=");
+                    VisitElement(element.getRhs());
+                    if(local==0)
+                    {
+                    if (mVariableMap[(((VariableElement)(element.getLhs())).getText())] is MatrixVariableDeclaration)
+                        matrixData((((VariableElement)(element.getLhs())).getText()));
+                    else if (mVariableMap[(((VariableElement)(element.getLhs())).getText())] is IntegerElement)
+                        varData((((VariableElement)(element.getLhs())).getText()));
+                    else if (mVariableMap[(((VariableElement)(element.getLhs())).getText())] is DoubleElement)
+                        varData((((VariableElement)(element.getLhs())).getText()));
+                    }
+                    else
+                    {
+                    Hashtable hash=getHashTable((((VariableElement)(element.getLhs())).getText()));
+                    if (hash[(((VariableElement)(element.getLhs())).getText())] is MatrixVariableDeclaration)
+                        matrixData((((VariableElement)(element.getLhs())).getText()));
+                    else if (hash[(((VariableElement)(element.getLhs())).getText())] is IntegerElement)
+                        varData((((VariableElement)(element.getLhs())).getText()));
+                    else if (hash[(((VariableElement)(element.getLhs())).getText())] is DoubleElement)
+                        varData((((VariableElement)(element.getLhs())).getText()));
+                    }
+                }
+                else
+                {
+                string var_name = ((VariableElement)(element.getLhs())).getText();
+                Element rhs = element.getRhs();
+                VisitElement(rhs);
+
+                if (mat_stack.Count > 0 && flag == -1)
+                {
+                    Object obj = getTopOfStack_Matrix();
+                    if (GetTypeOfElement(element.getLhs()) == GetTypeOfElement(((Element)obj)))
+                    {
+                        if ((GetTypeOfElement(element.getLhs()) == 3))
+                        {
+                            MatrixVariableDeclaration tempmat = null;
+                            if (local == 0)
+                            {
+                                tempmat = ((MatrixVariableDeclaration)(mVariableMap[((VariableElement)(element.getLhs())).getText()]));
+                            }
+                            else
+                            {
+                                Hashtable hash = getHashTable(((VariableElement)(element.getLhs())).getText());
+                                tempmat = ((MatrixVariableDeclaration)(hash[((VariableElement)(element.getLhs())).getText()]));
+                            }
+                            if (tempmat.getType() == (((MatrixVariableDeclaration)(((Element)obj))).getType()))
+                            {
+                                int rhs_row = int.Parse(((IntegerElement)((((MatrixVariableDeclaration)(((Element)obj))).getRow()))).getText());
+                                int lhs_col = int.Parse(((IntegerElement)(tempmat.getColumn())).getText());
+                                int lhs_row = int.Parse(((IntegerElement)(tempmat.getRow())).getText());
+                                int rhs_col = int.Parse(((IntegerElement)((((MatrixVariableDeclaration)(((Element)obj))).getColumn()))).getText());
+
+                                if (lhs_col == rhs_col && lhs_row == rhs_row)
+                                {
+                                    if (local == 0)
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                                     {
                                         final.setRow(lRow);
                                         final.setColumn(lCol);
@@ -2391,6 +3257,7 @@ namespace Spinach
                                         Object result = (Object)(final);
                                         mat_stack.Push(result);
                                     }
+<<<<<<< HEAD
                                 }
                                 else
                                 {
@@ -2414,17 +3281,57 @@ namespace Spinach
                         {
                             Console.Write("Scalar and matrix subtraction not possible\n");
                             sendres(112, "Scalar and matrix subtraction not possible\n");
+=======
+                                    else
+                                    {
+                                        Hashtable hash = getHashTable(var_name);
+                                        hash.Remove(var_name);
+                                        hash.Add(var_name, obj);
+                                    }
+                                }
+                                else
+                                    sendres(112, "Rows and columns of matrices do not match\n");
+                            }
+                            else
+                                sendres(112, "Matrices are of different types\n");
+                        }
+                        else
+                        {
+                            if (local == 0)
+                            {
+                                mVariableMap.Remove(var_name);
+                                mVariableMap.Add(var_name, obj);
+                            }
+                            else
+                            {
+                                Hashtable hash = getHashTable(var_name);
+                                hash.Remove(var_name);
+                                hash.Add(var_name, obj);
+                            }
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                         }
                     }
                     else
                     {
+<<<<<<< HEAD
                         Console.Write("Matrix types are different.. try again.. ");
                         sendres(112, "Matrix types are different.. try again.. ");
+=======
+                        Console.Write("Datatypes mismatch\n");
+                        sendres(112, "Datatypes mismatch\n");
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                     }
                 }
+                else
+                {
+                    Console.Write("Variable not found");
+                    sendres(112, "Variable not found");
+                }
+            }
             }
         }
 
+<<<<<<< HEAD
         private void PerformDoubleSubtraction(Object obj_rhs, Object obj_lhs)
         {
             try
@@ -2561,7 +3468,7 @@ namespace Spinach
         public override void VisitAssignmentOperationElement(AssignmentOperationElement element)
         {
             StructAssignDeclaration temp;
-            StructDeclaration structTemp=null;
+            StructDeclaration structTemp = null;
             int flag = -1;
 
             //Handle struct
@@ -2574,15 +3481,15 @@ namespace Spinach
                     flag = 1;
                 }
                 else
-                    sendres(112,"Structure " + ((VariableElement)(temp.getObjName())).getText()+" not found\n");
-                    
+                    sendres(112, "Structure " + ((VariableElement)(temp.getObjName())).getText() + " not found\n");
+
                 Element rhs = element.getRhs();
                 VisitElement(rhs);
                 if (mat_stack.Count > 0 && flag == 1)
                 {
                     Object obj = getTopOfStack_Matrix();
                     List<ScalarVariableDeclaration> l1 = structTemp.getVarType();
-                    for(int i=0;i<l1.Count;i++)
+                    for (int i = 0; i < l1.Count; i++)
                         if (l1[i].getVar().getText() == ((VariableElement)temp.getDataMember()).getText())
                         {
                             if (obj is IntegerElement)
@@ -2712,6 +3619,174 @@ namespace Spinach
             }
         }
 
+        private void ProcessResults(List<string> result)
+        {           
+            for (int i = 0; result.Count != 0 && i < result.Count; i++)
+            {
+            int curElement = 0;
+            MatrixVariableDeclaration matTemp = null;
+            VectorVariableDeclaration vec = null;
+            StringReader readStr = new StringReader(result[i]);
+            XmlTextReader xf = new XmlTextReader(readStr);
+            string matElem = "";
+            int currRow = 0;
+            int currCol = 0;
+            string type = "";
+            string name = "";
+            int value = 0;
+            double dvalue = 0.0;
+            while (xf.Read())
+            {
+                switch (xf.NodeType)
+                {
+                    case XmlNodeType.Element:
+                        {
+                            if (xf.Name == "Matrix")
+                                curElement = 1;                               
+                            if (xf.Name == "Vector")
+                                curElement = 2;
+                            if (curElement == 2)
+                            {
+                                if (xf.Name == "name")
+                                    matElem = "name";
+
+                            }
+                            if (curElement == 1)
+                            {
+                                if (xf.Name == "Name")
+                                    matElem = "name";
+                                if (xf.Name == "Row")
+                                    matElem = "row";
+                                if (xf.Name == "Column")
+                                    matElem = "column";
+                                if (xf.Name == "type")
+                                    matElem = "type";
+                                if (xf.Name == "Value")
+                                    matElem = "value";                                
+                            }
+                            if (curElement == 2)
+                            {
+                                if (xf.Name == "Name")
+                                    matElem = "name";
+                                if (xf.Name == "count")
+                                    matElem = "count";
+                                if (xf.Name == "type")
+                                    matElem = "type";
+                                if (xf.Name == "Element")
+                                {
+                                    matElem = "elem";
+                                }
+                            }
+
+                            break;
+                        }
+                    case XmlNodeType.Text:
+                        {
+                            if (curElement == 1)
+                            {
+                                if (matElem == "row")
+                                    currRow = int.Parse(xf.Value.ToString());
+                                if (matElem == "column")
+                                    currCol = int.Parse(xf.Value.ToString());
+                                if (matElem == "name")
+                                {
+                                    name = xf.Value;
+                                    if (map_contains_matrix(name))
+                                    {
+                                        if (local == 0)
+                                        {
+                                            matTemp = (MatrixVariableDeclaration)mVariableMap[name];
+                                        }
+                                        else
+                                        {
+                                            Hashtable hash = getHashTable(name);
+                                            matTemp = (MatrixVariableDeclaration)hash[name];
+                                        }
+                                    }
+                                }
+                                if (matElem == "type")
+                                {
+                                    type = xf.Value;
+                                    
+                                }
+                                if (matElem == "value")
+                                {
+                                    if (type == "int")
+                                        value = int.Parse(xf.Value.ToString());
+                                    else if (type == "double")
+                                        dvalue = double.Parse(xf.Value.ToString());
+                                }
+                            }
+                            if (curElement == 2)
+                            {
+                                if (matElem == "index")
+                                {
+                                    currRow = int.Parse(xf.Value);
+                                }
+                                if (matElem == "name")
+                                {
+                                    name = xf.Value;
+                                    if (map_contains_matrix(name))
+                                    {
+                                        if (local == 0)
+                                        {
+                                            vec= (VectorVariableDeclaration)mVariableMap[name];
+                                         }
+                                        else
+                                        {
+                                            Hashtable hash = getHashTable(name);
+                                            vec = (VectorVariableDeclaration)hash[name];
+                                            
+                                        }
+                                    }
+                                }
+                                if (matElem == "type")
+                                {
+                                    type = xf.Value;
+                                    vec.setType(type);
+                                }
+                                if (matElem == "value")
+                                {
+                                    if (type == "int")
+                                        value = int.Parse(xf.Value.ToString());
+                                    else if (type == "double")
+                                        dvalue = double.Parse(xf.Value.ToString());
+                                }
+                            }
+                            break;
+                        }
+                    case XmlNodeType.EndElement:
+                        {
+                            if (xf.Name == "Matrix" && curElement == 1)
+                            {
+                                if(type=="int")
+                                      matTemp.setintValueat(currRow,currCol,value);
+                                else if (type == "double")
+                                    matTemp.setdoubleValueat(currRow, currCol, dvalue);                                
+                            }
+                            if (xf.Name == "Vector" && curElement == 2)
+                            {
+                                if(type=="int")//TBD
+                                    vec.setintValueat(currRow,value);
+                                else if (type == "double")
+                                    vec.setdoubleValueat(currRow,value);
+                                
+                            }
+                            Console.Write("End:" + xf.Name);
+                            break;
+                        }
+                    default:
+                        {
+                            Console.Write("\n");
+                            break;
+                        }
+                }
+            }
+ 
+            }
+        }
+<<<<<<< HEAD
+
 <<<<<<< HEAD
 <<<<<<< HEAD
         //Set the single matrix element
@@ -2722,9 +3797,14 @@ namespace Spinach
         {
             try
 =======
+>>>>>>> ratandon-master
+=======
         private void ProcessResults(List<string> result)
         {           
             for (int i = 0; result.Count != 0 && i < result.Count; i++)
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
 >>>>>>> ratandon-master
             {
             int curElement = 0;
@@ -2743,6 +3823,7 @@ namespace Spinach
             {
                 switch (xf.NodeType)
                 {
+<<<<<<< HEAD
 <<<<<<< HEAD
                     string s = ((IntegerElement)(mVariableMap[((VariableElement)temp.getColumn()).getText()])).getText();
                     return int.Parse(s);
@@ -2786,6 +3867,8 @@ namespace Spinach
             parallelString.Append("=");
             VisitElement(element.getRhs());
 =======
+=======
+>>>>>>> ratandon-master
                     case XmlNodeType.Element:
                         {
                             if (xf.Name == "Matrix")
@@ -2796,6 +3879,9 @@ namespace Spinach
                             {
                                 if (xf.Name == "name")
                                     matElem = "name";
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
 >>>>>>> ratandon-master
 
                             }
@@ -2933,6 +4019,7 @@ namespace Spinach
  
             }
         }
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
         //Set the single matrix element
         public void HandleSingleMatrixElement(AssignmentOperationElement element)
         {
@@ -3294,12 +4381,15 @@ namespace Spinach
                 if (element.getChildElement() is VariableElement)
                     PrintVariable(element.getChildElement());
 <<<<<<< HEAD
+<<<<<<< HEAD
                 else if(element.getChildElement() is IntegerElement)
                     result(((IntegerElement)element.getChildElement()).getText() + "\n");
                 else if(element.getChildElement() is DoubleElement)
                     result(((DoubleElement)element.getChildElement()).getText() + "\n");
                 else if(element.getChildElement() is StringElement)
 =======
+=======
+>>>>>>> ratandon-master
                 else if (element.getChildElement() is IntegerElement)
                 {
                     result(((IntegerElement)element.getChildElement()).getText() + "\n");
@@ -3312,6 +4402,9 @@ namespace Spinach
                 }
                 else if (element.getChildElement() is StringElement)
                 {
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
 >>>>>>> ratandon-master
                     result(((StringElement)element.getChildElement()).getText() + "\n");
                     finalResult.Append(((StringElement)element.getChildElement()).getText() + "\n");
@@ -3368,7 +4461,7 @@ namespace Spinach
             }
 
             else sendres(112, "Variable not declared\n");
-  
+
         }
         private void PrintStruct(Object obj)
         {
@@ -3445,6 +4538,7 @@ namespace Spinach
         private void PrintMatrix(Object obj)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
                             MatrixVariableDeclaration elem = (MatrixVariableDeclaration)(obj);
                             string type = elem.getType();
                             int row = int.Parse(elem.getRow().getText());
@@ -3507,6 +4601,8 @@ namespace Spinach
             string type = elem.getType();
             int index = int.Parse(elem.getRange().getText());
 =======
+=======
+>>>>>>> ratandon-master
             MatrixVariableDeclaration elem = (MatrixVariableDeclaration)(obj);
             string type = elem.getType();
             int row = int.Parse(elem.getRow().getText());
@@ -3562,10 +4658,13 @@ namespace Spinach
                     }
                 }
             }
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
 >>>>>>> ratandon-master
             
         }
->>>>>>> ratandon-master
+
         public String getIfElement(Element element)
         {
             if (element is IntegerElement)
@@ -3576,27 +4675,56 @@ namespace Spinach
             else if (element is VariableElement)
             {
                 VariableElement var_elem = (VariableElement)element;
-                return var_elem.getText();
+                if (mVariableMap.ContainsKey(var_elem.getText()) == true)
+                {
+                    Object obj = mVariableMap[var_elem.getText()];
+                    String str = getIfElement((Element)obj);
+                    return str;
+                }
             }
             else if (element is DoubleElement)
             {
                 DoubleElement double_elem = (DoubleElement)element;
                 return double_elem.getText();
             }
-            else
-                return null;
-            /*else if (element is StructAssignDeclaration)
-<<<<<<< HEAD
+            else if (element is StringElement)
             {
-                StructAssignDeclaration range_elem = (StructAssignDeclaration)element;
-                return range_elem.;
-            }*/
-=======
+                StringElement string_elem = (StringElement)element;
+                return string_elem.getText();
+            }
+            else if (element is StructAssignDeclaration)
             {
-                StructAssignDeclaration range_elem = (StructAssignDeclaration)element;
-                return range_elem.;
-            }*/
+                /* The following commemted will work when the front end team will provide structure hash map
+                 * and related APIs.
+                 * sendres(112, "Structure hash map not found.\n");                   
+                          return null;  // for time being
+                  StructAssignDeclaration struct_elem = (StructAssignDeclaration)element;
+                  StructDeclaration structTemp=null;
+       
+                  if (mVariableMap.ContainsKey(((VariableElement)(struct_elem.getObjName())).getText())) //getName()))
+                  {
+                      structTemp = (StructDeclaration)mVariableMap[((VariableElement)(struct_elem.getObjName())).getText()]; //.getName()];
+                     // String str = getIfElement((Element)obj); 
+                      for (x = 0; x < structTemp.getVarType().Count; x++)
+                      {
+                          VariableElement s = ((VariableElement)(struct_elem.getDataMember())).getText();
+                          // search s in structure's hash table
+                          // return (s.getText());                        
+                      }
+                  }
+                  else
+                      sendres(112, "Structure " + ((VariableElement)(struct_elem.getObjName())).getText() + " not found\n");                   
+                 */
+                sendres(112, "Program Error: Structure hash map not found.\n");
+                return null;  // for time being
+            }
+
+            //Console.WriteLine("\n Invalid if expression!");
+            sendres(112, "\n Invalid if expression!");
+            return null;
+
         }
+
 
         private void createIf(IfStatementElement element)
         {
@@ -3634,7 +4762,6 @@ namespace Spinach
                 parallelString.Append(";");
             }
             parallelString.Append("\n}");
->>>>>>> ratandon-master
         }
 
         private void createElse(IfStatementElement element)
@@ -3654,62 +4781,90 @@ namespace Spinach
 
         public override void VisitIfStatementElement(IfStatementElement element)
         {
-<<<<<<< HEAD
-            String lhs = getIfElement(element.getLhs()); //.getConditionLhs());
-            String rhs = getIfElement(element.getRhs()); //.getConditionRhs());
-
-            if (lhs == null || rhs == null)
-            { Console.WriteLine("\n Variable not allowed. "); return; }
-
-            if (mVariableMap.ContainsKey(lhs) == false || mVariableMap.ContainsKey(rhs) == false)
-                Console.WriteLine("\n Invalid Comparison.");
-
-            if (
-                 (element.OP == "eq" && String.Compare(lhs, rhs) == 0) ||
-                 (element.OP == "ne" && String.Compare(lhs, rhs) != 0) ||
-                 (element.OP == "lt" && String.Compare(lhs, rhs) < 0) ||
-                 (element.OP == "le" && String.Compare(lhs, rhs) <= 0) ||
-                 (element.OP == "gt" && String.Compare(lhs, rhs) < 0) ||
-                 (element.OP == "ge" && String.Compare(lhs, rhs) >= 0)
-               )
-            {
-                Console.WriteLine("\n Loop condition true - entered true. ");
-            }
-            else
-            {
-                if (element.ELSECODE.Count != 0)
-                { Console.WriteLine("\n Loop condition false - entered else. "); }
-=======
             if (inParallelFor == 1)
             {
                 createIf(element);
                 createElse(element);
-
             }
             else
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
+                local++;
+                Hashtable localTable = new Hashtable();
+                scope.Push(localTable);
+
+                String lhs = getIfElement(element.getLhs());
+                String rhs = getIfElement(element.getRhs());
+                Console.WriteLine("\n lhs = " + lhs + " rhs = " + rhs);
 >>>>>>> ratandon-master
 =======
                 String lhs = getIfElement(element.getLhs()); //.getConditionLhs());
                 String rhs = getIfElement(element.getRhs()); //.getConditionRhs());
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
 
                 if (lhs == null || rhs == null)
                 { Console.WriteLine("\n Variable not allowed. "); return; }
 
+<<<<<<< HEAD
+=======
                 if (mVariableMap.ContainsKey(lhs) == false || mVariableMap.ContainsKey(rhs) == false)
                     Console.WriteLine("\n Invalid Comparison.");
 
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                 if (
                      (element.OP == "eq" && String.Compare(lhs, rhs) == 0) ||
                      (element.OP == "ne" && String.Compare(lhs, rhs) != 0) ||
                      (element.OP == "lt" && String.Compare(lhs, rhs) < 0) ||
                      (element.OP == "le" && String.Compare(lhs, rhs) <= 0) ||
+<<<<<<< HEAD
+                     (element.OP == "gt" && String.Compare(lhs, rhs) > 0) ||
+=======
                      (element.OP == "gt" && String.Compare(lhs, rhs) < 0) ||
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
                      (element.OP == "ge" && String.Compare(lhs, rhs) >= 0)
                    )
                 {
                     Console.WriteLine("\n Loop condition true - entered true. ");
+<<<<<<< HEAD
+                    //sendres(120, "Loop condition true - entered true.\n");
+
+                    for (int i = 0; i < element.IFCODE.Count; i++)
+                    {
+                        Element curr = element.IFCODE[i];
+                        curr.Accept(this);
+                    }
+
+                    scope.Pop();
+                    local--;
+
+                }
+                else
+                {
+                    local++;
+                    Hashtable localTableElse = new Hashtable();
+                    scope.Push(localTableElse);
+
+                    //VisitElseStatementElement(element);
+                    if (element.ELSECODE.Count != 0)
+                    {
+                        Console.WriteLine("\n Loop condition false - entered else. ");
+                        //sendres(121, "Loop condition false - entered false.\n");
+
+                        for (int i = 0; i < element.ELSECODE.Count; i++)
+                        {
+                            Element curr = element.ELSECODE[i];
+                            curr.Accept(this);
+                        }
+                    }
+
+                    scope.Pop();
+                    local--;
+                }
+
+=======
                 }
                 else
                 {
@@ -3718,9 +4873,17 @@ namespace Spinach
                 }
 
                 //throw new NotImplementedException();
+<<<<<<< HEAD
+>>>>>>> ratandon-master
+=======
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
 >>>>>>> ratandon-master
             }
 
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa

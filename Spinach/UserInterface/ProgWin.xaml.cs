@@ -23,7 +23,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.IO;
-using System.Threading;
 using Spinach;
 
 namespace Spinach
@@ -37,44 +36,20 @@ namespace Spinach
         //private Core core = new Core();
         private List<string> swarmUserList;
         private List<string> progUserList;
-        private Dictionary<string, string> swarmUserTable = new Dictionary<string,string>();
         public editorType et;
-        bool read, write;
-        private string PID;
-        private string owner;
 
         private PlotReceiver plot = new PlotReceiver();
         PngBitmapEncoder PBE = new PngBitmapEncoder();
-
-        //Swarm Memory related Declarations
-        private SwarmConnection SC;
-        private SwarmMemory SM;
-        private SwarmMemoryCaller SMcaller;
-        string IP = "";
-        string Port = "";
-
         private executor Controller;
-        private string plotpath = "";
-        private int isplotReady = 0; 
-        
-        Thread cur_th = null;
-        public delegate void mydelegate();
+        //private Spinach.exec FE = new exec();
 
         public enum editorType { owner, collaborator };
 
         //this is to know the type of invocation
 
-        //public ProgWin()
-        //{
-        //    InitializeComponent();
-        //    err.ProgWinError+=new ErrorNotification(ShowError);
-        //    keywords = FE.getKeywords();
-        //}
-        
-        public ProgWin(editorType e, SwarmConnection sconn, SwarmMemoryCaller smcaller, string ip, string port, string pid)
+        public ProgWin()
         {
             InitializeComponent();
-            et = e;
             err.ProgWinError += new ErrorNotification(ShowError);
             plot.image += new PlotReceiver.BmpImage(EnablePlot);
             Controller = new executor(plot);
@@ -82,37 +57,24 @@ namespace Spinach
             keywords = Controller.frontEnd.getKeywords();
             err.SetExecutorObject(Controller);
             err.SetPlotObject(plot);
-
-            //Swarm Operations
-            SC = sconn;
-            SMcaller = smcaller;
-            SM = new SwarmMemory(SC);
-            IP = ip;
-            Port = port;
-            PID = pid;
-            SM.createTheObjects(PID, IP, Port);                 //Finally the swarm memory object
-            SC.InsertProgtoSC(SM);
         }
 
-        public SwarmMemory SMObj()
+        public ProgWin(editorType e)
         {
-            return SM;
+            InitializeComponent();
+            et = e;
+            err.ProgWinError += new ErrorNotification(ShowError);
+            plot.image +=new PlotReceiver.BmpImage(EnablePlot);
+            Controller = new executor(plot);
+            Controller.resEvent +=new executor.result(Display);
+            keywords = Controller.frontEnd.getKeywords();
+            err.SetExecutorObject(Controller);
+            err.SetPlotObject(plot);
         }
 
-        public void setOwner(string uname)
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-              Thread th = new Thread(new ThreadStart(
-              delegate()
-              {
-                  this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
-                      delegate()
-                      {
-                          owner = uname;
-                          lblOwner.Content = "Owner: " + owner;
-                          SM.setOwner(owner);
-                      }));
-              }));
-              th.Start();
+            
         }
 
         private void mnuFile_Click(object sender, RoutedEventArgs e)
@@ -161,8 +123,8 @@ namespace Spinach
 
         private void mnuAccess_Click(object sender, RoutedEventArgs e)
         {
-            //mnuAdd.Visibility = Visibility.Visible;
-            //mnuDelete.Visibility = Visibility.Visible;
+            mnuAdd.Visibility = Visibility.Visible;
+            mnuDelete.Visibility = Visibility.Visible;
             mnuEdit.Visibility = Visibility.Visible;
         }
 
@@ -174,11 +136,7 @@ namespace Spinach
         }
         private void mnuEdit_Click(object sender, RoutedEventArgs e)
         {
-            TextPointer start = rtbInput.Document.ContentStart;
-            TextPointer end = rtbInput.Document.ContentEnd;
-            TextRange tr = new TextRange(start, end);
-            EditPermissions editPerm = new EditPermissions(SM, IP, Port, tr.Text);
-            editPerm.setUserList(swarmUserTable);
+            EditPermissions editPerm = new EditPermissions();
             editPerm.ShowDialog();
         }
         private void mnuDelete_Click(object sender, RoutedEventArgs e)
@@ -190,12 +148,6 @@ namespace Spinach
         public void setUserList(List<string> list)
         {
             swarmUserList = list;
-            foreach (string s in swarmUserList)
-            {
-                string[] userInfo = s.Split(':');
-                string ipPort = userInfo[1].Trim() + ":" + userInfo[2].Trim();
-                swarmUserTable[ipPort] = userInfo[0].Trim();
-            }
         }
 
         public void setProgUserList(List<string> list)
@@ -214,13 +166,10 @@ namespace Spinach
         {
             if (et == editorType.collaborator)
             {
-                //for (int i = 0; i < progUserList.Count; i++)
-                //{
-                //    lstUsers.Items.Add(progUserList[i]);
-                //}
-
-                //This will disable the Access Control menu
-                mnuAccess.IsEnabled = false;
+                for (int i = 0; i < progUserList.Count; i++)
+                {
+                    lstUsers.Items.Add(progUserList[i]);
+                }
             }
             //keywords.Add("int");
             //keywords.Add("double");
@@ -331,13 +280,7 @@ namespace Spinach
                 while (lstLine.Items.Count > 0)
                     lstLine.Items.RemoveAt(lstLine.Items.Count - 1);
             }
-        }
-
-        public void highlight()
-        {
-            syntax();
-            LineNumbers();
-        }
+            }
 
              
             private int compare(tags t1, tags t2)
@@ -352,26 +295,8 @@ namespace Spinach
 
             private void rtbInput_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
             {
-                if (e.Key.ToString() == "Space" || e.Key.ToString() == "Return")
-                {
-                    if (cur_th != null && cur_th.IsAlive == true)
-                    {
-                        cur_th.Abort();
-
-                        cur_th = null;
-                    }
-                    cur_th = new Thread(new ThreadStart(
-                                            delegate()
-                                            {
-                                                rtbInput.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
-                                                    delegate()
-                                                    {
-                                                        highlight();
-                                                    }));
-                                            }));
-                    cur_th.IsBackground = true;
-                    cur_th.Start();
-                }
+                LineNumbers();
+                syntax();
             }
             private void ShowError(string Msg)
             {
@@ -380,10 +305,6 @@ namespace Spinach
 
             private void btnCompute_Click(object sender, RoutedEventArgs e)
             {
-                txtResult.Text = "";
-                isplotReady = 0;
-                plotpath = Title;
-                plotpath += ".png";
                 TextPointer start = rtbInput.Document.ContentStart;
                 TextPointer end = rtbInput.Document.ContentEnd;
                 TextRange tr = new TextRange(start, end);
@@ -391,7 +312,7 @@ namespace Spinach
                 mnuPlot.IsEnabled = true;
             }
 
-            public void loadProgram(string text)
+            public void loadProgram(int read, int write, string text)
             {
                 rtbInput.AppendText(text);
                 syntax();
@@ -428,38 +349,19 @@ namespace Spinach
 
             private void EnablePlot(PngBitmapEncoder encoder)
             {
-                try
-                {
-                    if (encoder != null)
-                    {
-                        PBE = new PngBitmapEncoder();
-                        PBE.Frames.Add(BitmapFrame.Create(encoder.Frames[0].Clone()));
-                        isplotReady = 1;
-                        System.IO.FileStream outStream = new System.IO.FileStream(plotpath, System.IO.FileMode.Create);
-                        PBE.Save(outStream);
-                        outStream.Close();
-                    }
-                }
-                catch (Exception e)
-                {
-                    System.Windows.MessageBox.Show("Error in enable plot:" + e.Message);
-                }
+                mnuPlot.IsEnabled = true;
+                PBE = encoder;
             }
             
             private void Display(string res)
 	        {
-	    	    txtResult.Text += res;
+	    	    rtbResult.AppendText(res);
             }
 
             private void mnuShowPlot_Click(object sender, RoutedEventArgs e)
             {
-                if (isplotReady == 1)
-                {
-                    ProgPlot frmPlot = new ProgPlot(plotpath);
-                    frmPlot.ShowDialog();
-                }
-                else
-                    System.Windows.MessageBox.Show("No Plot");
+                ProgPlot frmPlot = new ProgPlot(PBE);
+                frmPlot.ShowDialog();
             }
 
             private void mnuSavePlot_Click(object sender, RoutedEventArgs e)
@@ -486,35 +388,6 @@ namespace Spinach
                         System.Windows.MessageBox.Show("Error: Could not Write file to disk. Original error: " + ex.Message);
                     }
                 }
-            }
-
-            public void setPermissions(string perm)
-            {
-                if (perm == "RW")
-                {
-                    read = true;
-                    write = true;
-                }
-                else if (perm == "R")
-                {
-                    read = true;
-                    write = false;
-                }
-                else if (perm == "W")
-                {
-                    read = false;
-                    write = true;
-                }
-
-                if (write)
-                    rtbInput.IsEnabled = true;
-                else
-                    rtbInput.IsEnabled = false;
-            }
-
-            private void Window_Unloaded(object sender, RoutedEventArgs e)
-            {
-                plot.terminate();
             }
     }
 }
