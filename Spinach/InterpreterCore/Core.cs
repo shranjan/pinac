@@ -82,26 +82,41 @@ namespace Spinach
                 rescore_(coremsg);
         }
 
-        public Core()
+        
+        public void execParallel(string body, string data, int start, int stop)
         {
+            interp_visitor.execParallel(body, data, start, stop);
+        }
+
+        public void setSwarm()
+        {
+            interp_visitor.setSwarm();
         }
         //List<Element> elements;
-        public Core(PlotReceiver r)
+        public Core()
         {
-           interp_visitor=new InterpreterVisitor();
-            interp_visitor.errorcore_ += new InterpreterVisitor.errorcoremsg(sendres);
+             interp_visitor=new InterpreterVisitor();
+             interp_visitor.errorcore_ += new InterpreterVisitor.errorcoremsg(sendres);
              interp_visitor.rescore_ += new InterpreterVisitor.resultcore(result);
-             interp_visitor.setPlotObj(r);
+             //interp_visitor.setFE(FE);
+        }
+
+        public void setPlotObject(PlotReceiver plotObj)
+        {
+            interp_visitor.setPlotObj(plotObj);
         }
         public void setAST(List<Element> elements)
         {
             //  element = ele;
-            for (int i = 0; i < elements.Count && flag!=1; i++)
+            if (elements != null)
             {
-                Element curr = elements[i];
-               // curr.Accept(print_visitor);
-                curr.Accept(interp_visitor);
-            }  
+                for (int i = 0; i < elements.Count && flag != 1; i++)
+                {
+                    Element curr = elements[i];
+                    // curr.Accept(print_visitor);
+                    curr.Accept(interp_visitor);
+                }
+            }
         }
 
         public void clearVarMap()
