@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////
-// Core.cs: Executive for core processing of the SPINACH code.
+// Core.cs: Implements a vistor that interprets the syntax tree.
 // 
 // version: 1.0
 // Description: part of the interpreter example for the visitor design
@@ -15,17 +15,17 @@
 /*
  * Module Operations
  * ================= 
- * This file provides APIs to be used by other teams for communicating with 
- * the core. It provides a setAST() function which receives the Abstract Syntax 
- * Tree. Using this tree, we execute the entire code and perform semantic analysis
- * as well.
- * 
- * We also send the code execution results and errors to the User Interface using 
- * sendres() and result().
+ * This file provides functionalities which interprets the tree, according to the 
+ * elements present in it, i.e. it invokes addition functionality if it encounters
+ * a '+' symbol, multiplication functionality if '*' symbol is encontered, etc. 
+ * Similarly,it invokes variable, integer, assignment, matrix assignment, print and 
+ * for loop functionalities as and when these are encountered. The functionalities 
+ * associated with these various operations, will further go into the tree to evaluate 
+ * them.
  * 
  * Public Interface
  * ================
- * Core core = new Core();  
+ * Core interp_visitor = new Core();  
  *                       // will create an instance of this class and allocate memory
  * 
  */
@@ -66,12 +66,8 @@ namespace Spinach
         {
             if (errorcore_ != null)
             {
-                if (flag == -1)
-                {
-                    errorcore_(code, errormsg);
-                    flag = 1;
-                }
-                
+                errorcore_(code, errormsg);
+                flag = 1;
             }
 
         }
@@ -81,42 +77,23 @@ namespace Spinach
             if (rescore_ != null)
                 rescore_(coremsg);
         }
-
-        
-        public void execParallel(string body, string data, int start, int stop)
-        {
-            interp_visitor.execParallel(body, data, start, stop);
-        }
-
-        public void setSwarm()
-        {
-            interp_visitor.setSwarm();
-        }
         //List<Element> elements;
-        public Core()
+        public Core(PlotReceiver r)
         {
-             interp_visitor=new InterpreterVisitor();
-             interp_visitor.errorcore_ += new InterpreterVisitor.errorcoremsg(sendres);
+           interp_visitor=new InterpreterVisitor();
+            interp_visitor.errorcore_ += new InterpreterVisitor.errorcoremsg(sendres);
              interp_visitor.rescore_ += new InterpreterVisitor.resultcore(result);
-             //interp_visitor.setFE(FE);
-        }
-
-        public void setPlotObject(PlotReceiver plotObj)
-        {
-            interp_visitor.setPlotObj(plotObj);
+             interp_visitor.setPlotObj(r);
         }
         public void setAST(List<Element> elements)
         {
             //  element = ele;
-            if (elements != null)
+            for (int i = 0; i < elements.Count && flag!=1; i++)
             {
-                for (int i = 0; i < elements.Count && flag != 1; i++)
-                {
-                    Element curr = elements[i];
-                    // curr.Accept(print_visitor);
-                    curr.Accept(interp_visitor);
-                }
-            }
+                Element curr = elements[i];
+               // curr.Accept(print_visitor);
+                curr.Accept(interp_visitor);
+            }  
         }
 
         public void clearVarMap()

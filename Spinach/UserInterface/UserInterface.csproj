@@ -86,7 +86,6 @@
       <SubType>Code</SubType>
       <DependentUpon>AddUser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Chat.cs" />
     <Compile Include="Connection.xaml.cs">
       <DependentUpon>Connection.xaml</DependentUpon>
     </Compile>
@@ -165,12 +164,6 @@
   <ItemGroup>
     <Resource Include="Icon.JPG" />
     <Resource Include="SPINACH_logo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SwarmComputing\Swarm.csproj">
-      <Project>{B303F988-4CD6-451D-97CC-A8704B510B64}</Project>
-      <Name>Swarm</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -107,7 +107,7 @@ public class VectorVariableDeclaration : Element
             intlist = new List<int>();
             for (int i = 0; i < range; i++)
             {
-                intlist.Add(i);
+                intlist.Add(vector[i]);
             }
             return true;
         }
