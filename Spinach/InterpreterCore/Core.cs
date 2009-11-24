@@ -66,8 +66,12 @@ namespace Spinach
         {
             if (errorcore_ != null)
             {
-                errorcore_(code, errormsg);
-                flag = 1;
+                if (flag == -1)
+                {
+                    errorcore_(code, errormsg);
+                    flag = 1;
+                }
+                
             }
 
         }
@@ -76,6 +80,10 @@ namespace Spinach
         {
             if (rescore_ != null)
                 rescore_(coremsg);
+        }
+
+        public Core()
+        {
         }
         //List<Element> elements;
         public Core(PlotReceiver r)
