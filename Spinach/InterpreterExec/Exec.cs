@@ -8,7 +8,7 @@
 // language: C# .Net 3.5
 ////////////////////////////////////////////////////////////////////////
 
-#define TEST_EXECw
+#define TEST_EXEC
 
 using System;
 using System.Collections.Generic;
@@ -30,11 +30,12 @@ namespace Spinach
             if (errEvent != null)
                 errEvent(code, message);
         }
-        public executor(PlotReceiver plot)
+
+        public executor()
         {
-            frontEnd = new exec();
             coreObject = new Core();
-            coreObject.setPlotObject(plot);
+            frontEnd = new exec();
+            this.setFrontEndToCore();
             frontEnd.error_ +=new exec.errorreport(Onerror);
             frontEnd.astEvent += new Spinach.exec.ast(AST);
             coreObject.errorcore_ +=new Core.errorcoremsg(Onerror);
@@ -59,39 +60,53 @@ namespace Spinach
         }
         public void AST(List<Element> elements)
         {
-            coreObject.clearVarMap();
-            
-            //string str = " <root><Matrix><name>b</name><row>2</row><col>2</col><type>int</type><Elements><Element>1</Element><Element>2</Element><Element>3</Element><Element>4</Element></Elements></Matrix><Matrix><name>a</name><row>2</row><col>2</col><type>int</type><Elements><Element>1</Element><Element>2</Element><Element>3</Element><Element>4</Element></Elements></Matrix></root>";
-            //string body = "a[0][0]=b[0][0]+b[0][0];";
-
-            //coreObject.execParallel(body,str,1,2);
             coreObject.setAST(elements);
         }
-    }
-}
 
-
-
-#if TEST_EXEC
-
-
-
-namespace Spinach
-{
-    public class UI
-    {
-        public static void Main(string[] args)
+        public void setSMObject(SwarmMemory sm)
         {
-            PlotReceiver plot = new PlotReceiver();
-            Core obj = new Core(plot);
-            executor obj1 = new executor(plot);
-            obj1.errEvent += new executor.err(error);
-            obj1.VisitLine("ubPlot(1,a,\"abc\",1D);vec[i]=i + 2;mat[i][j] = i + 2;");
+            coreObject.setSwarmObject(sm);
         }
-        public static void error(int code, string message)
+
+        public void setPlotObject(PlotReceiver plot)
         {
-            Console.Write(code + " " + message);
+            coreObject.setPlotObject(plot);
+        }
+
+        public void setFrontEndToCore() 
+        {
+            coreObject.setFrontEnd(frontEnd);
+        }
+
+        public void clearCoreValues()
+        {
+            coreObject.clearVarMap();
         }
     }
 }
-#endif
+
+
+
+//#if TEST_EXEC
+
+
+
+//namespace Spinach
+//{
+//    public class UI
+//    {
+//        public static void Main(string[] args)
+//        {
+//            PlotReceiver plot = new PlotReceiver();
+//            Core obj = new Core();
+//            executor obj1 = new executor(plot);
+//            obj1.errEvent += new executor.err(error);
+//            obj1.VisitLine("ubPlot(1,a,\"abc\",1D);vec[i]=i + 2;mat[i][j] = i + 2;");
+//        }
+//        public static void error(int code, string message)
+//        {
+//            Console.Write(code + " " + message);
+//        }
+//    }
+//}
+//#endif
