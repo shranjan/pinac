@@ -39,6 +39,8 @@ namespace Spinach
         //----< Create the Dictionary of Errors >----
         public ErrorModule()
         {
+            // Swarm Error Messages
+            ErrorDict.Add(10, "Connection Error: ");
             // FrontEnd Error Messages
             ErrorDict.Add(101, "Syntax Error: ");
             ErrorDict.Add(102, "Exception: ");

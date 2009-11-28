@@ -28,12 +28,12 @@ namespace Spinach
     public class ChatModule
     {
         public event ChatNotification Chat;
-        //private SwarmConnection SC;
+        private SwarmConnection SC;
 
-        public ChatModule(/*SwarmConnection SConn*/)
+        public ChatModule(SwarmConnection SConn)
         {
-            //SC = SConn;
-            //SC.ChatEvent += new SwarmConnection.chat(ChatMsg);
+            SC = SConn;
+            SC.ChatChanged += new SwarmConnection.ChatEventHandler(ChatMsg);
         }
 
         //----< Sends Error Message to ProgConf >----
