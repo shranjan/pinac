@@ -1,9 +1,0 @@
-// matrix operation
-// //
-////
-// int a = 1;
-//();
-// ;
-// double;
-int z = 0 ; //
-double y = // 1.33 ;
