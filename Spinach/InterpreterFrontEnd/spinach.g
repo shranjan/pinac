@@ -1,7 +1,7 @@
 ///-- Interpreter Front End team.
 ///-- version 1.1  Date: 11/08/09
 ///-- version 1.2  Date: 11/09/09  -- Updated vectorelem, matrixelem, plot grammar, struct propertices Name changed, removed commented code, modified for and if-else body loop
-
+///-- version 1.3 Date: 11/26/09 -- Updated comment, string, struct, program to have comment everywhere.
 
 grammar spinach;
 
@@ -163,8 +163,6 @@ multiplicative_expression returns [MultiplicationElement ret]
 }
 	: (e11 = var_int_or_double_literal{retval.ret.setLhs($e11.ret);}
 	   | e12= bracket_exp{retval.ret.setLhs($e12.ret);}
-	   //| el3 = matrixelem{retval.ret.setLhs($el3.ret);}
-	   //| el4 = vectorelem{retval.ret.setLhs($el4.ret);}
 	   )
 	   ('*'
 	   el5 = multiplicative_expression{retval.ret.setRhs(el5.ret);}
@@ -196,8 +194,7 @@ structdec returns [StructDeclaration ret]
 retval.ret = new StructDeclaration();
 }
 : ('struct' variable { retval.ret.setName($variable.ret);}
-(('{''}')|
-'{' (el1=scalarvardec { retval.ret.setVarType($el1.ret);})+'}'){retval.ret.setVar();}
+('{'((el1=scalarvardec { retval.ret.setVarType($el1.ret);}| comment )+)?'}'){retval.ret.setVar();}
 )END_OF_STATEMENT; 
 
 scalarvardec returns [ScalarVariableDeclaration ret]
@@ -244,7 +241,7 @@ print returns [PrintOperationElement ret]
 parallelfor returns [ParallelForElement ret]
 @init {
   retval.ret = new ParallelForElement();
-}: 'parallelfor'LEFTBRACE r11 = variable{retval.ret.RANGEVARIABLE = $r11.ret;} POINT r12 = int_literal{retval.ret.STARTINGRANGE = $r12.ret;} 'to' r13= int_literal{retval.ret.ENDINGRANGE = $r13.ret;} RIGHTBRACE LEFTPARANTHESIS  ((e11=expr2{retval.ret.ADDCODE =$e11.ret;})+(('SYNC'{retval.ret.syncfunction();} END_OF_STATEMENT)|{retval.ret.syncfunction();}))+ RIGHTPARANTHESIS
+}: 'parallelfor'LEFTBRACE r11 = variable{retval.ret.RANGEVARIABLE = $r11.ret;} POINT r12 = int_literal{retval.ret.STARTINGRANGE = $r12.ret;} 'to' r13= int_literal{retval.ret.ENDINGRANGE = $r13.ret;} RIGHTBRACE LEFTPARANTHESIS  ((e11=expr2{retval.ret.ADDCODE =$e11.ret;})('SYNC'{retval.ret.syncfunction();} END_OF_STATEMENT)?)+ {retval.ret.syncfunction();}RIGHTPARANTHESIS
 ;
 
 ifelse returns [IfStatementElement ret]
@@ -266,14 +263,14 @@ ifloop returns [List<Element> ret]
 {
    retval.ret = new List<Element>();
 }
-: (expr1{retval.ret.Add($expr1.ret);}|functionreturn{retval.ret.Add($functionreturn.ret);})+
+: (expr1{retval.ret.Add($expr1.ret);}|functionreturn{retval.ret.Add($functionreturn.ret);}|comment)+
 ;
 
 
 forstatement returns [ForStatementElement ret]
 @init{
    retval.ret = new ForStatementElement();
-}:'for' LEFTBRACE r11 = variable{retval.ret.RANGEVARIABLE = $r11.ret;} POINT r12 = int_literal{retval.ret.STARTINGRANGE = $r12.ret;} 'to' r13= int_literal{retval.ret.ENDINGRANGE = $r13.ret;} RIGHTBRACE LEFTPARANTHESIS (e11=forexpr{retval.ret.ADDCODE =$e11.ret;})+ RIGHTPARANTHESIS;
+}:'for' LEFTBRACE r11 = variable{retval.ret.RANGEVARIABLE = $r11.ret;} POINT r12 = int_literal{retval.ret.STARTINGRANGE = $r12.ret;} 'to' r13= int_literal{retval.ret.ENDINGRANGE = $r13.ret;} RIGHTBRACE LEFTPARANTHESIS (e11=forexpr{retval.ret.ADDCODE =$e11.ret;}|comment)+ RIGHTPARANTHESIS;
 
 functioncall returns [FunctionCallElement ret]
  @init{ retval.ret = new FunctionCallElement();
@@ -301,7 +298,7 @@ retval.ret = new FunctionElement();
   | vectorvardec { retval.ret.setBody($vectorvardec.ret);}
   | matrixvardec { retval.ret.setBody($matrixvardec.ret);}
   | deletionofvar { retval.ret.setBody($deletionofvar.ret);} | print { retval.ret.setBody($print.ret); }
-  | ifelse{retval.ret.setBody($ifelse.ret);}| functionreturn{retval.ret.setBody($functionreturn.ret);}| parallelfor{retval.ret.setBody($parallelfor.ret);}| forstatement{retval.ret.setBody($forstatement.ret);})+)?
+  | ifelse{retval.ret.setBody($ifelse.ret);}| functionreturn{retval.ret.setBody($functionreturn.ret);}| parallelfor{retval.ret.setBody($parallelfor.ret);}| forstatement{retval.ret.setBody($forstatement.ret);}|comment)+)?
 '}')|'void'{retval.ret.setreturntype("void");}
   variable {retval.ret.setfunctionname($variable.ret);}
   '('
@@ -311,7 +308,7 @@ retval.ret = new FunctionElement();
   | vectorvardec { retval.ret.setBody($vectorvardec.ret);}
   | matrixvardec { retval.ret.setBody($matrixvardec.ret);}
   | deletionofvar { retval.ret.setBody($deletionofvar.ret);} | print { retval.ret.setBody($print.ret); }
-  | ifelse{retval.ret.setBody($ifelse.ret);}| functionreturn{retval.ret.setBody($functionreturn.ret);}| parallelfor{retval.ret.setBody($parallelfor.ret);}| forstatement{retval.ret.setBody($forstatement.ret);})+)?
+  | ifelse{retval.ret.setBody($ifelse.ret);}| functionreturn{retval.ret.setBody($functionreturn.ret);}|comment| parallelfor{retval.ret.setBody($parallelfor.ret);}| forstatement{retval.ret.setBody($forstatement.ret);})+)?
 '}'
 ;
 
@@ -346,14 +343,6 @@ arguments returns [Element ret]
 | matrixreference {retval.ret = $matrixreference.ret; }
 | vectorreference {retval.ret = $vectorreference.ret;});
 
-//functiondeclaration returns [DeclarationElement ret]
-//@init { retval.ret = new DeclarationElement();
-//}
-//:((e11 =VARTYPE{retval.ret.settype($e11.text);}) e12 =variable
-//{retval.ret.setvariable($e12.ret); }
-//|('Matrix''<' el1=VARTYPE {retval.ret.settype($el1.text);}'>'
-//el2=variable {retval.ret.setvariable($el2.ret);}))
-//;
 
 scalarargument returns [ScalarArgument ret]
 @init{retval.ret = new ScalarArgument();
@@ -362,13 +351,6 @@ scalarargument returns [ScalarArgument ret]
 {retval.ret.setvariable($e12.ret); })
 ;
 
-//comment returns [CommentElement ret]
-//@init{
-//retval.ret = new CommentElement();
-//}
-//:'//'var_int_or_double_literal*;
-
-
 
 functionreturn returns [ReturnElement ret]
 @init{
@@ -376,9 +358,6 @@ retval.ret = new ReturnElement();
 }
 :'return' (var_int_or_double_literal{retval.ret.setreturnvariable($var_int_or_double_literal.ret);}) END_OF_STATEMENT
 ;
-
-
- 
  
 plotfunctions returns [PlotFunctionElement ret]
 @init { retval.ret = new PlotFunctionElement();
@@ -429,13 +408,15 @@ comment returns [CommentElement ret]
  |PLUS{}
  |MULTIPLY{}
  |'print'{}
-|'subPlot'{}
-|'plot'{}
-|'resetPlot'{}
-|'setPlotAxis'{}
-|'setAxisTitle'{}
-|'setScaleMode'{}
-	|'"'{}	
+ |'subPlot'{}
+ |'plot'{}
+ |'resetPlot'{}
+ |'setPlotAxis'{}
+ |'setAxisTitle'{}
+ |'setScaleMode'{}
+ |'"'{}	
+ |'delete'{}
+ |'return'{}
  |'('{}
  |')'{}
  |'{'{}
@@ -444,34 +425,35 @@ comment returns [CommentElement ret]
  |'=='{}
  |'!='{}
  |'<='{}
-  |'&'{}
-  |'-'{}
-  |';'{}
-  |':'{}
-  | 'SYNC' {}
-   //|'%'{retval.ret.setText("%");}
-   |'^'{}
-   |'$'{}
-   |'#'{}
-   |'@'{}
-   |'!'{}
-    |'?'{}
-     |'/'{}  
-     |'['{}
-     |']'{}
-     |','{}
-     | 'T'{}
-     | 'DOT'
-     |'1D'{}
-     |'2D'{}
-     |'3D'{}
-     |'void'{}
-     |'struct'{}
-     | 'else' {}
-     | 'if'
-     | 'for'
-     |'parallelfor'
- )*'//');
+ |'&'{}
+ |'-'{}
+ |';'{}
+ |':'{}
+ | 'SYNC' {}
+ | PERCENT {}
+ |'^'{}
+ |'$'{}
+ |'#'{}
+ |'@'{}
+ |'!'{}
+ |'?'{}
+ |'/'{}  
+ |'['{}
+ |']'{}
+ |','{}
+ | 'T'{}
+ | 'DOT'
+ |'1D'{}
+ |'2D'{}
+ |'3D'{}
+ |'void'{}
+ |'struct'{}
+ | 'else' {}
+ | 'if'
+ | 'for'
+ |'parallelfor'
+ | 'to'
+)*'//');
 
 /*
  * Lexer Rules
@@ -497,11 +479,11 @@ string_literal returns [StringElement ret]
  |PLUS{retval.ret.setText($PLUS.text);}
  |MULTIPLY{retval.ret.setText($MULTIPLY.text);}
  |'subPlot'{retval.ret.setText("subPlot");}
-|'plot'{retval.ret.setText("plot");}
-|'resetPlot'{retval.ret.setText("resetPlot");}
-|'setPlotAxis'{retval.ret.setText("setPlotAxis");}
-|'setAxisTitle'{retval.ret.setText("setAxisTitle");}
-|'setScaleMode'{retval.ret.setText("setScaleMode");}
+ |'plot'{retval.ret.setText("plot");}
+ |'resetPlot'{retval.ret.setText("resetPlot");}
+ |'setPlotAxis'{retval.ret.setText("setPlotAxis");}
+ |'setAxisTitle'{retval.ret.setText("setAxisTitle");}
+ |'setScaleMode'{retval.ret.setText("setScaleMode");}
  |'('{retval.ret.setText("(");}
  |')'{retval.ret.setText(")");}
  |'{'{retval.ret.setText("{");}
@@ -510,25 +492,37 @@ string_literal returns [StringElement ret]
  |'=='{retval.ret.setText("==");}
  |'!='{retval.ret.setText("!=");}
  |'<='{retval.ret.setText("<=");}
-  |'&'{retval.ret.setText("&");}
-   //|'%'{retval.ret.setText("%");}
-   |'^'{retval.ret.setText("^");}
-   |'$'{retval.ret.setText("$");}
-   |'#'{retval.ret.setText("#");}
-   |'@'{retval.ret.setText("@");}
-   |';'{retval.ret.setText(";");}
-   |'!'{retval.ret.setText("!");}
-    |'?'{retval.ret.setText("?");}
-     |'/'{retval.ret.setText("/");}
-        |':'{retval.ret.setText(":");}
-          |','{retval.ret.setText(",");}
-            |'1D'{retval.ret.setText("1D");}
-              |'2D'{retval.ret.setText("2D");}
-                |'3D'{retval.ret.setText("3D");}
-         |'void'{retval.ret.setText("void");}
-       |'struct'{retval.ret.setText("struct");}
- 
- )*
+ |'&'{retval.ret.setText("&");}
+ |PERCENT{retval.ret.setText($PERCENT.text);}
+ |'^'{retval.ret.setText("^");}
+ |'$'{retval.ret.setText("$");}
+ |'#'{retval.ret.setText("#");}
+ |'@'{retval.ret.setText("@");}
+ |';'{retval.ret.setText(";");}
+ |'!'{retval.ret.setText("!");}
+ |'?'{retval.ret.setText("?");}
+ |'/'{retval.ret.setText("/");}
+ |':'{retval.ret.setText(":");}
+ |'['{retval.ret.setText("[");}
+ |']'{retval.ret.setText("]");} 
+ |','{retval.ret.setText(",");}
+ |'1D'{retval.ret.setText("1D");}
+ |'2D'{retval.ret.setText("2D");}
+ |'3D'{retval.ret.setText("3D");}
+ |'void'{retval.ret.setText("void");}
+ |'struct'{retval.ret.setText("struct");}
+ | 'return'{retval.ret.setText("return");}
+ | 'delete' {retval.ret.setText("delete");}
+ | 'DOT' {retval.ret.setText("DOT");}
+ | 'T' {retval.ret.setText("T");}
+ | 'else' {retval.ret.setText("else");}
+ | 'if' {retval.ret.setText("if");}
+ | 'for'{retval.ret.setText("for");}
+ |'parallelfor'{retval.ret.setText("parallelfor");}
+ | 'SYNC' {retval.ret.setText("SYNC");}
+ | 'print' {retval.ret.setText("print");}
+ | 'to' {retval.ret.setText("to");}
+)*
  '"');
 
  
@@ -544,7 +538,7 @@ VARIABLE: (('a'..'z' | 'A'..'Z' ) INT_LITERAL*)+;
 INT_LITERAL: ('0'..'9')+;
 DOUBLE_LITERAL:(INT_LITERAL DOT INT_LITERAL);	
 WHITESPACE : (' ' | '\t' | '\n' | '\r' )+ {$channel = HIDDEN; } ;
-//COMMENT	:	('//'(VARTYPE))+{$channel = HIDDEN;};
+PERCENT	:'%';
 LEFTBRACE :'(';
 RIGHTBRACE:')';
 LEFTPARANTHESIS:'{';
