@@ -157,6 +157,7 @@ namespace Spinach
         {
             interp_visitor.clearMap();
             Visited = 0;
+            flag = -1;
 
         }
 

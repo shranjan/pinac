@@ -88,7 +88,10 @@ namespace Spinach
         XmlTextWriter matXml;
         int parallelSwarm = 0;
         
-
+        //
+        string pdata, pbody, prange;
+        int pstart, pstop;
+        //
         public delegate void errorcoremsg(int code, string errormsg);
         public event errorcoremsg errorcore_;
 
@@ -136,10 +139,26 @@ namespace Spinach
            smem.parallelresult_ += new SwarmMemory.getResults(ParallelRes);
            parallelSwarm = 1;
         }
+
+        
         public void ParallelCore(string data, string body, int start, int stop,string range)
         {
-            convertParallel(data, body, start, stop,range);
-            parallelSwarm = 1;
+            try
+            {
+                Thread.Sleep(5);
+                pdata = data;
+                pbody = body;
+                pstart = start;
+                pstop = stop;
+                prange = range;
+                Thread t = new Thread(new ThreadStart(convertParallel));
+                t.Start();
+                parallelSwarm = 1;
+            }
+            catch (Exception e)
+            {
+                e.GetType();
+            }
         }
         public void ParallelRes(List<string> ParRes)
         {
@@ -183,6 +202,9 @@ namespace Spinach
             func_def.Clear();
             scope.Clear();
             scope.Push(mVariableMap);
+            parallelData.Length = 0;
+            parallelString.Length = 0;
+            parallelResult.Length = 0;
         }
         public Hashtable getMap()
         {
@@ -443,218 +465,234 @@ namespace Spinach
         }
 
         //To be used by Swarm 
-        public void convertParallel(string body, string data, int start, int stop,string range)
+        public void convertParallel()
         {
-            CreateData(data);
-            StringBuilder stmt = new StringBuilder();
-            stmt.Append("for(" + range + "->");//o reserved as control variable for parallel-for
-            stmt.Append(start.ToString() + " to " + stop.ToString() + ")");
-            stmt.Append("\n{");
-            stmt.Append(body);
-            stmt.Append("\n}");
-            //Fe.VisitLine(stmt.ToString());
-            FE.Visitline(stmt.ToString());
-            scope.Pop();
-            local--;
-            
-            smem.outgoingResult(start.ToString(),parallelResult.ToString());
-            parallelResult.Length = 0;
+            try
+            {
+                
+                CreateData(pdata);
+                StringBuilder stmt = new StringBuilder();
+                stmt.Append("for(" + prange + "->");//o reserved as control variable for parallel-for
+                stmt.Append(pstart.ToString() + " to " + pstop.ToString() + ")");
+                stmt.Append("\n{");
+                stmt.Append(pbody);
+                stmt.Append("\n}");
+                //Fe.VisitLine(stmt.ToString());
+                FE.Visitline(stmt.ToString());
+                scope.Pop();
+                local--;
+
+                smem.outgoingResult(pstart.ToString(), parallelResult.ToString());
+                parallelResult.Length = 0;
+            }
+            catch (Exception e)
+            {
+                sendres(112, e.Message);
+            }
             
         }
 
         private void CreateData(string data)
         {
-            local++;
-            Hashtable localTable = new Hashtable();
-            scope.Push(localTable);
-            int curElement = 0;
-            StringReader readStr = new StringReader(data);
-            XmlTextReader xf = new XmlTextReader(readStr);
-            MatrixVariableDeclaration mat = null;
-            VectorVariableDeclaration vec = null;
-            string matElem = "";
-            int currRow = 0;
-            
-            string type = "";
-            int totalRows = 0;
-            int totalCols = 0;
-            int currCol = -1;
-            int[,] elems = new int[10, 10];
-            double[,] delems = new double[10, 10];
-            List<int> vecElems = new List<int>();
-            List<double> vecDelems = new List<double>();
-
-            while (xf.Read())
+            try
             {
-                switch (xf.NodeType)
+                
+                local++;
+                Hashtable localTable = new Hashtable();
+                scope.Push(localTable);
+                int curElement = 0;
+                StringReader readStr = new StringReader(data);
+                XmlTextReader xf = new XmlTextReader(readStr);
+                MatrixVariableDeclaration mat = null;
+                VectorVariableDeclaration vec = null;
+                string matElem = "";
+                int currRow = 0;
+
+                string type = "";
+                int totalRows = 0;
+                int totalCols = 0;
+                int currCol = -1;
+                int[,] elems = new int[10, 10];
+                double[,] delems = new double[10, 10];
+                List<int> vecElems = new List<int>();
+                List<double> vecDelems = new List<double>();
+
+                while (xf.Read())
                 {
-                    case XmlNodeType.Element:
-                        {
-                            if (xf.Name == "Matrix")
+                    switch (xf.NodeType)
+                    {
+                        case XmlNodeType.Element:
                             {
-                                curElement = 1;
-                                mat = new MatrixVariableDeclaration();
-                                currRow = 0; currCol = -1;
-                            }
-                            if (xf.Name == "Vector")
-                            {
-                                curElement = 2;
-                                vec = new VectorVariableDeclaration();
-                            }
-                            if (curElement == 2)
-                            {
-                                if (xf.Name == "name")
-                                    matElem = "name";
-
-                            }
-                            if (curElement == 1)
-                            {
-                                if (xf.Name == "name")
-                                    matElem = "name";
-                                if (xf.Name == "row")
-                                    matElem = "row";
-                                if (xf.Name == "col")
-                                    matElem = "column";
-                                if (xf.Name == "type")
-                                    matElem = "type";
-                                if (xf.Name == "Elements")
+                                if (xf.Name == "Matrix")
                                 {
-                                    if(mat.getType()=="int")
-                                        elems = new int[totalRows, totalCols];
-                                    else if (mat.getType() == "double")
-                                        delems = new double[totalRows, totalCols];
+                                    curElement = 1;
+                                    mat = new MatrixVariableDeclaration();
+                                    currRow = 0; currCol = -1;
                                 }
-                                if (xf.Name == "Element")
+                                if (xf.Name == "Vector")
                                 {
-                                    matElem = "elem";
-                                    if (currCol == totalCols - 1 && currRow < totalRows - 1)
+                                    curElement = 2;
+                                    vec = new VectorVariableDeclaration();
+                                }
+                                if (curElement == 2)
+                                {
+                                    if (xf.Name == "name")
+                                        matElem = "name";
+
+                                }
+                                if (curElement == 1)
+                                {
+                                    if (xf.Name == "name")
+                                        matElem = "name";
+                                    if (xf.Name == "row")
+                                        matElem = "row";
+                                    if (xf.Name == "col")
+                                        matElem = "column";
+                                    if (xf.Name == "type")
+                                        matElem = "type";
+                                    if (xf.Name == "Elements")
                                     {
-                                        currRow += 1;
-                                        currCol = 0;
+                                        if (mat.getType() == "int")
+                                            elems = new int[totalRows, totalCols];
+                                        else if (mat.getType() == "double")
+                                            delems = new double[totalRows, totalCols];
                                     }
-                                    else currCol += 1;
+                                    if (xf.Name == "Element")
+                                    {
+                                        matElem = "elem";
+                                        if (currCol == totalCols - 1 && currRow < totalRows - 1)
+                                        {
+                                            currRow += 1;
+                                            currCol = 0;
+                                        }
+                                        else currCol += 1;
+                                    }
                                 }
-                            }
-                            if (curElement == 2)
-                            {
-                                if (xf.Name == "name")
-                                    matElem = "name";
-                                if (xf.Name == "count")
-                                    matElem = "count";
-                                if (xf.Name == "type")
-                                    matElem = "type";
-                                if (xf.Name == "Elements")
+                                if (curElement == 2)
                                 {
-                                    if (vec.getType() == "int")
-                                        vecElems = new List<int>();
-                                    if (vec.getType() == "double")
-                                        vecDelems = new List<double>();
+                                    if (xf.Name == "name")
+                                        matElem = "name";
+                                    if (xf.Name == "count")
+                                        matElem = "count";
+                                    if (xf.Name == "type")
+                                        matElem = "type";
+                                    if (xf.Name == "Elements")
+                                    {
+                                        if (vec.getType() == "int")
+                                            vecElems = new List<int>();
+                                        if (vec.getType() == "double")
+                                            vecDelems = new List<double>();
+                                    }
+                                    if (xf.Name == "Element")
+                                    {
+                                        matElem = "elem";
+                                    }
                                 }
-                                if (xf.Name == "Element")
-                                {
-                                    matElem = "elem";
-                                }
-                            }
 
-                            break;
-                        }
-                    case XmlNodeType.Text:
-                        {
-                            if (curElement == 1)
-                            {
-                                if (matElem == "row")
-                                {
-                                    IntegerElement row = new IntegerElement();
-                                    totalRows = int.Parse(xf.Value.ToString());
-                                    row.setText(xf.Value);
-                                    mat.setRow(row);
-                                }
-                                if (matElem == "column")
-                                {
-                                    IntegerElement col = new IntegerElement();
-                                    totalCols = int.Parse(xf.Value.ToString());
-                                    col.setText(xf.Value);
-                                    mat.setColumn(col);
-                                }
-                                if (matElem == "name")
-                                {
-                                    VariableElement val = new VariableElement();
-                                    val.setText(xf.Value);
-                                    mat.setVar(val);
-                                }
-                                if (matElem == "type")
-                                {
-                                    type = xf.Value;
-                                    mat.setType(type);
-                                }
-                                if (matElem == "elem")
-                                {
-                                    if (type == "int")
-                                        elems[currRow, currCol] = int.Parse(xf.Value.ToString());
-                                    else if (type == "double")
-                                       delems[currRow, currCol] = double.Parse(xf.Value.ToString());
-                                }
+                                break;
                             }
-                            if (curElement == 2)
+                        case XmlNodeType.Text:
                             {
-                                if (matElem == "count")
+                                if (curElement == 1)
                                 {
-                                    IntegerElement count = new IntegerElement();
-                                    
-                                    count.setText(xf.Value);
-                                    vec.setRange(count);
+                                    if (matElem == "row")
+                                    {
+                                        IntegerElement row = new IntegerElement();
+                                        totalRows = int.Parse(xf.Value.ToString());
+                                        row.setText(xf.Value);
+                                        mat.setRow(row);
+                                    }
+                                    if (matElem == "column")
+                                    {
+                                        IntegerElement col = new IntegerElement();
+                                        totalCols = int.Parse(xf.Value.ToString());
+                                        col.setText(xf.Value);
+                                        mat.setColumn(col);
+                                    }
+                                    if (matElem == "name")
+                                    {
+                                        VariableElement val = new VariableElement();
+                                        val.setText(xf.Value);
+                                        mat.setVar(val);
+                                    }
+                                    if (matElem == "type")
+                                    {
+                                        type = xf.Value;
+                                        mat.setType(type);
+                                    }
+                                    if (matElem == "elem")
+                                    {
+                                        if (type == "int")
+                                            elems[currRow, currCol] = int.Parse(xf.Value.ToString());
+                                        else if (type == "double")
+                                            delems[currRow, currCol] = double.Parse(xf.Value.ToString());
+                                    }
                                 }
-                                if (matElem == "name")
+                                if (curElement == 2)
                                 {
-                                    VariableElement val = new VariableElement();
-                                    val.setText(xf.Value);
-                                    vec.setText(val);
+                                    if (matElem == "count")
+                                    {
+                                        IntegerElement count = new IntegerElement();
+
+                                        count.setText(xf.Value);
+                                        vec.setRange(count);
+                                    }
+                                    if (matElem == "name")
+                                    {
+                                        VariableElement val = new VariableElement();
+                                        val.setText(xf.Value);
+                                        vec.setText(val);
+                                    }
+                                    if (matElem == "type")
+                                    {
+                                        type = xf.Value;
+                                        vec.setType(type);
+                                    }
+                                    if (matElem == "elem")
+                                    {
+                                        if (type == "int")
+                                            vecElems.Add(int.Parse(xf.Value.ToString()));
+                                        else if (type == "double")
+                                            vecDelems.Add(double.Parse(xf.Value.ToString()));
+                                    }
                                 }
-                                if (matElem == "type")
-                                {
-                                    type = xf.Value;
-                                    vec.setType(type);
-                                }
-                                if (matElem == "elem")
-                                {
-                                    if (type == "int")
-                                        vecElems.Add(int.Parse(xf.Value.ToString()));
-                                    else if (type == "double")
-                                        vecDelems.Add(double.Parse(xf.Value.ToString()));
-                                }
+                                break;
                             }
-                            break;
-                        }
-                    case XmlNodeType.EndElement:
-                        {
-                            if (xf.Name == "Elements" && curElement == 1)
+                        case XmlNodeType.EndElement:
                             {
-                                if(mat.getType()=="int")
-                                mat.setIntMatrix(elems);
-                                else if (mat.getType() == "double")
-                                    mat.setDoubleMatrix(delems);
-                                if (!scope.Peek().ContainsKey((mat.getVar().getText())))
-                                scope.Peek().Add(mat.getVar().getText(), mat);
+                                if (xf.Name == "Elements" && curElement == 1)
+                                {
+                                    if (mat.getType() == "int")
+                                        mat.setIntMatrix(elems);
+                                    else if (mat.getType() == "double")
+                                        mat.setDoubleMatrix(delems);
+                                    if (!scope.Peek().ContainsKey((mat.getVar().getText())))
+                                        scope.Peek()[mat.getVar().getText()]= mat;
+                                }
+                                if (xf.Name == "Elements" && curElement == 2)
+                                {
+                                    bool a;
+                                    if (vec.getType() == "int")
+                                        a = vec.setIntVector(vecElems);
+                                    else if (vec.getType() == "double")
+                                        a = vec.setDoubleVector(vecDelems);
+                                    if (!scope.Peek().ContainsKey((vec.getText().getText())))
+                                        scope.Peek().Add(vec.getText().getText(), vec);
+                                }
+                                Console.Write("End:" + xf.Name);
+                                break;
                             }
-                            if (xf.Name == "Elements" && curElement == 2)
+                        default:
                             {
-                                bool a;
-                                if(vec.getType()=="int")
-                                    a= vec.setIntVector(vecElems);
-                                else if (vec.getType() == "double")
-                                    a=vec.setDoubleVector(vecDelems);
-                                if (!scope.Peek().ContainsKey((vec.getText().getText())))
-                                scope.Peek().Add(vec.getText().getText(), vec);
+                                Console.Write("\n");
+                                break;
                             }
-                            Console.Write("End:" + xf.Name);
-                            break;
-                        }
-                    default:
-                        {
-                            Console.Write("\n");
-                            break;
-                        }
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                sendres(112, e.Message);
             }
            // scope.Pop();
            // local--;
@@ -1040,7 +1078,7 @@ namespace Spinach
 
                 }
             }
-            catch (Exception e) { sendres(112, "Parallel for : Error in Matrix data\n"); e.GetType(); }
+            catch (Exception e) { e.GetType(); }
         }
 
         public override void VisitMatrixSingleElement(MatrixElement element)
@@ -2212,6 +2250,8 @@ namespace Spinach
                     //execParallel(parallelString.ToString(),parallelData.ToString(),0, l1.Count);
                     inParallelFor = 0;
                     smem.distributeParallelCode(start, end,parallelData.ToString(),parallelString.ToString(),rangeVar);
+                    parallelData.Length = 0;
+                    parallelString.Length = 0;
                     while (result_.Count == 0)
                     {
                         Thread.Sleep(2000);
@@ -2688,6 +2728,7 @@ namespace Spinach
             }
             else if (GetTypeOfElement(element.getLhs()) == 5)
             {
+               // Thread.Sleep(5);
                 HandleSingleMatrixElement(element);
             }
             else if (GetTypeOfElement(element.getLhs()) == 15)
@@ -2808,7 +2849,7 @@ namespace Spinach
         {
             try
             {
-                
+                //Thread.Sleep(2);
                 for (int i = 0; result.Count != 0 && i < result.Count; i++)
                 {
                     int curElement = 0;
@@ -3375,6 +3416,7 @@ namespace Spinach
 
         private void PrintVariable(Element elem)
         {
+            
             if (map_contains_matrix(((VariableElement)elem).getText()))
             {
             

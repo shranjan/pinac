@@ -49,6 +49,8 @@ namespace Spinach
         public event PrivelageEventHandler AddPrev;
         public event PrivelageEventHandler ChngPermission;
         public event PrivelageEventHandler TransOwner;
+        public delegate void DisconnectEventHandler(bool disconnect);
+        public event DisconnectEventHandler DisconnectChanged;
 
 
         private List<string> DisplayList = new List<string>();
@@ -266,6 +268,8 @@ namespace Spinach
 
         public void Disconnect()
         {
+            if (DisconnectChanged != null)
+                DisconnectChanged(true);
             mSocket.Disconnect();
             Thread.Sleep(1000);
             mSocket.Clear();
