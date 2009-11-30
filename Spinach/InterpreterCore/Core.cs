@@ -60,7 +60,16 @@ namespace Spinach
         public delegate void resultcore(string coremsg);
         public event resultcore rescore_;
 
+        public delegate void executeParallel(string body, string data, int start, int stop);
+        public event executeParallel parallelcore_;
+
+        public delegate void getResults(List<string> results);
+        public event getResults parallelresult_;
+
         private int flag = -1;
+        private int totalLines = 0;
+        private int Visited = 0;
+        SwarmMemory smem;
  
         public void sendres(int code, string errormsg)
         {
@@ -76,30 +85,37 @@ namespace Spinach
 
         }
 
+        public void getParallelResult(List<string> results)
+        {
+            if (parallelresult_ != null)
+                parallelresult_(results);
+        }
+        public void execParallel(string body, string data, int start, int stop)
+        {
+            if (parallelcore_ != null)
+               parallelcore_(body,data,start,stop);
+        }
+
         public void result(string coremsg)
         {
             if (rescore_ != null)
                 rescore_(coremsg);
         }
 
-        
-        public void execParallel(string body, string data, int start, int stop)
-<<<<<<< HEAD
+                
+        public void setSwarmObject(SwarmMemory sm)
         {
-            interp_visitor.execParallel(body, data, start, stop);
+            smem = sm;
+            interp_visitor.setSwarmObject(sm);
         }
-
         public void setSwarm()
         {
-=======
-        {
-            interp_visitor.execParallel(body, data, start, stop);
-        }
-
-        public void setSwarm()
-        {
->>>>>>> 717e6c550bc47469fa73317e447725928a3c08fa
             interp_visitor.setSwarm();
+        }
+
+        public void setFrontEnd(exec FrontEnd)
+        {
+            interp_visitor.setFE(FrontEnd);
         }
         //List<Element> elements;
         public Core()
@@ -107,6 +123,8 @@ namespace Spinach
              interp_visitor=new InterpreterVisitor();
              interp_visitor.errorcore_ += new InterpreterVisitor.errorcoremsg(sendres);
              interp_visitor.rescore_ += new InterpreterVisitor.resultcore(result);
+             
+             
              //interp_visitor.setFE(FE);
         }
 
@@ -119,18 +137,27 @@ namespace Spinach
             //  element = ele;
             if (elements != null)
             {
+                if (Visited != 1)
+                {
+                    totalLines = elements.Count;
+                    Visited = 1;
+                }
                 for (int i = 0; i < elements.Count && flag != 1; i++)
                 {
                     Element curr = elements[i];
                     // curr.Accept(print_visitor);
                     curr.Accept(interp_visitor);
                 }
+                if(totalLines ==elements.Count && flag!=1 && Visited==1)
+                   smem.clearMasterBackup(true);
             }
         }
 
         public void clearVarMap()
         {
             interp_visitor.clearMap();
+            Visited = 0;
+            flag = -1;
 
         }
 
