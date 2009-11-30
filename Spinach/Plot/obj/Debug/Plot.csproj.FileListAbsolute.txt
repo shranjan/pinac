@@ -1,5 +1,0 @@
-C:\Users\Rajika\Desktop\pinac\pinac\Spinach\Plot\bin\Debug\Plot.dll
-C:\Users\Rajika\Desktop\pinac\pinac\Spinach\Plot\bin\Debug\Plot.pdb
-C:\Users\Rajika\Desktop\pinac\pinac\Spinach\Plot\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Rajika\Desktop\pinac\pinac\Spinach\Plot\obj\Debug\Plot.dll
-C:\Users\Rajika\Desktop\pinac\pinac\Spinach\Plot\obj\Debug\Plot.pdb
