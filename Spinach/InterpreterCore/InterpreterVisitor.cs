@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////
 // InterpreterVisitor.cs: Implements a vistor that interprets the syntax tree.
-// 
+//
 // version: 1.6
 // Description: part of the interpreter example for the visitor design
 //  pattern.
@@ -139,6 +139,12 @@ namespace Spinach
            smem.parallelresult_ += new SwarmMemory.getResults(ParallelRes);
            parallelSwarm = 1;
         }
+<<<<<<< HEAD
+        public void ParallelCore(string data, string body, int start, int stop,string range)
+        {
+            convertParallel(data, body, start, stop,range);
+            parallelSwarm = 1;
+=======
 
         
         public void ParallelCore(string data, string body, int start, int stop,string range)
@@ -159,6 +165,7 @@ namespace Spinach
             {
                 e.GetType();
             }
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
         }
         public void ParallelRes(List<string> ParRes)
         {
@@ -465,6 +472,24 @@ namespace Spinach
         }
 
         //To be used by Swarm 
+<<<<<<< HEAD
+        public void convertParallel(string body, string data, int start, int stop,string range)
+        {
+            CreateData(data);
+            StringBuilder stmt = new StringBuilder();
+            stmt.Append("for(" + range + "->");//o reserved as control variable for parallel-for
+            stmt.Append(start.ToString() + " to " + stop.ToString() + ")");
+            stmt.Append("\n{");
+            stmt.Append(body);
+            stmt.Append("\n}");
+            //Fe.VisitLine(stmt.ToString());
+            FE.Visitline(stmt.ToString());
+            scope.Pop();
+            local--;
+            
+            smem.outgoingResult(start.ToString(),parallelResult.ToString());
+            parallelResult.Length = 0;
+=======
         public void convertParallel()
         {
             try
@@ -489,6 +514,7 @@ namespace Spinach
             {
                 sendres(112, e.Message);
             }
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
             
         }
 
@@ -682,18 +708,46 @@ namespace Spinach
                                 Console.Write("End:" + xf.Name);
                                 break;
                             }
+<<<<<<< HEAD
+                            break;
+                        }
+                    case XmlNodeType.EndElement:
+                        {
+                            if (xf.Name == "Elements" && curElement == 1)
+                            {
+                                if(mat.getType()=="int")
+                                mat.setIntMatrix(elems);
+                                else if (mat.getType() == "double")
+                                    mat.setDoubleMatrix(delems);
+                                if (!scope.Peek().ContainsKey((mat.getVar().getText())))
+                                scope.Peek().Add(mat.getVar().getText(), mat);
+                            }
+                            if (xf.Name == "Elements" && curElement == 2)
+                            {
+                                bool a;
+                                if(vec.getType()=="int")
+                                    a= vec.setIntVector(vecElems);
+                                else if (vec.getType() == "double")
+                                    a=vec.setDoubleVector(vecDelems);
+                                if (!scope.Peek().ContainsKey((vec.getText().getText())))
+                                scope.Peek().Add(vec.getText().getText(), vec);
+=======
                         default:
                             {
                                 Console.Write("\n");
                                 break;
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
                             }
                     }
                 }
             }
+<<<<<<< HEAD
+=======
             catch (Exception e)
             {
                 sendres(112, e.Message);
             }
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
            // scope.Pop();
            // local--;
         }
@@ -2082,6 +2136,146 @@ namespace Spinach
                                     final.setType(stk_lhs.getType());
                                     Console.Write("Multiplication..\n");
                                     string mat_type = stk_lhs.getType();
+<<<<<<< HEAD
+                                    /*  if (mat_type == "int")
+                                      {
+                                          int[,] lhs_elem = stk_lhs.getintValue();
+                                          int[,] rhs_elem = stk_rhs.getintValue();
+                                          int[,] result = new int[lhs_row, rhs_col];
+                                          for (int i = 0; i < lhs_row; i++)
+                                          {
+                                              for (int j = 0; j < rhs_col; j++)
+                                              {
+                                                  for (int k = 0; k < lhs_col; k++)
+                                                  {
+                                                      int res = lhs_elem[i, k] * rhs_elem[k, j];
+                                                      result[i, j] = result[i, j] + res;
+                                                  }
+                                              }
+                                          }
+                                          bool mat_set = final.setIntMatrix(result);
+                                          int[,] output = final.getintValue();
+                                          int row = int.Parse(((IntegerElement)(final.getRow())).getText());
+                                          int col = int.Parse(((IntegerElement)(final.getColumn())).getText());
+                                          for (int i = 0; i < row; i++)
+                                          {
+                                              for (int j = 0; j < col; j++)
+                                              {
+                                                  Console.Write("\t" + output[i, j]);
+                                              }
+                                              Console.Write("\n");
+                                          }
+                                        //  Object final_output = (Object)(final);
+                                         // mat_stack.Push(final_output);
+                                      }*/
+                                    if (mat_type == "int")
+                                    {
+                                        int[,] rhs_elements = stk_rhs.getintValue();
+                                        int[,] lhs_elements = stk_lhs.getintValue();
+                                        List<MatrixOp> list_matOp = new List<MatrixOp>();
+                                        MatrixOp.init_result_mat(lhs_row, lhs_col);
+
+                                        Thread[] t = new Thread[lhs_row];
+                                        for (int i = 0; i < lhs_row; i++)
+                                        {
+                                            //
+                                            MatrixOp matOp = new MatrixOp(rhs_elements, lhs_elements, i, lhs_col, lhs_row, rhs_col);
+                                            list_matOp.Add(matOp);
+                                            t[i] = new Thread(new ThreadStart(matOp.mul_mat));
+                                            t[i].Start();
+                                        }
+
+
+                                        bool running = true;
+                                        int count = 0;
+                                        int[,] res = new int[lhs_row, lhs_col];
+                                        while (!MatrixOp.isAllSet())
+                                        {
+                                            Thread.Sleep(100);
+                                        }
+                                        //result integrate
+
+                                        res = MatrixOp.get_result_matrix();
+
+                                        //////////////////////////
+                                        // assemble matrix using the list of matOp.
+                                        //list_matOp[0].
+
+                                        ///////////////////////////
+                                        bool mat_set = final.setIntMatrix(res);
+                                    }
+                                    /* else if (mat_type == "double")
+                                     {
+                                         double[,] lhs_elem = stk_lhs.getdoubleValue();
+                                         double[,] rhs_elem = stk_rhs.getdoubleValue();
+                                         double[,] result = new double[lhs_row, rhs_col];
+                                         for (int i = 0; i < lhs_row; i++)
+                                         {
+                                             for (int j = 0; j < rhs_col; j++)
+                                             {
+                                                 for (int k = 0; k < lhs_col; k++)
+                                                 {
+                                                     double res = lhs_elem[i, k] * rhs_elem[k, j];
+                                                     result[i, j] = result[i, j] + res;
+                                                 }
+                                             }
+                                         }
+                                         bool mat_set = final.setDoubleMatrix(result);
+                                         double[,] output = final.getdoubleValue();
+                                         int row = int.Parse(((IntegerElement)(final.getRow())).getText());
+                                         int col = int.Parse(((IntegerElement)(final.getColumn())).getText());
+                                         for (int i = 0; i < row; i++)
+                                         {
+                                             for (int j = 0; j < col; j++)
+                                             {
+                                                 Console.Write("\t" + output[i, j]);
+                                             }
+                                             Console.Write("\n");
+                                         }
+                                       //  Object final_output = (Object)(final);
+                                       //  mat_stack.Push(final_output);
+                                     }*/
+                                    else if (mat_type == "double")
+                                    {
+                                        double[,] rhs_elements = stk_rhs.getdoubleValue();
+                                        double[,] lhs_elements = stk_lhs.getdoubleValue();
+                                        List<MatrixOp_double> list_matOp = new List<MatrixOp_double>();
+                                        MatrixOp_double.init_result_mat(lhs_row, lhs_col);
+
+                                        Thread[] t = new Thread[lhs_row];
+                                        for (int i = 0; i < lhs_row; i++)
+                                        {
+                                            //
+                                            MatrixOp_double matOp = new MatrixOp_double(rhs_elements, lhs_elements, i, lhs_col, lhs_row, rhs_col);
+                                            list_matOp.Add(matOp);
+                                            t[i] = new Thread(new ThreadStart(matOp.mul_mat));
+                                            t[i].Start();
+                                        }
+
+
+                                        bool running = true;
+                                        int count = 0;
+                                        double[,] res = new double[lhs_row, lhs_col];
+                                        while (!MatrixOp_double.isAllSet())
+                                        {
+                                            Thread.Sleep(100);
+                                        }
+                                        //result integrate
+
+                                        res = MatrixOp_double.get_result_matrix();
+
+                                        //////////////////////////
+                                        // assemble matrix using the list of matOp.
+                                        //list_matOp[0].
+
+                                        ///////////////////////////
+                                        bool mat_set = final.setDoubleMatrix(res);
+                                    }
+
+                                    Object final_output = (Object)(final);
+                                    mat_stack.Push(final_output);
+
+=======
                                     if (mat_type == "int")
                                     {
                                         int[,] lhs_elem = stk_lhs.getintValue();
@@ -2145,6 +2339,7 @@ namespace Spinach
                                         mat_stack.Push(final_output);
                                     }
 
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
                                 }
                                 else
                                 {
@@ -2250,8 +2445,11 @@ namespace Spinach
                     //execParallel(parallelString.ToString(),parallelData.ToString(),0, l1.Count);
                     inParallelFor = 0;
                     smem.distributeParallelCode(start, end,parallelData.ToString(),parallelString.ToString(),rangeVar);
+<<<<<<< HEAD
+=======
                     parallelData.Length = 0;
                     parallelString.Length = 0;
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
                     while (result_.Count == 0)
                     {
                         Thread.Sleep(2000);
@@ -2278,10 +2476,21 @@ namespace Spinach
 
             if (p.getData() != null && mVariableMap.ContainsKey(p.getData().getText()))
             {
-                double[,] temp = ((MatrixVariableDeclaration)(mVariableMap[p.getData().getText()])).getdoubleValue();
-                p1.Data = p.getData().getText() == null ? null : temp;
+                double[,] temp_double = ((MatrixVariableDeclaration)(mVariableMap[p.getData().getText()])).getdoubleValue();
+                int[,] temp_int = ((MatrixVariableDeclaration)(mVariableMap[p.getData().getText()])).getintValue();
+                double[,] temp_;
+                if (temp_double != null)
+                    p1.Data = p.getData().getText() == null ? null : temp_double;
+                else if (temp_int != null)
+                {
+                    temp_ = new double[temp_int.GetLength(0), temp_int.GetLength(1)];
+                    for (int i = 0; i < temp_int.GetLength(0); i++)
+                        for (int j = 0; j < temp_int.GetLength(1); j++)
+                            temp_[i, j] = (double)temp_int[i, j];
+                    p1.Data = p.getData().getText() == null ? null : temp_;
+                }
             }
-            p1.Mode = p.getMode() == null ? 0 : int.Parse(p.getMode().getText());
+            p1.Mode = p.getMode() == null ? 1 : int.Parse(p.getMode().getText());
             p1.Dimensions = p.getPlotType() == null ? 0 : p.getPlotType() == "2D" ? 2 : 3;
             p1.PlotTitle = p.getTitle() == null ? "" : p.getTitle().getText();
             p1.X_Fact = p.getXFact() == null ? 1.0 : double.Parse(p.getXFact().getText());
@@ -2293,6 +2502,112 @@ namespace Spinach
             p1.ScaleMode = p.getScaleMode() == null ? 1 : (p.getScaleMode() == "linear") ? 1 : 2;
             return (p1);
         }
+
+        public string wrap(Plot cmd)
+        {
+            System.Text.StringBuilder st = new System.Text.StringBuilder();
+            XmlWriter xwriter = XmlWriter.Create(st);
+            xwriter.WriteStartElement("PlotCommand");
+            xwriter.WriteAttributeString("PlotTitle", cmd.PlotTitle);
+            xwriter.WriteAttributeString("CommandType", cmd.Command.ToString());
+            xwriter.WriteAttributeString("Dimension", cmd.Dimensions.ToString());
+            xwriter.WriteAttributeString("PaneNumber", cmd.PaneNum.ToString());
+            xwriter.WriteStartElement("XAxis");
+            xwriter.WriteAttributeString("Title", cmd.X_Axis_Title);
+            xwriter.WriteAttributeString("Scale", cmd.X_Fact.ToString());
+            xwriter.WriteEndElement();
+            xwriter.WriteStartElement("YAxis");
+            xwriter.WriteAttributeString("Title", cmd.Y_Axis_Title);
+            xwriter.WriteAttributeString("Scale", cmd.Y_Fact.ToString());
+            xwriter.WriteEndElement();
+            xwriter.WriteStartElement("ZAxis");
+            xwriter.WriteAttributeString("Title", cmd.Z_Axis_Title);
+            xwriter.WriteAttributeString("Scale", cmd.Z_Fact.ToString());
+            xwriter.WriteEndElement();
+            xwriter.WriteStartElement("Data");
+            xwriter.WriteAttributeString("Rows", cmd.Data.GetLength(0).ToString());
+            xwriter.WriteAttributeString("Columns", cmd.Data.GetLength(1).ToString());
+            double[,] temp = cmd.Data;
+            for (int i = 0; i < temp.GetLength(0); i++)
+            {
+                string tempst = "Row";
+                tempst += (i + 1).ToString();
+                xwriter.WriteStartElement(tempst);
+                tempst = "";
+                for (int j = 0; j < temp.GetLength(1); j++)
+                {
+                    tempst += temp[i, j] + " ";
+                }
+                xwriter.WriteString(tempst);
+                xwriter.WriteEndElement();
+            }
+            xwriter.WriteEndElement();
+            xwriter.WriteEndElement();
+            xwriter.Close();
+            return st.ToString();
+        }
+        public Plot unWrap(string xmlstring)
+        {
+            Plot command = new Plot();
+            System.IO.StringReader sr = new System.IO.StringReader(xmlstring);
+            XmlReader xreader = XmlReader.Create(sr);
+            while (xreader.Read())
+            {
+                if (xreader.IsStartElement())
+                {
+                    switch (xreader.Name)
+                    {
+                        case "PlotCommand":
+                            command.Command = xreader.GetAttribute("CommandType");
+                            command.Dimensions = Convert.ToInt32(xreader.GetAttribute("Dimension"));
+                            command.PlotTitle = xreader.GetAttribute("PlotTitle");
+                            command.PaneNum = Convert.ToInt32(xreader.GetAttribute("PaneNumber"));
+                            break;
+                        case "XAxis":
+                            command.X_Axis_Title = xreader.GetAttribute("Title");
+                            command.X_Fact = Convert.ToDouble(xreader.GetAttribute("Scale"));
+                            break;
+                        case "YAxis":
+                            command.Y_Axis_Title = xreader.GetAttribute("Title");
+                            command.Y_Fact = Convert.ToDouble(xreader.GetAttribute("Scale"));
+                            break;
+                        case "ZAxis":
+                            command.Z_Axis_Title = xreader.GetAttribute("Title");
+                            command.Z_Fact = Convert.ToDouble(xreader.GetAttribute("Scale"));
+                            break;
+                        case "Data":
+                            int rows = Convert.ToInt32(xreader.GetAttribute("Rows"));
+                            int cols = Convert.ToInt32(xreader.GetAttribute("Columns"));
+                            double[,] data = new double[rows, cols];
+                            while (xreader.Read())
+                            {
+                                if (!xreader.IsStartElement() && xreader.LocalName == "Data")
+                                    break;
+                                string tempst = xreader.Name;
+                                int row = Convert.ToInt32(tempst.Substring(tempst.IndexOf("Row") + 3));
+                                tempst = xreader.ReadString();
+                                for (int j = 0; tempst.Length > 0; j++)
+                                {
+                                    data[row - 1, j] = Convert.ToDouble(tempst.Substring(0, tempst.IndexOf(" ")));
+                                    tempst = tempst.Substring(tempst.IndexOf(" ") + 1);
+                                }
+                            }
+                            command.Data = data;
+                            break;
+                    }
+                }
+            }
+            return command;
+        }
+
+
+
+
+
+
+
+
+
         public override void VisitPlotFunctionElement(PlotFunctionElement element)
         {
             if (element.getPlotFunction() == "plot" || element.getPlotFunction() == "subPlot")
@@ -2347,7 +2662,7 @@ namespace Spinach
                         else if (plotType == "3D")
                         {
                             int mode = int.Parse(((IntegerElement)(element.getMode())).getText());
-                            if (mode >= 3 || mode <= 0)
+                            if (mode > 3 || mode <= 0)
                             {
                                 Console.Write("Invalid mode.. Give the input between 1..3 ");
                                 sendres(112, "Invalid mode.. Give the input between 1..3 ");
@@ -2368,12 +2683,29 @@ namespace Spinach
             else if (element.getPlotFunction() == "setScaleMode")
             {
                 string scaleMode = element.getScaleMode();
+<<<<<<< HEAD
+                if (scaleMode == "log")
+                {
+                    /*Console.Write("Invalid scale mode.. it should be either 'linear' or 'log'");
+                    sendres(112, "Invalid scale mode.. it should be either 'linear' or 'log'");
+                    return;*/
+                }
+                else if (scaleMode == "linear")
+                {
+                    /*Console.Write("Invalid scale mode.. it should be either 'linear' or 'log'");
+                    sendres(112, "Invalid scale mode.. it should be either 'linear' or 'log'");
+                    return;*/
+                }
+                else
+=======
                 if (scaleMode != "log" || scaleMode != "linear")
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
                 {
                     Console.Write("Invalid scale mode.. it should be either 'linear' or 'log'");
                     sendres(112, "Invalid scale mode.. it should be either 'linear' or 'log'");
                     return;
                 }
+
             }
 
 
@@ -2382,7 +2714,6 @@ namespace Spinach
             p.writetolist(pr);
 
         }
-
 
         public override void VisitReturnElement(ReturnElement element)
         {
@@ -2486,39 +2817,112 @@ namespace Spinach
                                         Console.Write("Subtraction..\n");
                                         Console.Write(element.getLhs().GetType());
                                         string mat_type = stk_lhs.getType();
+                                        /*  if (mat_type == "int")
+                                          {
+                                              int[,] rhs_elements = stk_rhs.getintValue();
+                                              int[,] lhs_elements = stk_lhs.getintValue();
+                                              int[,] output = new int[lhs_row, lhs_col];
+                                              for (int i = 0; i < lhs_row; i++)
+                                              {
+                                                  for (int j = 0; j < lhs_col; j++)
+                                                  {
+                                                      output[i, j] = lhs_elements[i, j] - rhs_elements[i, j];
+                                                      Console.Write(output[i, j]);
+                                                      Console.Write("\t");
+                                                  }
+                                                  Console.Write("\n");
+                                              }
+                                              bool mat_set = final.setIntMatrix(output);
+                                          }*/
                                         if (mat_type == "int")
                                         {
                                             int[,] rhs_elements = stk_rhs.getintValue();
                                             int[,] lhs_elements = stk_lhs.getintValue();
-                                            int[,] output = new int[lhs_row, lhs_col];
+                                            List<MatrixOp> list_matOp = new List<MatrixOp>();
+                                            MatrixOp.init_result_mat(lhs_row, lhs_col);
+
+                                            Thread[] t = new Thread[lhs_row];
                                             for (int i = 0; i < lhs_row; i++)
                                             {
-                                                for (int j = 0; j < lhs_col; j++)
-                                                {
-                                                    output[i, j] = lhs_elements[i, j] - rhs_elements[i, j];
-                                                    Console.Write(output[i, j]);
-                                                    Console.Write("\t");
-                                                }
-                                                Console.Write("\n");
+                                                //
+                                                MatrixOp matOp = new MatrixOp(rhs_elements, lhs_elements, i, lhs_col, lhs_row, rhs_col);
+                                                list_matOp.Add(matOp);
+                                                t[i] = new Thread(new ThreadStart(matOp.sub_mat));
+                                                t[i].Start();
                                             }
-                                            bool mat_set = final.setIntMatrix(output);
+
+
+                                            bool running = true;
+                                            int count = 0;
+                                            int[,] res = new int[lhs_row, lhs_col];
+                                            while (!MatrixOp.isAllSet())
+                                            {
+                                                Thread.Sleep(100);
+                                            }
+                                            //result integrate
+
+                                            res = MatrixOp.get_result_matrix();
+
+                                            //////////////////////////
+                                            // assemble matrix using the list of matOp.
+                                            //list_matOp[0].
+
+                                            ///////////////////////////
+                                            bool mat_set = final.setIntMatrix(res);
                                         }
-                                        else if (mat_type == "double")
+                                        /*  else if (mat_type == "double")
+                                          {
+                                              double[,] rhs_elements = stk_rhs.getdoubleValue();
+                                              double[,] lhs_elements = stk_lhs.getdoubleValue();
+                                              double[,] output = new double[lhs_row, lhs_col];
+                                              for (int i = 0; i < lhs_row; i++)
+                                              {
+                                                  for (int j = 0; j < lhs_col; j++)
+                                                  {
+                                                      output[i, j] = lhs_elements[i, j] - rhs_elements[i, j];
+                                                      Console.Write(output[i, j]);
+                                                      Console.Write("\t");
+                                                  }
+                                                  Console.Write("\n");
+                                              }
+                                              bool mat_set = final.setDoubleMatrix(output);
+                                          }*/
+
+                                        if (mat_type == "double")
                                         {
                                             double[,] rhs_elements = stk_rhs.getdoubleValue();
                                             double[,] lhs_elements = stk_lhs.getdoubleValue();
-                                            double[,] output = new double[lhs_row, lhs_col];
+                                            List<MatrixOp_double> list_matOp = new List<MatrixOp_double>();
+                                            MatrixOp_double.init_result_mat(lhs_row, lhs_col);
+
+                                            Thread[] t = new Thread[lhs_row];
                                             for (int i = 0; i < lhs_row; i++)
                                             {
-                                                for (int j = 0; j < lhs_col; j++)
-                                                {
-                                                    output[i, j] = lhs_elements[i, j] - rhs_elements[i, j];
-                                                    Console.Write(output[i, j]);
-                                                    Console.Write("\t");
-                                                }
-                                                Console.Write("\n");
+                                                //
+                                                MatrixOp_double matOp = new MatrixOp_double(rhs_elements, lhs_elements, i, lhs_col, lhs_row, rhs_col);
+                                                list_matOp.Add(matOp);
+                                                t[i] = new Thread(new ThreadStart(matOp.sub_mat));
+                                                t[i].Start();
                                             }
-                                            bool mat_set = final.setDoubleMatrix(output);
+
+
+                                            bool running = true;
+                                            int count = 0;
+                                            double[,] res = new double[lhs_row, lhs_col];
+                                            while (!MatrixOp_double.isAllSet())
+                                            {
+                                                Thread.Sleep(100);
+                                            }
+                                            //result integrate
+
+                                            res = MatrixOp_double.get_result_matrix();
+
+                                            //////////////////////////
+                                            // assemble matrix using the list of matOp.
+                                            //list_matOp[0].
+
+                                            ///////////////////////////
+                                            bool mat_set = final.setDoubleMatrix(res);
                                         }
                                         Object result = (Object)(final);
                                         mat_stack.Push(result);
@@ -2740,71 +3144,97 @@ namespace Spinach
                     parallelString.Append((((VariableElement)(element.getLhs())).getText()));
                     parallelString.Append("=");
                     VisitElement(element.getRhs());
-                    if(local==0)
+                    if (local == 0)
                     {
-                    if (mVariableMap[(((VariableElement)(element.getLhs())).getText())] is MatrixVariableDeclaration)
-                        matrixData((((VariableElement)(element.getLhs())).getText()));
-                    else if (mVariableMap[(((VariableElement)(element.getLhs())).getText())] is IntegerElement)
-                        varData((((VariableElement)(element.getLhs())).getText()));
-                    else if (mVariableMap[(((VariableElement)(element.getLhs())).getText())] is DoubleElement)
-                        varData((((VariableElement)(element.getLhs())).getText()));
+                        if (mVariableMap[(((VariableElement)(element.getLhs())).getText())] is MatrixVariableDeclaration)
+                            matrixData((((VariableElement)(element.getLhs())).getText()));
+                        else if (mVariableMap[(((VariableElement)(element.getLhs())).getText())] is IntegerElement)
+                            varData((((VariableElement)(element.getLhs())).getText()));
+                        else if (mVariableMap[(((VariableElement)(element.getLhs())).getText())] is DoubleElement)
+                            varData((((VariableElement)(element.getLhs())).getText()));
                     }
                     else
                     {
-                    Hashtable hash=getHashTable((((VariableElement)(element.getLhs())).getText()));
-                    if (hash[(((VariableElement)(element.getLhs())).getText())] is MatrixVariableDeclaration)
-                        matrixData((((VariableElement)(element.getLhs())).getText()));
-                    else if (hash[(((VariableElement)(element.getLhs())).getText())] is IntegerElement)
-                        varData((((VariableElement)(element.getLhs())).getText()));
-                    else if (hash[(((VariableElement)(element.getLhs())).getText())] is DoubleElement)
-                        varData((((VariableElement)(element.getLhs())).getText()));
+                        Hashtable hash = getHashTable((((VariableElement)(element.getLhs())).getText()));
+                        if (hash[(((VariableElement)(element.getLhs())).getText())] is MatrixVariableDeclaration)
+                            matrixData((((VariableElement)(element.getLhs())).getText()));
+                        else if (hash[(((VariableElement)(element.getLhs())).getText())] is IntegerElement)
+                            varData((((VariableElement)(element.getLhs())).getText()));
+                        else if (hash[(((VariableElement)(element.getLhs())).getText())] is DoubleElement)
+                            varData((((VariableElement)(element.getLhs())).getText()));
                     }
                 }
                 else
                 {
-                string var_name = ((VariableElement)(element.getLhs())).getText();
-                Element rhs = element.getRhs();
-                VisitElement(rhs);
+                    string var_name = ((VariableElement)(element.getLhs())).getText();
+                    Element rhs = element.getRhs();
+                    //matrixString.Append(var_name);
+                    //matrixString.Append("=");
+                    VisitElement(rhs);
 
-                if (mat_stack.Count > 0 && flag == -1)
-                {
-                    Object obj = getTopOfStack_Matrix();
-                    if (GetTypeOfElement(element.getLhs()) == GetTypeOfElement(((Element)obj)))
+                    if (mat_stack.Count > 0 && flag == -1)
                     {
-                        if ((GetTypeOfElement(element.getLhs()) == 3))
+                        Object obj = getTopOfStack_Matrix();
+                        if (GetTypeOfElement(element.getLhs()) == GetTypeOfElement(((Element)obj)))
                         {
-                            MatrixVariableDeclaration tempmat = null;
-                            if (local == 0)
+                            if ((GetTypeOfElement(element.getLhs()) == 3))
                             {
-                                tempmat = ((MatrixVariableDeclaration)(mVariableMap[((VariableElement)(element.getLhs())).getText()]));
-                            }
-                            else
-                            {
-                                Hashtable hash = getHashTable(((VariableElement)(element.getLhs())).getText());
-                                tempmat = ((MatrixVariableDeclaration)(hash[((VariableElement)(element.getLhs())).getText()]));
-                            }
-                            if (tempmat.getType() == (((MatrixVariableDeclaration)(((Element)obj))).getType()))
-                            {
-                                int rhs_row = int.Parse(((IntegerElement)((((MatrixVariableDeclaration)(((Element)obj))).getRow()))).getText());
-                                int lhs_col = int.Parse(((IntegerElement)(tempmat.getColumn())).getText());
-                                int lhs_row = int.Parse(((IntegerElement)(tempmat.getRow())).getText());
-                                int rhs_col = int.Parse(((IntegerElement)((((MatrixVariableDeclaration)(((Element)obj))).getColumn()))).getText());
-
-                                if (lhs_col == rhs_col && lhs_row == rhs_row)
+                                MatrixVariableDeclaration tempmat = null;
+                                if (local == 0)
                                 {
-                                    if (local == 0)
-                                    {
-                                        mVariableMap.Remove(var_name);
-                                        mVariableMap.Add(var_name, obj);
-                                    }
-                                    else
-                                    {
-                                        Hashtable hash = getHashTable(var_name);
-                                        hash.Remove(var_name);
-                                        hash.Add(var_name, obj);
-                                    }
+                                    tempmat = ((MatrixVariableDeclaration)(mVariableMap[((VariableElement)(element.getLhs())).getText()]));
                                 }
                                 else
+<<<<<<< HEAD
+                                {
+                                    Hashtable hash = getHashTable(((VariableElement)(element.getLhs())).getText());
+                                    tempmat = ((MatrixVariableDeclaration)(hash[((VariableElement)(element.getLhs())).getText()]));
+                                }
+                                if (tempmat.getType() == (((MatrixVariableDeclaration)(((Element)obj))).getType()))
+                                {
+                                    int rhs_row = int.Parse(((IntegerElement)((((MatrixVariableDeclaration)(((Element)obj))).getRow()))).getText());
+                                    int lhs_col = int.Parse(((IntegerElement)(tempmat.getColumn())).getText());
+                                    int lhs_row = int.Parse(((IntegerElement)(tempmat.getRow())).getText());
+                                    int rhs_col = int.Parse(((IntegerElement)((((MatrixVariableDeclaration)(((Element)obj))).getColumn()))).getText());
+
+                                    if (lhs_col == rhs_col && lhs_row == rhs_row)
+                                    {
+                                        if (local == 0)
+                                        {
+                                            mVariableMap.Remove(var_name);
+                                            mVariableMap.Add(var_name, obj);
+                                        }
+                                        else
+                                        {
+                                            Hashtable hash = getHashTable(var_name);
+                                            hash.Remove(var_name);
+                                            hash.Add(var_name, obj);
+                                        }
+                                    }
+                                    else
+                                        sendres(112, "Rows and columns of matrices do not match\n");
+                                }
+                                else
+                                    sendres(112, "Matrices are of different types\n");
+                            }
+                            else if (GetTypeOfElement(element.getLhs()) == 16)   // for vector
+                            {
+                                VectorVariableDeclaration tempVec = null;
+                                if (local == 0)
+                                {
+                                    tempVec = ((VectorVariableDeclaration)(mVariableMap[((VariableElement)(element.getLhs())).getText()]));
+                                }
+                                else
+                                {
+                                    Hashtable hash = getHashTable(((VariableElement)(element.getLhs())).getText());
+                                    tempVec = ((VectorVariableDeclaration)(hash[((VariableElement)(element.getLhs())).getText()]));
+                                }
+                                if (tempVec.getType() == (((VectorVariableDeclaration)(((Element)obj))).getType()))
+                                {
+                                    int rhs_range = int.Parse(((IntegerElement)((((VectorVariableDeclaration)(((Element)obj))).getRange()))).getText());
+                                    int lhs_range = int.Parse(((IntegerElement)(tempVec.getRange())).getText());
+                                    if (rhs_range == lhs_range)
+=======
                                     sendres(112, "Rows and columns of matrices do not match\n");
                             }
                             else
@@ -2912,6 +3342,156 @@ namespace Spinach
                             case XmlNodeType.Text:
                                 {
                                     if (curElement == 1)
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
+                                    {
+                                        if (matElem == "row")
+                                            currRow = int.Parse(xf.Value.ToString());
+                                        if (matElem == "column")
+                                            currCol = int.Parse(xf.Value.ToString());
+                                        if (matElem == "name")
+                                        {
+                                            name = xf.Value;
+                                            if (map_contains_matrix(name))
+                                            {
+                                                if (local == 0)
+                                                {
+                                                    matTemp = (MatrixVariableDeclaration)mVariableMap[name];
+                                                }
+                                                else
+                                                {
+                                                    Hashtable hash = getHashTable(name);
+                                                    matTemp = (MatrixVariableDeclaration)hash[name];
+                                                }
+                                            }
+                                        }
+                                        if (matElem == "type")
+                                        {
+<<<<<<< HEAD
+                                            mVariableMap.Remove(var_name);
+                                            mVariableMap.Add(var_name, obj);
+=======
+                                            if (matTemp != null)
+                                                type = matTemp.getType(); ;
+
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
+                                        }
+                                        if (matElem == "value")
+                                        {
+<<<<<<< HEAD
+                                            Hashtable hash = getHashTable(var_name);
+                                            hash.Remove(var_name);
+                                            hash.Add(var_name, obj);
+                                        }
+                                    }
+                                    else
+                                        sendres(112, "Range mismatch.. \n");
+                                }
+                                else
+                                    sendres(112, "Vector type mismatch.. \n");
+                            }
+                            else
+                            {
+                                if (local == 0)
+                                {
+                                    mVariableMap.Remove(var_name);
+                                    mVariableMap.Add(var_name, obj);
+                                }
+                                else
+                                {
+                                    Hashtable hash = getHashTable(var_name);
+                                    hash.Remove(var_name);
+                                    hash.Add(var_name, obj);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.Write("Datatypes mismatch\n");
+                            sendres(112, "Datatypes mismatch\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("Variable not found");
+                        sendres(112, "Variable '" + var_name + "' not found");
+                    }
+                }
+            }
+            else
+            {
+                string var_name = ((VariableElement)(element.getLhs())).getText();
+                Console.Write("Variable not declared");
+                sendres(112, "Variable '" + var_name + "' not declared");
+            }
+        }
+        public List<string> result_=new List<string>();
+        private void ProcessResults(List<string> result)
+        {
+            try
+            {
+                
+                for (int i = 0; result.Count != 0 && i < result.Count; i++)
+                {
+                    int curElement = 0;
+                    MatrixVariableDeclaration matTemp = null;
+                    VectorVariableDeclaration vec = null;
+                    StringReader readStr = new StringReader(result[i]);
+                    XmlTextReader xf = new XmlTextReader(readStr);
+                    string matElem = "";
+                    int currRow = 0;
+                    int currCol = 0;
+                    string type = "";
+                    string name = "";
+                    int value = 0;
+                    double dvalue = 0.0;
+                    while (xf.Read())
+                    {
+                        switch (xf.NodeType)
+                        {
+                            case XmlNodeType.Element:
+                                {
+                                    if (xf.Name == "Matrix")
+                                        curElement = 1;
+                                    if (xf.Name == "Vector")
+                                        curElement = 2;
+                                    if (curElement == 2)
+                                    {
+                                        if (xf.Name == "name")
+                                            matElem = "name";
+
+                                    }
+                                    if (curElement == 1)
+                                    {
+                                        if (xf.Name == "Name")
+                                            matElem = "name";
+                                        if (xf.Name == "Row")
+                                            matElem = "row";
+                                        if (xf.Name == "Column")
+                                            matElem = "column";
+                                        if (xf.Name == "type")
+                                            matElem = "type";
+                                        if (xf.Name == "Value")
+                                            matElem = "value";
+                                    }
+                                    if (curElement == 2)
+                                    {
+                                        if (xf.Name == "Name")
+                                            matElem = "name";
+                                        if (xf.Name == "Index")
+                                            matElem = "index";
+                                        if (xf.Name == "type")
+                                            matElem = "type";
+                                        if (xf.Name == "Value")
+                                        {
+                                            matElem = "value";
+                                        }
+                                    }
+
+                                    break;
+                                }
+                            case XmlNodeType.Text:
+                                {
+                                    if (curElement == 1)
                                     {
                                         if (matElem == "row")
                                             currRow = int.Parse(xf.Value.ToString());
@@ -2951,6 +3531,18 @@ namespace Spinach
                                     {
                                         if (matElem == "index")
                                         {
+=======
+                                            if (matTemp.getType()=="int")
+                                                value = int.Parse(xf.Value.ToString());
+                                            else if (matTemp.getType() == "double")
+                                                dvalue = double.Parse(xf.Value.ToString());
+                                        }
+                                    }
+                                    if (curElement == 2)
+                                    {
+                                        if (matElem == "index")
+                                        {
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
                                             currRow = int.Parse(xf.Value);
                                         }
                                         if (matElem == "name")
@@ -3237,7 +3829,12 @@ namespace Spinach
                 else
                 {
                     VisitElement(element.getLhs());
+                    /* if(GetTypeOfElement(((VariableElement)(element.getLhs())).getText())==3)
+                     matrixString.Append("+");*/
                     VisitElement(element.getRhs());
+                    /* if (GetTypeOfElement(((VariableElement)(element.getLhs())).getText()) == 3)
+                         matrixString.Append(";");*/
+
                     if (mat_stack.Count >= 2)
                     {
                         Object obj_rhs = getTopOfStack_Matrix();
@@ -3271,24 +3868,47 @@ namespace Spinach
                                         Console.Write("Addition..\n");
                                         Console.Write(element.getLhs().GetType());
                                         string mat_type = stk_lhs.getType();
+                                        int p = 0;
                                         if (mat_type == "int")
                                         {
+                                            //send to swarm
+                                            //
                                             int[,] rhs_elements = stk_rhs.getintValue();
                                             int[,] lhs_elements = stk_lhs.getintValue();
-                                            int[,] output = new int[lhs_row, lhs_col];
+                                            List<MatrixOp> list_matOp = new List<MatrixOp>();
+                                            MatrixOp.init_result_mat(lhs_row, lhs_col);
+
+                                            Thread[] t = new Thread[lhs_row];
                                             for (int i = 0; i < lhs_row; i++)
                                             {
-                                                for (int j = 0; j < lhs_col; j++)
-                                                {
-                                                    output[i, j] = lhs_elements[i, j] + rhs_elements[i, j];
-                                                    Console.Write(output[i, j]);
-                                                    Console.Write("\t");
-                                                }
-                                                Console.Write("\n");
+                                                //
+                                                MatrixOp matOp = new MatrixOp(rhs_elements, lhs_elements, i, lhs_col, lhs_row, rhs_col);
+                                                list_matOp.Add(matOp);
+                                                t[i] = new Thread(new ThreadStart(matOp.add_mat));
+                                                t[i].Start();
                                             }
-                                            bool mat_set = final.setIntMatrix(output);
+
+
+                                            bool running = true;
+                                            int count = 0;
+                                            int[,] res = new int[lhs_row, lhs_col];
+                                            while (!MatrixOp.isAllSet())
+                                            {
+                                                Thread.Sleep(100);
+                                            }
+                                            //result integrate
+
+                                            res = MatrixOp.get_result_matrix();
+                                            //writeIntermediateIntResult(res, lhs_row, lhs_col);
+
+                                            //////////////////////////
+                                            // assemble matrix using the list of matOp.
+                                            //list_matOp[0].
+
+                                            ///////////////////////////
+                                            bool mat_set = final.setIntMatrix(res);
                                         }
-                                        else if (mat_type == "double")
+                                        /*else if (mat_type == "double")
                                         {
                                             double[,] rhs_elements = stk_rhs.getdoubleValue();
                                             double[,] lhs_elements = stk_lhs.getdoubleValue();
@@ -3305,6 +3925,43 @@ namespace Spinach
                                                 Console.Write("\n");
                                             }
                                             bool mat_set = final.setDoubleMatrix(output);
+                                        }*/
+
+                                        if (mat_type == "double")
+                                        {
+                                            double[,] rhs_elements = stk_rhs.getdoubleValue();
+                                            double[,] lhs_elements = stk_lhs.getdoubleValue();
+                                            List<MatrixOp_double> list_matOp = new List<MatrixOp_double>();
+                                            MatrixOp_double.init_result_mat(lhs_row, lhs_col);
+
+                                            Thread[] t = new Thread[lhs_row];
+                                            for (int i = 0; i < lhs_row; i++)
+                                            {
+                                                //
+                                                MatrixOp_double matOp = new MatrixOp_double(rhs_elements, lhs_elements, i, lhs_col, lhs_row, rhs_col);
+                                                list_matOp.Add(matOp);
+                                                t[i] = new Thread(new ThreadStart(matOp.add_mat));
+                                                t[i].Start();
+                                            }
+
+
+                                            bool running = true;
+                                            int count = 0;
+                                            double[,] res = new double[lhs_row, lhs_col];
+                                            while (!MatrixOp_double.isAllSet())
+                                            {
+                                                Thread.Sleep(100);
+                                            }
+                                            //result integrate
+
+                                            res = MatrixOp_double.get_result_matrix();
+
+                                            //////////////////////////
+                                            // assemble matrix using the list of matOp.
+                                            //list_matOp[0].
+
+                                            ///////////////////////////
+                                            bool mat_set = final.setDoubleMatrix(res);
                                         }
                                         Object result = (Object)(final);
                                         mat_stack.Push(result);
@@ -3314,6 +3971,7 @@ namespace Spinach
                                 else
                                 {
                                     Console.Write("Matrix dimensions does not match.. try again.. \n");
+                                    sendres(112, "Matrix types do not match.. ");
                                 }
                             }
                         }
@@ -3776,8 +4434,240 @@ namespace Spinach
                     local--;
                 }
 
+<<<<<<< HEAD
             }
 
         }
     }
+    public class MatrixOp
+    {
+        int[,] rhs_elements;
+        int[,] lhs_elements;
+        int i, lhs_col, lhs_row, rhs_col;
+        Object obj = new Object();
+        //Thread
+        static int[,] res_mat;
+        static bool[,] isSet;
+        //
+
+        public MatrixOp(int[,] rhs_elements, int[,] lhs_elements, int i, int lhs_col, int lhs_row, int rhs_col)
+        {
+            this.rhs_elements = rhs_elements;
+            this.lhs_elements = lhs_elements;
+            this.i = i;
+            this.lhs_col = lhs_col;
+            this.lhs_row = lhs_row;
+            this.rhs_col = rhs_col;
+        }
+
+
+        public static bool isAllSet()
+        {
+            int row = isSet.GetLength(0);
+            int col = isSet.GetLength(1);
+            for (int count_row = 0; count_row < row; count_row++)
+                for (int count_col = 0; count_col < col; count_col++)
+                    if (!isSet[count_row, count_col]) return false;
+            return true;
+        }
+
+        public void add_mat()
+        {
+            lock (obj)
+            {
+                for (int j = 0; j < lhs_col; j++)
+                {
+                    res_mat[i, j] = lhs_elements[i, j] + rhs_elements[i, j];
+                    isSet[i, j] = true;
+                    Console.Write(res_mat[i, j]);
+                    Console.Write("\t");
+                }
+            }
+
+        }
+
+        public void sub_mat()
+        {
+            lock (obj)
+            {
+                for (int j = 0; j < lhs_col; j++)
+                {
+                    res_mat[i, j] = lhs_elements[i, j] - rhs_elements[i, j];
+                    isSet[i, j] = true;
+                    Console.Write(res_mat[i, j]);
+                    Console.Write("\t");
+                }
+            }
+
+        }
+
+        public void mul_mat()
+        {
+            lock (obj)
+            {
+                for (int j = 0; j < rhs_col; j++)
+                {
+                    for (int k = 0; k < lhs_col; k++)
+                    {
+                        int res = lhs_elements[i, k] * rhs_elements[k, j];
+                        res_mat[i, j] = res_mat[i, j] + res;
+                        isSet[i, j] = true;
+                    }
+                }
+            }
+        }
+
+        public static void init_result_mat(int lhs_row, int lhs_col)
+        {
+            res_mat = new int[lhs_row, lhs_col];
+            isSet = new bool[lhs_row, lhs_col];
+
+        }
+        public bool return_isSet()
+        {
+            int flag = 0;
+            for (int p = 0; p < lhs_col; p++)
+            {
+                if (isSet[i, p] == true)
+                    flag = 1;
+
+                else
+                    flag = 0;
+            }
+            if (flag == 1)
+                return true;
+            else
+                return false;
+        }
+
+        public static int[,] get_result_matrix()
+        {
+
+            return res_mat;
+        }
+
+        public int return_row()
+        {
+            return i;
+        }
+    }
+
+    public class MatrixOp_double
+    {
+        double[,] rhs_elements;
+        double[,] lhs_elements;
+        int i, lhs_col, lhs_row, rhs_col;
+        Object obj = new Object();
+        //Thread
+        static double[,] res_mat;
+        static bool[,] isSet;
+        //
+
+        public MatrixOp_double(double[,] rhs_elements, double[,] lhs_elements, int i, int lhs_col, int lhs_row, int rhs_col)
+        {
+            this.rhs_elements = rhs_elements;
+            this.lhs_elements = lhs_elements;
+            this.i = i;
+            this.lhs_col = lhs_col;
+            this.lhs_row = lhs_row;
+            this.rhs_col = rhs_col;
+        }
+
+        public static bool isAllSet()
+        {
+            int row = isSet.GetLength(0);
+            int col = isSet.GetLength(1);
+            for (int count_row = 0; count_row < row; count_row++)
+                for (int count_col = 0; count_col < col; count_col++)
+                    if (!isSet[count_row, count_col]) return false;
+            return true;
+        }
+
+        public void add_mat()
+        {
+            lock (obj)
+            {
+                for (int j = 0; j < lhs_col; j++)
+                {
+                    res_mat[i, j] = lhs_elements[i, j] + rhs_elements[i, j];
+                    isSet[i, j] = true;
+                    Console.Write(res_mat[i, j]);
+                    Console.Write("\t");
+                }
+            }
+
+        }
+
+        public void sub_mat()
+        {
+            lock (obj)
+            {
+                for (int j = 0; j < lhs_col; j++)
+                {
+                    res_mat[i, j] = lhs_elements[i, j] - rhs_elements[i, j];
+                    isSet[i, j] = true;
+                    Console.Write(res_mat[i, j]);
+                    Console.Write("\t");
+                }
+            }
+
+        }
+
+
+        public void mul_mat()
+        {
+            lock (obj)
+            {
+                for (int j = 0; j < rhs_col; j++)
+                {
+                    for (int k = 0; k < lhs_col; k++)
+                    {
+                        double res = lhs_elements[i, k] * rhs_elements[k, j];
+                        res_mat[i, j] = res_mat[i, j] + res;
+                        isSet[i, j] = true;
+                    }
+                }
+            }
+        }
+
+        public static void init_result_mat(int lhs_row, int lhs_col)
+        {
+            res_mat = new double[lhs_row, lhs_col];
+            isSet = new bool[lhs_row, lhs_col];
+
+        }
+        public bool return_isSet()
+        {
+            int flag = 0;
+            for (int p = 0; p < lhs_col; p++)
+            {
+                if (isSet[i, p] == true)
+                    flag = 1;
+
+                else
+                    flag = 0;
+=======
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
+            }
+            if (flag == 1)
+                return true;
+            else
+                return false;
+        }
+
+        public static double[,] get_result_matrix()
+        {
+
+            return res_mat;
+        }
+
+        public int return_row()
+        {
+            return i;
+        }
+    }
+<<<<<<< HEAD
+
+=======
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
 }

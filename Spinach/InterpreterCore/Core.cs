@@ -148,7 +148,11 @@ namespace Spinach
                     // curr.Accept(print_visitor);
                     curr.Accept(interp_visitor);
                 }
+<<<<<<< HEAD
+                if(totalLines ==elements.Count && flag!=1 && Visited==1)
+=======
                 if(totalLines ==elements.Count && Visited==1)
+>>>>>>> a4beb3cbce0a0fd892a9dd68fb13bde4bb80a4f5
                    smem.clearMasterBackup(true);
             }
         }

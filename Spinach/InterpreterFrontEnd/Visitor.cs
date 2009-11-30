@@ -73,7 +73,13 @@ public abstract class Visitor {
     }else if (element is ForStatementElement){
         ForStatementElement for_elem = (ForStatementElement)element;
         VisitForStatementElement(for_elem);
-    }else if (element is IfStatementElement){
+    }
+    else if (element is FunctionCallElement)
+    {
+        FunctionCallElement fun_elem = (FunctionCallElement)element;
+        VisitFunctionCallElement(fun_elem);
+    }
+    else if (element is IfStatementElement){
         IfStatementElement if_elem = (IfStatementElement)element;
         VisitIfStatementElement(if_elem);
     }

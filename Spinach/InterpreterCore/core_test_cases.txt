@@ -13,7 +13,6 @@
 Note: 
 
 - Currently if-else does not support local scope. But will be completed soon.
-- Please don't copy-paste the comments/undeline as well. They are not supported.
 
 
 Only IF
