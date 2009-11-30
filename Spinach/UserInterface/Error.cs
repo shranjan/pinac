@@ -27,7 +27,6 @@ namespace Spinach
     public delegate void ErrorNotification(string Msg);
     public class ErrorModule
     {
-        //FEO fo;
         public event ErrorNotification ConnError;
         public event ErrorNotification ProgConfError;
         public event ErrorNotification ProgWinError;
@@ -40,6 +39,8 @@ namespace Spinach
         //----< Create the Dictionary of Errors >----
         public ErrorModule()
         {
+            // Swarm Error Messages
+            ErrorDict.Add(10, "Connection Error: ");
             // FrontEnd Error Messages
             ErrorDict.Add(101, "Syntax Error: ");
             ErrorDict.Add(102, "Exception: ");
