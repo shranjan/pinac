@@ -1,19 +1,14 @@
 ﻿//////////////////////////////////////////////////////////////////////////////////
 //  Chat.cs - Chat handling class                                               //
-//  ver 1.0                                                                     //
 //                                                                              //
 //  Language:      C#                                                           //
-//  Platform:      Windows 7                                                    //
+//  Platform:      Windows Vista                                                //
 //  Application:   SPINACH                                                      //
-//  Author:        Abhay Ketkar (asketkar@syr.edu)                              //
-//                 (315) 439 7224                                               //
+//  Author:        Arunkumar K T (akyasara@syr.edu)                             //
+//                 Abhay Ketkar  (asketkar@syr.edu)                             //
+//                 Prateek Jain  (pjain02@syr.edu)                              //
+//                 Rutu Pandya   (rkpandya@syr.edu)                             //
 //////////////////////////////////////////////////////////////////////////////////
-/*
- * Maintenance History:
- * ====================
- * version 1.0 : 15 Nov 09
- * - the initial version of the Chat module
- */
 
 using System;
 using System.Collections.Generic;

@@ -3,10 +3,12 @@
 //  ver 1.0                                                                     //
 //                                                                              //
 //  Language:      C#                                                           //
-//  Platform:      Windows 7                                                    //
+//  Platform:      Windows Vista                                                //
 //  Application:   SPINACH                                                      //
-//  Author:        Abhay Ketkar (asketkar@syr.edu)                              //
-//                 (315) 439 7224                                               //
+//  Author:        Arunkumar K T (akyasara@syr.edu)                             //
+//                 Abhay Ketkar  (asketkar@syr.edu)                             //
+//                 Prateek Jain  (pjain02@syr.edu)                              //
+//                 Rutu Pandya   (rkpandya@syr.edu)                             //
 //////////////////////////////////////////////////////////////////////////////////
 
 /*
@@ -55,6 +57,7 @@ namespace Spinach
       InitializeComponent();
       Err.ConnError += new ErrorNotification(ShowError);
       SC.ListChanged += new SwarmConnection.ChangedEventHandler(SC_ListChanged);
+      Err.SetSwarmConnectionObject(SC);
     }
 
     void SC_ListChanged(List<string> conInfo)
@@ -115,7 +118,17 @@ namespace Spinach
     private void btnConnect_Click(object sender, RoutedEventArgs e)
     {
       bool conn = false;
-      if (txtUsername.Text.Trim() == "")
+      if (txtSelfIP.Text.Trim() == "")
+      {
+          MessageBox.Show("Please enter your IP Address", "IP Address", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+          txtSelfIP.Focus();
+      }
+      else if (txtPort.Text.Trim() == "")
+      {
+          MessageBox.Show("Please enter your Port", "Port", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+          txtPort.Focus();
+      }
+      else if (txtUsername.Text.Trim() == "")
       {
           MessageBox.Show("Please enter the Username", "Username", MessageBoxButton.OK, MessageBoxImage.Exclamation);
           txtUsername.Focus();
@@ -139,8 +152,8 @@ namespace Spinach
               else
               {
                   conn = SC.Join_Swarm(txtPeerIP.Text.Trim(), txtPeerPort.Text.Trim(), txtSelfIP.Text.Trim(), txtPort.Text.Trim(), txtUsername.Text.Trim());
-                  if (!conn)
-                      MessageBox.Show("Connection Problem", "Error in Connection", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                  //if (!conn)
+                  //    MessageBox.Show("Connection Problem", "Error in Connection", MessageBoxButton.OK, MessageBoxImage.Exclamation);
               }
           }
           else if (rdbCreateSwarm.IsChecked == true)

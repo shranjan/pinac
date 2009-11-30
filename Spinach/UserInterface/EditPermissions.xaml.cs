@@ -1,4 +1,16 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////////////////////////////
+//  EditPermissions.xaml.cs - Granting Permissions                              //
+//  ver 1.0                                                                     //
+//                                                                              //
+//  Language:      C#                                                           //
+//  Platform:      Windows Vista                                                //
+//  Application:   SPINACH                                                      //
+//  Author:        Arunkumar K T (akyasara@syr.edu)                             //
+//                 Abhay Ketkar  (asketkar@syr.edu)                             //
+//                 Prateek Jain  (pjain02@syr.edu)                              //
+//                 Rutu Pandya   (rkpandya@syr.edu)                             //
+//////////////////////////////////////////////////////////////////////////////////
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
