@@ -6,7 +6,9 @@
 //  Platform:      Windows Vista                                                //
 //  Application:   SPINACH                                                      //
 //  Author:        Arunkumar K T (akyasara@syr.edu)                             //
-//                 (315) 751 7324                                               //
+//                 Abhay Ketkar  (asketkar@syr.edu)                             //
+//                 Prateek Jain  (pjain02@syr.edu)                              //
+//                 Rutu Pandya   (rkpandya@syr.edu)                             //
 //////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -40,13 +42,17 @@ namespace Spinach
         private string PID;                     //Program ID
         private string owner;
         private string username;
+        private string progName="";
         string IP = "";
         string Port = "";
         private List<string> swarmUserList; 
         private List<string> progUserList;
+        private List<string> collaboratedUsers = new List<string>();
+        private List<Color> userColor = new List<Color>();
         private Dictionary<string, string> swarmUserTable = new Dictionary<string,string>();
         public enum editorType { owner, collaborator };
         public editorType et;
+        private bool clickedCompute = false;
         private BackgroundWorker worker;
         public delegate void CloseProgramEventHandler(string pid);
         public event CloseProgramEventHandler CloseProgramEvent;
@@ -76,9 +82,10 @@ namespace Spinach
         
         //Plot related declarations
         private PlotReceiver plot = new PlotReceiver();             
-        PngBitmapEncoder PBE = new PngBitmapEncoder();
+        //PngBitmapEncoder PBE = new PngBitmapEncoder();
         private string plotpath = "";
-        private int isplotReady = 0; 
+        private int isplotReady = 0;
+        private List<double> PlotVals;
 
         //Swarm Memory related Declarations
         private SwarmConnection SC;
@@ -101,7 +108,7 @@ namespace Spinach
         /// <param name="port">Self Port</param>
         /// <param name="pid">PID of the program</param>
         /// <param name="uname">Self USername</param>
-        public ProgWin(editorType e, SwarmConnection sconn, string ip, string port, string pid, string uname)
+        public ProgWin(editorType e, SwarmConnection sconn, string ip, string port, string pid, string uname, string Prog)
         {
             InitializeComponent();
             et = e;
@@ -113,6 +120,7 @@ namespace Spinach
             err.SetExecutorObject(Controller);
             err.SetPlotObject(plot);
             username = uname;
+            progName = Prog;
 
             //Swarm Operations
             SC = sconn;
@@ -125,8 +133,11 @@ namespace Spinach
             SM.srcChanged += new SwarmMemory.SourceCodeChanged(CollabEditing);
             SM.CloseP += new SwarmMemory.CloseProgram(SM_CloseP);
             SM.RerunP += new SwarmMemory.RerunProgram(SM_RerunP);
+            SC.DisconnectChanged += new SwarmConnection.DisconnectEventHandler(SM_CloseP);
+            SM.FinalResult += new SwarmMemory.GetFinalResult(SM_FinalResult);
             SM.createTheObjects(PID, IP, Port);                 //Finally the swarm memory object
             SC.InsertProgtoSC(SM);
+            err.SetSwarmMemoryObject(SM);
 
             //Exec Operations
             Controller.setPlotObject(plot);
@@ -134,6 +145,24 @@ namespace Spinach
             worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            prog = new TextRange(rtbInput.Document.ContentStart, rtbInput.Document.ContentEnd).Text;
+            userColor.Add(Colors.Brown);
+            userColor.Add(Colors.Yellow);
+            userColor.Add(Colors.Green);
+        }
+
+        void SM_FinalResult(string FinRes)
+        {
+            Thread t = new Thread(new ThreadStart(
+                delegate()
+                {
+                    this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+                        delegate()
+                        {
+                            txtResult.Text = FinRes;
+                        }));
+                }));
+            t.Start();
         }
 
         void SM_RerunP(bool Rerun)
@@ -171,11 +200,42 @@ namespace Spinach
                         delegate()
                         {
                             SM.programClosed();
-                            Close();
+                            //Thread.Sleep(2000);
+                            this.Close();
                         }));
-                }));                                                                      
+                }));
             t.Start();
+            //BackgroundWorker bw = new BackgroundWorker();
+            //bw.WorkerReportsProgress = true;
+            //bw.WorkerSupportsCancellation = true;
+            //bw.DoWork += new DoWorkEventHandler(closeAll);
+            //bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(closebw);
+            //bw.Dispose();
+            //bw.RunWorkerAsync("Hello to worker");
         }
+
+        //void closebw(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //    Close();
+            
+        //}
+
+        //void closeAll(object sender, DoWorkEventArgs e)
+        //{
+        //    Thread t = new Thread(new ThreadStart(
+        //        delegate()
+        //        {
+        //            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+        //                delegate()
+        //                {
+        //                    SM.programClosed();
+        //                    //Close();
+        //                }));
+        //        }));
+        //    t.Start();
+        //    //bw.ReportProgress(i);
+        //    //Thread.Sleep(1000);
+        //}
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -205,9 +265,15 @@ namespace Spinach
                                 rtbInput.IsEnabled = false;
                             }
                             else
-                            {
+                            { 
                                 btnCompute.IsEnabled = true;
-                                rtbInput.IsEnabled = true;
+                                if (write)
+                                    rtbInput.IsEnabled = true;
+                                if (clickedCompute)
+                                {
+                                    SM.BroadcastResult(txtResult.Text.ToString());
+                                    clickedCompute = false;
+                                }
                             }
                         }));
                 }));
@@ -343,10 +409,14 @@ namespace Spinach
         //***   All the Private Functions   ***//
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this.Title += " - ";
+            this.Title += progName;
+            lblProgName.Content = "Program Name: " + progName;
             if (et == editorType.collaborator)
             {
                 //This will disable the Access Control menu
                 mnuAccess.IsEnabled = false;
+                //txtResult.is
             }
         }
 
@@ -407,52 +477,52 @@ namespace Spinach
             TextPointer end = rtbInput.Document.ContentEnd;
             TextRange tr = new TextRange(start, end);
             string[] txt = tr.Text.Split('\n');
-
             if (tr.Text.Length > 2)
             {
                 if (!mnuWrap.IsChecked)
                 {
-                    lstLine.Items.Clear();
-                    if (txt.Length > 0 && lstLine.Items.Count >= 0)
+                    txtline.Text = "1";
+                    if (txt.Length > 0)
                     {
-                        if (lstLine.Items.Count <= txt.Length - 2)
+                        int len = txtline.Text.Split('\n').Length;
+                        if (len <= txt.Length - 2)
                         {
-                            while (lstLine.Items.Count <= txt.Length - 2)
-                                lstLine.Items.Add(lstLine.Items.Count + 1);
+                            while (len <= txt.Length - 2)
+                            {
+                                txtline.AppendText("\n" + (len + 1).ToString());
+                                len = len + 1;
+                            }
                         }
                     }
                 }
                 else
                 {
-                    if (txt.Length > 0 && lstLine.Items.Count >= 0)
+
+                    if (txt.Length > 0)
                     {
                         int lines = 0;
-                        lstLine.Items.Clear();
+                        txtline.Text = "";
                         int i;
-                        
+                        int width = 70;
                         for (i = 0; i <= txt.Length - 2; i++)
                         {
-                            
                             lines = 0;
-                            lines += txt[i].Length / 99;
-                            if (txt[i].Length % 99 != 0)
+                            lines += txt[i].Length / width;
+                            if (txt[i].Length % width != 0)
                                 lines += 1;
-                                lstLine.Items.Add(i + 1);
-                            for (int j = 1; j< lines; j++)
+                            if (i == 0)
+                                txtline.Text = (i + 1).ToString();
+                            else
+                                txtline.Text += "\n" + (i + 1).ToString();
+                            for (int j = 1; j < lines; j++)
                             {
-                                lstLine.Items.Add(" ");
+                                txtline.Text += "\n ";
                             }
                         }
-                       
+
                     }
                 }
-            }
-            tr = new TextRange(rtbInput.Document.ContentStart, rtbInput.Document.ContentEnd);
-            
-            if (tr.Text.Length == 0 && lstLine.Items.Count > 0)
-            {
-                while (lstLine.Items.Count > 0)
-                    lstLine.Items.RemoveAt(lstLine.Items.Count - 1);
+                txtline.ScrollToVerticalOffset(rtbInput.VerticalOffset);
             }
         }
 
@@ -473,109 +543,143 @@ namespace Spinach
 
         private void rtbInput_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key.ToString() == "Space" || e.Key.ToString() == "Return")
-            
+            if (e.Key.ToString() == "Left" || e.Key.ToString() == "Right" || e.Key.ToString() == "Down" || e.Key.ToString() == "Up")
             {
-                if (cur_th != null && cur_th.IsAlive == true)
+            }
+            else
+            {
+                try
                 {
-                    cur_th.Abort();
-                    cur_th = null;
-                }
-                cur_th = new Thread(new ThreadStart(
-                                        delegate()
-                                        {
-                                            rtbInput.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
-                                                delegate()
-                                                {
-                                                    highlight();
-                                                }));
-                                        }));
-                cur_th.IsBackground = true;
-                cur_th.Start();
-            }
-            else if (e.Key.ToString() == "Left" || e.Key.ToString() == "Right" || e.Key.ToString() == "Down" || e.Key.ToString() == "Up")
-            {
-            }
-
-            //Collaborative!!!!!!!!!!!!!!!!!!!!!!!
-            if (cur_th != null && cur_th.IsAlive == true)
-            {
-                cur_th.Abort();
-
-                cur_th = null;
-            }
-            TextPointer cur = rtbInput.CaretPosition;
-            TextPointer start = rtbInput.CaretPosition.GetLineStartPosition(0);
-            TextPointer end = rtbInput.Document.ContentEnd;
-            TextRange tr = new TextRange(start, end);
-            string s = tr.Text.ToString();
-            if (s.IndexOf('\r') != -1)
-                s = s.Substring(0, s.IndexOf('\r'));
-            int total = rtbInput.Document.ContentStart.GetOffsetToPosition(start);
-            TextRange ts = new TextRange(rtbInput.Document.ContentStart, start);
-            int linenum = ts.Text.Split('\n').Length;
-            linenum = linenum - 1;
-            int modifier = 0;
-            //if (prog != "")
-                if (e.Key.ToString() == "Return")
-                {
-                    TextPointer tp = start.GetLineStartPosition(-1);
-                    if (tp != null)
+                    //Collaborative!!!!!!!!!!!!!!!!!!!!!!!
+                    if (cur_th != null && cur_th.IsAlive == true)
                     {
-                        TextRange tp1 = new TextRange(tp, end);
-                        string st = tp1.Text.ToString();
-                        if (st.IndexOf('\r') != -1)
+                        cur_th.Abort();
+
+                        cur_th = null;
+                    }
+                    TextPointer cur = rtbInput.CaretPosition;
+                    TextPointer start = rtbInput.CaretPosition.GetLineStartPosition(0);
+                    TextPointer end = rtbInput.Document.ContentEnd;
+                    TextRange tr = new TextRange(start, end);
+                    string s = tr.Text.ToString();
+                    if (s.IndexOf('\r') != -1)
+                        s = s.Substring(0, s.IndexOf('\r'));
+                    int total = rtbInput.Document.ContentStart.GetOffsetToPosition(start);
+                    TextRange ts = new TextRange(rtbInput.Document.ContentStart, start);
+                    int linenum = ts.Text.Split('\n').Length;
+                    linenum = linenum - 1;
+                    int modifier = 0;
+                    //if (prog != "")
+                    if (e.Key.ToString() == "Return")
+                    {
+                        TextPointer tp = rtbInput.Document.ContentStart.GetLineStartPosition(0).GetLineStartPosition(linenum - 1);// start.GetLineStartPosition(0).GetLineStartPosition(-1).GetLineStartPosition(0);
+                        if (tp != null)
                         {
-                            st = st.Substring(0, st.IndexOf('\r'));
-                        }
-                        string[] param = prog.Split('\n');
-                        if (linenum != 0 && linenum <= param.Length - 1)
-                        {
-                            string temp = param[linenum - 1];
-                            temp = temp.Substring(0, temp.IndexOf('\r'));
-                            if (temp != st)
+                            TextRange tp1 = new TextRange(tp, end);
+                            string st = tp1.Text.ToString();
+                            if (st.IndexOf('\r') != -1)
                             {
-                                SM.sourceCodeChanged((linenum - 1).ToString(), st, "0", "");
+                                st = st.Substring(0, st.IndexOf('\r'));
                             }
-                            modifier = 2;
-                            SM.sourceCodeChanged(linenum.ToString(), s, modifier.ToString(), "");
+                            string[] param = prog.Split('\n');
+                            if (linenum != 0 && linenum <= param.Length - 1)
+                            {
+                                string temp = param[linenum - 1];
+                                if (temp.IndexOf('\r') != -1)
+                                    temp = temp.Substring(0, temp.IndexOf('\r'));
+                                if (temp != st)
+                                {
+                                    SM.sourceCodeChanged((linenum - 1).ToString(), st, "0", username);
+
+                                }
+                                modifier = 2;
+                                SM.sourceCodeChanged(linenum.ToString(), s, modifier.ToString(), username);
+                            }
                         }
                     }
-                }
-                else if ((e.Key.ToString() == "Back" || e.Key.ToString() == "Delete"))
-                {
-                    int presentlen = new TextRange(rtbInput.Document.ContentStart, rtbInput.Document.ContentEnd).Text.Split('\n').Length;
-                    int originallen = prog.Split('\n').Length;
-                    SM.sourceCodeChanged(linenum.ToString(), s, "0", "");
-                    if (presentlen < originallen)
+                    else if ((e.Key.ToString() == "Back" || e.Key.ToString() == "Delete"))
                     {
-                        modifier = 1;
-                        linenum = linenum + 1;
-                        SM.sourceCodeChanged(linenum.ToString(), s, modifier.ToString(), "");
+                        int presentlen = new TextRange(rtbInput.Document.ContentStart, rtbInput.Document.ContentEnd).Text.Split('\n').Length;
+                        int originallen = prog.Split('\n').Length;
+                        string temp = prog.Split('\n')[linenum];
+                        if (temp.IndexOf('\r') != -1)
+                            temp = temp.Substring(0, temp.IndexOf('\r'));
+
+                        if (presentlen < originallen)
+                        {
+                            modifier = 1;
+                            //linenum = linenum + 1;
+                            for (int j = (originallen - presentlen); j >= 1; j--)
+                            {
+                                SM.sourceCodeChanged((linenum + j).ToString(), s, modifier.ToString(), username);
+
+                            }
+                        }
+                        if (temp != s)
+                        {
+                            start = rtbInput.Document.ContentStart.GetLineStartPosition(0).GetLineStartPosition(linenum);
+                            tr = new TextRange(start, end);
+                            s = tr.Text.ToString();
+                            if (s.IndexOf('\r') != -1)
+                                s = s.Substring(0, s.IndexOf('\r'));
+                            SM.sourceCodeChanged(linenum.ToString(), s, "0", username);
+
+                        }
                     }
+                    else
+                    {
+                        start = rtbInput.Document.ContentStart.GetLineStartPosition(0).GetLineStartPosition(linenum);
+                        tr = new TextRange(start, end);
+                        s = tr.Text.ToString();
+                        if (s.IndexOf('\r') != -1)
+                            s = s.Substring(0, s.IndexOf('\r'));
+                        SM.sourceCodeChanged(linenum.ToString(), s, "0", username);
+                    }
+                    tr = new TextRange(rtbInput.Document.ContentStart, rtbInput.Document.ContentEnd);
+                    prog = tr.Text;
+                    markLinepositions();
                 }
-                else
+                catch (SystemException except)
                 {
-                    SM.sourceCodeChanged(linenum.ToString(), s, "0", "");
+                    //            System.Windows.MessageBox.Show("KEyin except:"+except.StackTrace);
                 }
-                tr = new TextRange(rtbInput.Document.ContentStart, rtbInput.Document.ContentEnd);
-                prog = tr.Text;
-                markLinepositions();
+                if (e.Key.ToString() == "Space" || e.Key.ToString() == "Return")
+                {
+                    if (cur_th != null && cur_th.IsAlive == true)
+                    {
+                        cur_th.Abort();
+                        cur_th = null;
+                    }
+                    cur_th = new Thread(new ThreadStart(
+                                            delegate()
+                                            {
+                                                rtbInput.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+                                                    delegate()
+                                                    {
+                                                        highlight();
+                                                    }));
+                                            }));
+                    cur_th.IsBackground = true;
+                    cur_th.Start();
+                }
+
+            }
         }
 
         private void markLinepositions()
         {
-            if (prog != "")
+            try
             {
                 string[] temp = prog.Split('\n');
                 m_user.Clear();
-                for (int i = 0; i < editedNum.Keys.Count; i++)
+                for (int i = 0; i < temp.Length && i < editedNum.Keys.Count; i++)
                 {
                     userhighlight u = new userhighlight();
-
                     int length = 0;
                     int x = 0;
-                    for (int j = 0; j < i; j++)
+                    int[] keys = new int[editedNum.Count];
+                    editedNum.Keys.CopyTo(keys, 0);
+                    for (int j = 0; j < keys[i]; j++)
                     {
                         if (temp[j].IndexOf('\r') != -1)
                             length += temp[j].Substring(0, temp[j].IndexOf('\r')).Length;
@@ -591,19 +695,38 @@ namespace Spinach
                     }
                 }
                 userformat();
+                //syntax();
+            }
+            catch (Exception except)
+            {
+                //System.Windows.MessageBox.Show("Exception in Marking line position"+except.StackTrace);
             }
         }
 
         private void userformat()
         {
-            if (mnuHighlight.IsChecked)
-                for (int i = 0; i < m_user.Count; i++)
+            try
+            {
+                if (mnuHighlight.IsChecked)
                 {
-                    TextPointer str = rtbInput.Document.ContentStart.GetPositionAtOffset(m_user[i].start, LogicalDirection.Forward);
-                    TextPointer stp = str.GetPositionAtOffset(m_user[i].size, LogicalDirection.Backward);
-                    TextRange ts = new TextRange(str, stp);
-                    ts.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Colors.Gray));
+                    TextRange tr = new TextRange(rtbInput.Document.ContentStart, rtbInput.Document.ContentEnd);
+                    tr.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Colors.White));
+                    int[] keys = new int[editedNum.Count];
+                    editedNum.Keys.CopyTo(keys, 0);
+                    string[] param = prog.Split('\n');
+                    for (int i = 0; i < editedNum.Count; i++)
+                    {
+                        TextPointer str = rtbInput.Document.ContentStart.GetPositionAtOffset(0).GetPositionAtOffset(keys[i] + 2, LogicalDirection.Forward);
+                        TextPointer stp = str.GetPositionAtOffset(param[i].Length + 1, LogicalDirection.Backward);
+                        TextRange ts = new TextRange(str, stp);
+                        ts.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(userColor[(collaboratedUsers.IndexOf(m_user[i].name) % userColor.Count)]));
+                    }
                 }
+            }
+            catch (SystemException except)
+            {
+                //System.Windows.MessageBox.Show("Exception in user format"+except.InnerException.ToString());
+            }
         }
 
         private void update(string lno1, string s, string mod1, string uname)
@@ -614,14 +737,11 @@ namespace Spinach
                     this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
                         delegate()
                         {
-                            int lno = Int32.Parse(lno1);
-                            int mod = Int32.Parse(mod1);
-                            //if (prog != "")
-                            //{
-                                string[] param = prog.Split('\r');
+                            try
+                            {
+                                int lno = Int32.Parse(lno1);
+                                int mod = Int32.Parse(mod1);
                                 int flag = 0;
-                                int maxlen = 0;
-                                //if(s!="")
                                 if (mod != 1)
                                 {
                                     Hashtable temp = new Hashtable();
@@ -665,74 +785,64 @@ namespace Spinach
                                         temp.Remove(k);
                                     }
                                 }
-                                rtbInput.Document.Blocks.Clear();
-                                int i;
-                                maxlen = param.Length - 1;
-                                for (i = 0; i < maxlen; i++)
+                                string[] param = prog.Split('\n');
+                                if (mod == 1)
                                 {
-                                    if (lno == i && mod == 1)
-                                        continue;
-                                    if (mod == 0 || mod == 1)
+                                    TextPointer t1 = rtbInput.Document.ContentStart.GetLineStartPosition(0).GetLineStartPosition(lno - 1);//GetPositionAtOffset(param[lno-1].Length);
+                                    if (lno - 1 < param.Length)
                                     {
-                                        if (lno == i)
+                                        string temp = param[lno - 1];
+                                        if (temp.IndexOf('\r') != -1)
+                                            temp = temp.Substring(0, temp.IndexOf('\r'));
+                                        if (lno < param.Length)
                                         {
-                                            if (param[i].IndexOf('\n') != -1)
-                                            {
-                                                rtbInput.AppendText("\n" + s);
-                                            }
+                                            string temp1 = param[lno];
+                                            if (temp1.IndexOf('\r') != -1)
+                                                temp1 = temp1.Substring(0, temp1.IndexOf('\r'));
+                                            TextRange tr;
+                                            if (temp1.Length > 0)
+                                                tr = new TextRange(t1.GetPositionAtOffset(temp.Length + 2), t1.GetPositionAtOffset(temp.Length + 5 + temp1.Length));
                                             else
-                                            {
-                                                rtbInput.AppendText(s + "\r\n");
-                                            }
-                                            flag = 1;
-                                        }
-                                        else
-                                        {
-                                            rtbInput.AppendText(param[i].ToString());
+                                                tr = new TextRange(t1.GetPositionAtOffset(temp.Length + 2), t1.GetPositionAtOffset(temp.Length + 4));
+                                            tr.Text = "";
                                         }
                                     }
-
-                                    if (mod == 2)
-                                    {
-                                        if (lno == i)
-                                        {
-                                            if (param[i].IndexOf('\n') != -1)
-                                            {
-                                                rtbInput.AppendText("\n" + s);
-                                            }
-                                            else
-                                            {
-                                                rtbInput.AppendText(s + "\r\n");
-                                            }
-                                            flag = 1;
-                                        }
-                                        else if (i < lno)
-                                        {
-                                            rtbInput.AppendText(param[i].ToString());
-                                        }
-                                        else if (i > lno)
-                                        {
-                                            rtbInput.AppendText(param[i - 1].ToString());
-                                        }
-                                    }
-
-                                }
-                                if (flag == 0 && mod == 2)
-                                {
-                                    rtbInput.AppendText("\r\n" + s);
                                 }
                                 else
-                                 if (flag == 0 && mod == 0)
-                                 {
-                                        rtbInput.AppendText(s);
-                                 }
-                                 else 
-                                 if (flag == 1 && mod == 2)
+                                    if (mod == 0)
                                     {
-                                        rtbInput.AppendText(param[i - 1]);
+                                        TextPointer tp = rtbInput.Document.ContentStart.GetLineStartPosition(0).GetLineStartPosition(lno);
+                                        if (tp != null)
+                                        {
+                                            string temp = param[lno];
+                                            if (temp.IndexOf('\r') != -1)
+                                                temp = temp.Substring(0, temp.IndexOf('\r'));
+                                            TextRange tr = new TextRange(tp, tp.GetPositionAtOffset(temp.Length + 1));
+                                            tr.Text = s;
+                                        }
                                     }
+                                    else
+                                        if (mod == 2)
+                                        {
+                                            if (lno < param.Length - 1)
+                                            {
+                                                TextPointer tp = rtbInput.Document.ContentStart.GetLineStartPosition(0).GetLineStartPosition(lno);
+                                                if (tp != null)
+                                                {
+                                                    tp.InsertTextInRun(s + "\n");
+                                                }
+                                            }
+                                            else
+                                                rtbInput.AppendText("\n" + s);
+                                        }
+
                                 prog = new TextRange(rtbInput.Document.ContentStart, rtbInput.Document.ContentEnd).Text.ToString();
-                            //}
+                                markLinepositions();
+                            }
+                            catch (SystemException except)
+                            {
+                                //System.Windows.MessageBox.Show("Exception in update " + except.StackTrace);
+                            }
                         }));
                 }));
             t.Start();
@@ -743,13 +853,14 @@ namespace Spinach
             System.Windows.MessageBox.Show(Msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        private void EnablePlot(PngBitmapEncoder encoder)
+        private void EnablePlot(PngBitmapEncoder encoder, List<double> listvalues)
         {
             try
             {
                 if (encoder != null)
                 {
-                    PBE = new PngBitmapEncoder();
+                    PlotVals = listvalues;
+                    PngBitmapEncoder PBE = new PngBitmapEncoder();
                     PBE.Frames.Add(BitmapFrame.Create(encoder.Frames[0].Clone()));
                     isplotReady = 1;
                     System.IO.FileStream outStream = new System.IO.FileStream(plotpath, System.IO.FileMode.Create);
@@ -819,9 +930,9 @@ namespace Spinach
         private void mnuLine_Click(object sender, RoutedEventArgs e)
         {
             if (mnuLine.IsChecked)
-                lstLine.Visibility = Visibility.Visible;
+                txtline.Visibility = Visibility.Visible;
             else
-                lstLine.Visibility = Visibility.Hidden;
+                txtline.Visibility = Visibility.Hidden;
         }
 
         private void mnuOption_Click(object sender, RoutedEventArgs e)
@@ -836,12 +947,6 @@ namespace Spinach
             mnuEdit.Visibility = Visibility.Visible;
         }
 
-        private void mnuAdd_Click(object sender, RoutedEventArgs e)
-        {
-            AddUser user = new AddUser();
-            user.setUserList(swarmUserList);
-            user.ShowDialog();
-        }
 
         private void mnuEdit_Click(object sender, RoutedEventArgs e)
         {
@@ -853,16 +958,11 @@ namespace Spinach
             editPerm.ShowDialog();
         }
 
-        private void mnuDelete_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteUser delUser = new DeleteUser();
-            delUser.ShowDialog();
-        }
-
         private void btnCompute_Click(object sender, RoutedEventArgs e)
         {
             if (SM.RunClicked(IP, Port))
             {
+                clickedCompute = true;
                 txtResult.Text = "";
                 isplotReady = 0;
                 plotpath = Title;
@@ -887,6 +987,11 @@ namespace Spinach
                 try
                 {
                     StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false);
+                    FileInfo fi = new FileInfo(saveFileDialog1.FileName);
+                    progName = fi.Name;
+                    string[] title = this.Title.Split('-');
+                    this.Title = title[0] + "-" + title[1] + "- " + progName;
+                    lblProgName.Content = "Program Name: " + progName;
                     using (sw)
                     {
                         TextPointer start = rtbInput.Document.ContentStart;
@@ -907,7 +1012,7 @@ namespace Spinach
         {
             if (isplotReady == 1)
             {
-                ProgPlot frmPlot = new ProgPlot(plotpath);
+                ProgPlot frmPlot = new ProgPlot(plotpath, PlotVals, plot);
                 frmPlot.ShowDialog();
             }
             else
@@ -929,7 +1034,8 @@ namespace Spinach
                     // create a file stream for saving image
                     using (FileStream outStream = new FileStream(tempPath, FileMode.Create))
                     {
-                        PBE.Save(outStream);
+                        //SAVING**************************
+                        //PBE.Save(outStream);
                     }
 
                 }
@@ -952,6 +1058,16 @@ namespace Spinach
             if (CloseProgramEvent != null)
                 CloseProgramEvent(PID);
             //Close();
+        }
+
+        private void rtbInput_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+            txtline.ScrollToVerticalOffset(rtbInput.VerticalOffset);
+        }
+
+        private void rtbInput_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            txtline.ScrollToVerticalOffset(rtbInput.VerticalOffset);
         }
     }
 }

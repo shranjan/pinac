@@ -1,19 +1,15 @@
 ﻿//////////////////////////////////////////////////////////////////////////////////
-//  Error.cs - Error handling class                                             //
+//  Error.cs - Error Module                                                     //
 //  ver 1.0                                                                     //
 //                                                                              //
 //  Language:      C#                                                           //
-//  Platform:      Windows 7                                                    //
+//  Platform:      Windows Vista                                                //
 //  Application:   SPINACH                                                      //
-//  Author:        Abhay Ketkar (asketkar@syr.edu)                              //
-//                 (315) 439 7224                                               //
+//  Author:        Arunkumar K T (akyasara@syr.edu)                             //
+//                 Abhay Ketkar  (asketkar@syr.edu)                             //
+//                 Prateek Jain  (pjain02@syr.edu)                              //
+//                 Rutu Pandya   (rkpandya@syr.edu)                             //
 //////////////////////////////////////////////////////////////////////////////////
-/*
- * Maintenance History:
- * ====================
- * version 1.0 : 4 Nov 09
- * - the initial version of the Error module
- */
 
 using System;
 using System.Collections.Generic;
@@ -33,6 +29,8 @@ namespace Spinach
         
         private executor Ex;
         private PlotReceiver plot;
+        private SwarmConnection SC;
+        private SwarmMemory SM = null;
 
         private Dictionary<int, string> ErrorDict = new Dictionary<int, string>();
 
@@ -46,6 +44,7 @@ namespace Spinach
             ErrorDict.Add(102, "Exception: ");
             // CoreTeam Error Messages
             ErrorDict.Add(112, "Semantic Error: ");
+            ErrorDict.Add(113, "Exception: ");
             // PlotTeam Error Messages
             ErrorDict.Add(121, "Plotting Error: ");
             ErrorDict.Add(122, "Plotting Error: ");
@@ -58,11 +57,16 @@ namespace Spinach
         {
             string ErrMsg = ErrorDict[Code] + Msg;
             if (Code < 50 && ConnError != null)
-              ConnError(ErrMsg);
+                ConnError(ErrMsg);
             else if (Code < 100 && ProgConfError != null)
-              ProgConfError(ErrMsg);
+                ProgConfError(ErrMsg);
             else if (Code < 150 && ProgWinError != null)
-              ProgWinError(ErrMsg);
+            {
+                SM.BroadcastError(ErrMsg);
+                //if (Code == 101 || Code == 102 || Code == 201 || Code == 202 || Code==203)
+                    SM.clearMasterBackup(true);
+                //ProgWinError(ErrMsg);
+            }
         }
 
         public void SetExecutorObject(executor E)
@@ -76,6 +80,22 @@ namespace Spinach
             plot = p;
             plot.error +=new PlotReceiver.PlotError(ErrorMsg);
         }
-        
+
+        public void SetSwarmConnectionObject(SwarmConnection s)
+        {
+            SC = s;
+            SC.ErrorChanged +=new SwarmConnection.ErrorEventHandler(ErrorMsg);
+        }
+
+        public void SetSwarmMemoryObject(SwarmMemory s)
+        {
+            SM = s;
+            SM.ErrorResult+=new SwarmMemory.BrdErrorResult(ShowMsg);
+        }
+
+        public void ShowMsg(string ErrMsg)
+        {
+            ProgWinError(ErrMsg);
+        }
     }
 }

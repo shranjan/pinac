@@ -5,10 +5,11 @@
 //  Language:      C#                                                           //
 //  Platform:      Windows Vista                                                //
 //  Application:   SPINACH                                                      //
-//  Author:        Prateek Jain (pjain02@syr.edu)                               //
-//                 (315) 751 7324                                               //
+//  Author:        Arunkumar K T (akyasara@syr.edu)                             //
+//                 Abhay Ketkar  (asketkar@syr.edu)                             //
+//                 Prateek Jain  (pjain02@syr.edu)                              //
+//                 Rutu Pandya   (rkpandya@syr.edu)                             //
 //////////////////////////////////////////////////////////////////////////////////
-
 using System;
 using System.Collections.Generic;
 using System.Collections;
@@ -45,6 +46,8 @@ namespace Spinach
         private int WindowCount = 0;
         private string[] AccessString;
         String programText = "";
+        private bool isDisconnected = false;
+        private string Prog = "Prog";
 
         private Dictionary<string, ArrayList> AccessControlList = new Dictionary<string, ArrayList>();
         private List<Thread> threadList = new List<Thread>();
@@ -93,13 +96,15 @@ namespace Spinach
                     ProgWin temp = (ProgWin)kp.Value[1];
                     temp.send_close_msg();
                 }
+                
+                //Thread.Sleep(5000);
+                SC.Disconnect();
                 foreach (Thread t in threadList)
                 {
                     t.Abort();
                 }
-                Thread.Sleep(5000);
-                SC.Disconnect();
-                //this.Close();
+                isDisconnected = true;
+                this.Close();
                 Environment.Exit(1);
             }
         }
@@ -117,15 +122,19 @@ namespace Spinach
                     ProgWin temp = (ProgWin)kp.Value[1];
                     temp.send_close_msg();
                 }
+                SC.Disconnect();
                 foreach (Thread t in threadList)
                 {
                     t.Abort();
                 }
-                SC.Disconnect();
                 if (Conn != null)
                     Conn();
+                isDisconnected = true;
                 this.Close();
             }
+
+
+            //editor_CloseProgramEvent(string pid)
         }
 
         private void frmProgConf_Loaded(object sender, RoutedEventArgs e)
@@ -143,26 +152,35 @@ namespace Spinach
 
       private void OwnerThreadStartingPoint()
       {
-          string pid;
-          pid = Guid.NewGuid().ToString();
-          ProgWin editor = new ProgWin(ProgWin.editorType.owner, SC, IP, Port, pid, username);
-          editor.CloseProgramEvent += new ProgWin.CloseProgramEventHandler(editor_CloseProgramEvent);
-          //owner is the user itself. so pass the username here
-          //list of the users in swarm
-          //take the program name and send the program name
-          editor.setUserList(userList);
-          editor.setPermissions("RW");
-          editor.loadProgram(programText);
-          editor.setOwner(username);
-          editor.SMObj().setOwner(IP + ":" + Port);
-          ArrayList list = new ArrayList();
-          list.Add("RW");
-          list.Add(editor);
-          AccessControlList.Add(pid, list);
-          //editor.Owner = this;
-          editor.Show();
+          //try
+          //{
+              string pid;
+              pid = Guid.NewGuid().ToString();
+              ProgWin editor = new ProgWin(ProgWin.editorType.owner, SC, IP, Port, pid, username, Prog+WindowCount.ToString());
+              editor.CloseProgramEvent += new ProgWin.CloseProgramEventHandler(editor_CloseProgramEvent);
+              //owner is the user itself. so pass the username here
+              //list of the users in swarm
+              //take the program name and send the program name
+              editor.setUserList(userList);
+              editor.setPermissions("RW");
+              editor.loadProgram(programText);
+              editor.setOwner(username);
+              editor.SMObj().setOwner(IP + ":" + Port);
+              ArrayList list = new ArrayList();
+              list.Add("RW");
+              list.Add(editor);
+              AccessControlList.Add(pid, list);
+              //editor.Owner = this;
+              editor.Show();
 
-          System.Windows.Threading.Dispatcher.Run();
+              System.Windows.Threading.Dispatcher.Run();
+          
+          //catch(Exception e)
+          //{
+          //    Console.WriteLine("**********************************************");
+          //    Console.WriteLine(e.ToString());
+          //    Console.WriteLine("**********************************************");
+          //}
       }
 
       void editor_CloseProgramEvent(string pid)
@@ -237,7 +255,7 @@ namespace Spinach
 
       private void AccessThreadStartingPoint()
       {
-          ProgWin editor = new ProgWin(ProgWin.editorType.collaborator, SC, IP, Port, AccessString[0], username);
+          ProgWin editor = new ProgWin(ProgWin.editorType.collaborator, SC, IP, Port, AccessString[0], username, Prog + WindowCount.ToString());
           editor.CloseProgramEvent += new ProgWin.CloseProgramEventHandler(editor_CloseProgramEvent);
           ArrayList list = new ArrayList();
           string permission = "";
@@ -444,23 +462,27 @@ namespace Spinach
       private void frmProgConf_Closed(object sender, EventArgs e)
       {
           MessageBoxResult result;
-          result = System.Windows.MessageBox.Show("Do you really want to disconnect from the swarm?", "Disconnect?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-          if (result == MessageBoxResult.Yes)
+          if (!isDisconnected)
           {
-              //Code for disconnecting from the swarm
-              Dictionary<string, ArrayList> local = AccessControlList;
-              foreach (KeyValuePair<string, ArrayList> kp in local)
+              result = System.Windows.MessageBox.Show("Do you really want to disconnect from the swarm?", "Disconnect?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+              if (result == MessageBoxResult.Yes)
               {
-                  ProgWin temp = (ProgWin)kp.Value[1];
-                  temp.send_close_msg();
+                  //Code for disconnecting from the swarm
+                  Dictionary<string, ArrayList> local = AccessControlList;
+                  foreach (KeyValuePair<string, ArrayList> kp in local)
+                  {
+                      ProgWin temp = (ProgWin)kp.Value[1];
+                      temp.send_close_msg();
+                  }
+                  
+                  SC.Disconnect();
+                  foreach (Thread t in threadList)
+                  {
+                      t.Abort();
+                  }
+                  this.Close();
+                  Environment.Exit(1);
               }
-              foreach (Thread t in threadList)
-              {
-                  t.Abort();
-              }
-              SC.Disconnect();
-              this.Close();
-              Environment.Exit(1);
           }
       }
 
