@@ -44,151 +44,156 @@ namespace Spinach
 
         private void parseMsg(String msg)
         {
-            String type=" ";
-            XDocument xml = XDocument.Parse(msg);
-            var q1 = from x in xml.Elements() select x;
-            if (q1.ElementAt(0).Name.ToString() == "root")
+            try
             {
-                var q = from x in xml.Descendants()
-                        where (x.Name == "root")
-                        select x;
-                foreach (var elem in q)
-                    type = elem.Attributes().ElementAt(0).Value;
+                String type = " ";
+                XDocument xml = XDocument.Parse(msg);
+                var q1 = from x in xml.Elements() select x;
+                if (q1.ElementAt(0).Name.ToString() == "root")
+                {
+                    var q = from x in xml.Descendants()
+                            where (x.Name == "root")
+                            select x;
+                    foreach (var elem in q)
+                        type = elem.Attributes().ElementAt(0).Value;
 
-                if (type == "Connection")
-                    getConnectionRequestMsg(msg);
-                else if (type == "IPtoPeer")
-                    getIPtoPeerMsg(msg);
-                else if (type == "HeartBeatRequest")
-                    getHeartBeatRequestMsg(msg);
-                else if (type == "HeartBeatReply")
-                    getHeartBeatReplyMsg(msg);
-                else if (type == "Master")
-                    getMasterMsg(msg);
-                else if (type == "Backup")
-                    getBackupMsg(msg);
-                else if (type == "Run")
-                    getRunMsg(msg);
-                else if (type == "RunSuccess")
-                    getRunSuccessMsg(msg);
-                else if (type == "RunFail")
-                    getRunFailMsg(msg);
-                //else if (type == "ReRun")
-                //    getReRun(ref mPeer);
-                else if (type == "Chat")
-                    getChatMsg(msg);
-                else if (type == "Error")
-                    getErrorMsg(msg);
-                else if (type == "Disconnect")
-                    getDisconnectMsg(msg);
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "NewProg")
-            {
-                SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                string[] temp = smc.addPermission(msg);
-                string myIp = GetIP();
-                string myPort = GetPort();
-                if (myIp == temp[3] && myPort == temp[4])
-                {
-                    if (AddPrev != null)
-                        AddPrev(temp);
+                    if (type == "Connection")
+                        getConnectionRequestMsg(msg);
+                    else if (type == "IPtoPeer")
+                        getIPtoPeerMsg(msg);
+                    else if (type == "HeartBeatRequest")
+                        getHeartBeatRequestMsg(msg);
+                    else if (type == "HeartBeatReply")
+                        getHeartBeatReplyMsg(msg);
+                    else if (type == "Master")
+                        getMasterMsg(msg);
+                    else if (type == "Backup")
+                        getBackupMsg(msg);
+                    else if (type == "Run")
+                        getRunMsg(msg);
+                    else if (type == "RunSuccess")
+                        getRunSuccessMsg(msg);
+                    else if (type == "RunFail")
+                        getRunFailMsg(msg);
+                    else if (type == "Chat")
+                        getChatMsg(msg);
+                    else if (type == "Error")
+                        getErrorMsg(msg);
+                    else if (type == "Disconnect")
+                        getDisconnectMsg(msg);
                 }
-                else 
+                else if (q1.ElementAt(0).Name.ToString() == "NewProg")
                 {
-                    //string[] temp = { Pid,owner,code,theIP,thePort,read,write, changes};
-                    //string[] temp={Pid, theIP, thePort, read, write};
-                    string[] temp1 = { temp[0], temp[3], temp[4], temp[5], temp[6] };
+                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                    string[] temp = smc.addPermission(msg);
+                    string myIp = GetIP();
+                    string myPort = GetPort();
+                    if (myIp == temp[3] && myPort == temp[4])
+                    {
+                        if (AddPrev != null)
+                            AddPrev(temp);
+                    }
+                    else
+                    {
+                        //string[] temp = { Pid,owner,code,theIP,thePort,read,write, changes};
+                        //string[] temp={Pid, theIP, thePort, read, write};
+                        string[] temp1 = { temp[0], temp[3], temp[4], temp[5], temp[6] };
+                        if (ChngPermission != null)
+                            ChngPermission(temp1);
+                    }
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "PermissionChange")
+                {
+                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                    string[] temp = smc.changePermission(msg);
                     if (ChngPermission != null)
-                        ChngPermission(temp1);
+                        ChngPermission(temp);
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "ChangeOwner")
+                {
+                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                    string[] temp = smc.changeOwner(msg);
+                    if (TransOwner != null)
+                        TransOwner(temp);
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "Prallel")
+                {
+                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                    string[] temp = smc.PortionReceive(msg);
+                    SwarmMemory sm = GetProg(temp[0].ToString());
+                    sm.acceptParallelfor(temp[2].ToString(), temp[3].ToString(), temp[1].ToString(), temp[4].ToString());
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "PrallelResult")
+                {
+                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                    string[] temp = smc.PortionResultReceive(msg);
+                    SwarmMemory sm = GetProg(temp[0].ToString());
+                    sm.incomingResult(temp[2].ToString(), temp[1].ToString());
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "MasterBackUp")
+                {
+                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                    string[] temp = smc.MasterBackUpChanger(msg);
+                    SwarmMemory sm = GetProg(temp[0].ToString());
+                    sm.setMaster(temp[1].ToString());
+                    sm.setBackUp(temp[2].ToString());
+                    sm.Lock();
+
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "ComputationDone")
+                {
+                    XDocument doc = XDocument.Parse(msg);
+                    var q = from x in doc.Elements().Descendants("Pid") select x;
+                    string Pid = q.ElementAt(0).Value.ToString();
+                    SwarmMemory sm = GetProg(Pid);
+                    sm.setRunFlag(false);
+                    sm.setStartFlag("");
+                    sm.clearMasterBackup(false);
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "ProgramClosed")
+                {
+                    XDocument doc = XDocument.Parse(msg);
+                    var q = from x in doc.Elements().Descendants("Pid") select x;
+                    string Pid = q.ElementAt(0).Value.ToString();
+                    q = from x in doc.Elements().Descendants("IPPort") select x;
+                    string IPPort = q.ElementAt(0).Value.ToString();
+                    SwarmMemory sm = GetProg(Pid);
+                    sm.removePermissionRec(IPPort);
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "SourceChange")
+                {
+                    XDocument doc = XDocument.Parse(msg);
+                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                    string[] temp = smc.CodeChanged(msg);
+                    SwarmMemory sm = GetProg(temp[0].ToString());
+                    sm.getSourceChanges(temp);
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "FinalResult")
+                {
+                    XDocument doc = XDocument.Parse(msg);
+                    var q = from x in doc.Elements().Descendants("Pid") select x;
+                    string Pid = q.ElementAt(0).Value.ToString();
+                    q = from x in doc.Elements().Descendants("Result") select x;
+                    string Result = q.ElementAt(0).Value.ToString();
+                    SwarmMemory sm = GetProg(Pid);
+                    sm.getFinalResult(Result);
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "ComError")
+                {
+                    XDocument doc = XDocument.Parse(msg);
+                    var q = from x in doc.Elements().Descendants("Pid") select x;
+                    string Pid = q.ElementAt(0).Value.ToString();
+                    //q = from x in doc.Elements().Descendants("ErrorNum") select x;
+                    //string ErrorNum = q.ElementAt(0).Value.ToString();
+                    q = from x in doc.Elements().Descendants("ErrorDetail") select x;
+                    string ErrorDetail = q.ElementAt(0).Value.ToString();
+                    SwarmMemory sm = GetProg(Pid);
+                    sm.GetError(ErrorDetail);
                 }
             }
-            else if (q1.ElementAt(0).Name.ToString() == "PermissionChange")
+            catch (Exception e)
             {
-                SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                string[] temp = smc.changePermission(msg);
-                if (ChngPermission != null)
-                    ChngPermission(temp);
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "ChangeOwner")
-            {
-                SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                string[] temp = smc.changeOwner(msg);
-                if (TransOwner != null)
-                    TransOwner(temp);
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "Prallel")
-            {
-                SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                string[] temp = smc.PortionReceive(msg);
-                SwarmMemory sm = GetProg(temp[0].ToString());
-                sm.acceptParallelfor(temp[2].ToString(), temp[3].ToString(), temp[1].ToString(),temp[4].ToString());
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "PrallelResult")
-            {
-                SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                string[] temp = smc.PortionResultReceive(msg);
-                SwarmMemory sm = GetProg(temp[0].ToString());
-                sm.incomingResult(temp[2].ToString(), temp[1].ToString());
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "MasterBackUp")
-            {
-                SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                string[] temp = smc.MasterBackUpChanger(msg);
-                SwarmMemory sm = GetProg(temp[0].ToString());
-                sm.setMaster(temp[1].ToString());
-                sm.setBackUp(temp[2].ToString());
-                sm.Lock();
-
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "ComputationDone")
-            {
-                XDocument doc = XDocument.Parse(msg);
-                var q = from x in doc.Elements().Descendants("Pid") select x;
-                string Pid = q.ElementAt(0).Value.ToString();
-                SwarmMemory sm = GetProg(Pid);
-                sm.setRunFlag(false);
-                sm.setStartFlag("");
-                sm.clearMasterBackup(false);
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "ProgramClosed")
-            {
-                XDocument doc = XDocument.Parse(msg);
-                var q = from x in doc.Elements().Descendants("Pid") select x;
-                string Pid = q.ElementAt(0).Value.ToString();
-                q = from x in doc.Elements().Descendants("IPPort") select x;
-                string IPPort = q.ElementAt(0).Value.ToString();
-                SwarmMemory sm = GetProg(Pid);
-                sm.removePermissionRec(IPPort);
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "SourceChange")
-            {
-                XDocument doc = XDocument.Parse(msg);
-                SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                string[] temp = smc.CodeChanged(msg);
-                SwarmMemory sm = GetProg(temp[0].ToString());
-                sm.getSourceChanges(temp);
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "FinalResult")
-            {
-                XDocument doc = XDocument.Parse(msg);
-                var q = from x in doc.Elements().Descendants("Pid") select x;
-                string Pid = q.ElementAt(0).Value.ToString();
-                q = from x in doc.Elements().Descendants("Result") select x;
-                string Result = q.ElementAt(0).Value.ToString();
-                SwarmMemory sm = GetProg(Pid);
-                sm.getFinalResult(Result);
-            }
-            else if (q1.ElementAt(0).Name.ToString() == "ComError")
-            {
-                XDocument doc = XDocument.Parse(msg);
-                var q = from x in doc.Elements().Descendants("Pid") select x;
-                string Pid = q.ElementAt(0).Value.ToString();
-                q = from x in doc.Elements().Descendants("ErrorNum") select x;
-                string ErrorNum = q.ElementAt(0).Value.ToString();
-                q = from x in doc.Elements().Descendants("ErrorDetail") select x;
-                string ErrorDetail = q.ElementAt(0).Value.ToString();
-                SwarmMemory sm = GetProg(Pid);
-                sm.GetError(ErrorNum,ErrorDetail);
+                Console.WriteLine(e.ToString());
             }
         }
 
@@ -420,18 +425,6 @@ namespace Spinach
             sm.setStartFlag("Success");
         }
 
-        //public void getReRun(ref Peer mPeer)
-        //{
-        //    string pid = " ";
-        //    XDocument xml = XDocument.Parse(msg);
-        //    var q = from x in xml.Descendants()
-        //            where (x.Name == "root")
-        //            select x;
-        //    foreach (var elem in q)
-        //        pid = elem.Value;
-        //    mPeer.SetFlag(pid, "0");
-        //}
-
         private void getChatMsg(String msg) 
         {
             string chat = "";
@@ -474,10 +467,15 @@ namespace Spinach
             string[] sr = error.Split(':');
             int errorCode = Convert.ToInt32(sr[0]);
             string errorMsg = sr[1];
-           // Console.WriteLine(error);
+            Console.WriteLine(error);
             ////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////////////////
             if (ErrorChanged != null)
                 ErrorChanged(errorCode,errorMsg);
+            if (errorCode == 10)
+            {
+                Clear();
+                CloseSocket();
+            }
 
 
             /////////

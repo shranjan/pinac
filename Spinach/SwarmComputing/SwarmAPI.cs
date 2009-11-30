@@ -49,6 +49,8 @@ namespace Spinach
         public event PrivelageEventHandler AddPrev;
         public event PrivelageEventHandler ChngPermission;
         public event PrivelageEventHandler TransOwner;
+        public delegate void DisconnectEventHandler(bool disconnect);
+        public event DisconnectEventHandler DisconnectChanged;
 
 
         private List<string> DisplayList = new List<string>();
@@ -68,6 +70,7 @@ namespace Spinach
             mSocket.AddPrev+=new AsynchronousSocketListener.PrivelageEventHandler(AddPrevChanged);
             mSocket.ChngPermission+=new AsynchronousSocketListener.PrivelageEventHandler(ChangPermission);
             mSocket.TransOwner+=new AsynchronousSocketListener.PrivelageEventHandler(TransferOwnership);
+         
         }
         public void InsertProgtoSC(SwarmMemory sm)
         {
@@ -266,6 +269,8 @@ namespace Spinach
 
         public void Disconnect()
         {
+            if (DisconnectChanged != null)
+                DisconnectChanged(true);
             mSocket.Disconnect();
             Thread.Sleep(1000);
             mSocket.Clear();

@@ -52,7 +52,8 @@ namespace Spinach
         Socket listener;
 
         public AsynchronousSocketListener()
-        {        
+        {  
+            
         }
 
         public void StartListening()
@@ -178,7 +179,7 @@ namespace Spinach
         private void preProcess(String msg)
         {
             string mMsg=msg.Remove(msg.Length-5);
-            Console.WriteLine("{0}\n ",mMsg);
+            //Console.WriteLine("{0}\n ",mMsg);
             parseMsg(mMsg);
         }
 
@@ -235,25 +236,34 @@ namespace Spinach
                     }
                 }
                 catch (Exception e)
-                {}
+                {
+                    Console.WriteLine(e.ToString());
+                }
             }
         }
         public void InsertSendTime(String ipport, String time)
         {
-            if (IPtoHeartbeat.Contains(ipport))
+            try
             {
-                Heartbeat temp = (Heartbeat)IPtoHeartbeat[ipport];
-                temp.SendTime = time;
-               // temp.ReceiveTime = "";
-                IPtoHeartbeat[ipport] = temp;
+                if (IPtoHeartbeat.Contains(ipport))
+                {
+                    Heartbeat temp = (Heartbeat)IPtoHeartbeat[ipport];
+                    temp.SendTime = time;
+                    // temp.ReceiveTime = "";
+                    IPtoHeartbeat[ipport] = temp;
+                }
+                else
+                {
+                    Heartbeat temp = new Heartbeat();
+                    temp.SendTime = time;
+                    temp.ReceiveTime = "";
+                    IPtoHeartbeat.Add(ipport, temp);
+                }
             }
-            else
+            catch (Exception e)
             {
-                Heartbeat temp = new Heartbeat();
-                temp.SendTime = time;
-                temp.ReceiveTime = "";
-                IPtoHeartbeat.Add(ipport, temp);
-             }
+                Console.WriteLine(e.ToString());
+            }
         }
         public void InsertReceiveTime(String ipport, String time)
         {
@@ -272,14 +282,21 @@ namespace Spinach
         }
         public void ShutDown(string ExcepErr)
         {
-            Hashtable temp = GetPidtoProgram();
-            foreach (string pid in temp.Keys)
+            try
             {
-                SwarmMemory sm = (SwarmMemory)temp[pid];
-                sm.removePermissionRec(ExcepErr);
+                Hashtable temp = GetPidtoProgram();
+                foreach (string pid in temp.Keys)
+                {
+                    SwarmMemory sm = (SwarmMemory)temp[pid];
+                    sm.removePermissionRec(ExcepErr);
+                }
+                setMasterBackup(ExcepErr);
+                showTable();
             }
-            setMasterBackup(ExcepErr);
-            showTable();
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
         //private void Send(Socket handler, String data)
         //{

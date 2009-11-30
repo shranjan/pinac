@@ -23,17 +23,6 @@ using System.Text;
 
 namespace Spinach
 {
-        //public class StateObject
-        //{
-        //    // Client socket.
-        //    public Socket workSocket = null;
-        //    // Size of receive buffer.
-        //    public const int BufferSize = 256;
-        //    // Receive buffer.
-        //    public byte[] buffer = new byte[BufferSize];
-        //    // Received data string.
-        //    public StringBuilder sb = new StringBuilder();
-        //}
 
         public class BroadcastClient
         {
@@ -64,11 +53,6 @@ namespace Spinach
                 try
                 {
                     // Establish the remote endpoint for the socket.
-                    // The name of the 
-                    // remote device is "host.contoso.com".
-                    //IPHostEntry ipHostInfo = Dns.GetHostAddresses("128.230.96.177");
-                    //IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
-                    //IPAddress ipAddress = ipHostInfo.AddressList[0];
                     IPAddress ipAddress = (Dns.GetHostAddresses(mIP))[0];
                     IPEndPoint remoteEP = new IPEndPoint(ipAddress, mPort);
 
@@ -173,6 +157,5 @@ namespace Spinach
                 }
             }
 
-        }
-    
+        }   
 }

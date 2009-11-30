@@ -32,8 +32,8 @@ namespace Spinach
         public event getResults parallelresult_;
         public delegate void GetFinalResult(string FinRes);
         public event GetFinalResult FinalResult;
-        public delegate void BroadcastErrorResult(string num, string error);
-        public event BroadcastErrorResult ErrorResult;
+        public delegate void BrdErrorResult(string error);
+        public event BrdErrorResult ErrorResult;
 
         public delegate void CloseProgram(bool CloseProg);
         public event CloseProgram CloseP;
@@ -52,6 +52,7 @@ namespace Spinach
         String owner;
         String ParallelForBody;
         String ParallelForData;
+        String rng; //for core team
         private SwarmConnection conn;
 
         public SwarmMemory(SwarmConnection c)
@@ -106,15 +107,16 @@ namespace Spinach
                 Thread t = new Thread(new ThreadStart(client.SendMultiClient));
                 t.IsBackground = true;
                 t.Start();
-                setRunFlag(false);
-                setStartFlag("");
             }
+            setRunFlag(false);
+            setStartFlag("");
         }
         public void BroadcastResult(string result)
         {
+         
             if (permissions.Count > 1)
             {
-                string xml = "<FinalResult>" + "<Pid>" + Pid + "</Pid>" + "<Result>" + result + "</Result>" + "</Finalresult>";
+                string xml = "<FinalResult>" + "<Pid>" + Pid + "</Pid>" + "<Result>" + result + "</Result>" + "</FinalResult>";
                 AsynchronousSocketListener msocket = conn.getSocket();
                 string myIP = msocket.GetIP();
                 string myPort = msocket.GetPort();
@@ -136,6 +138,14 @@ namespace Spinach
                 t.IsBackground = true;
                 t.Start();
             }
+            
+            //    catch(Exception e)
+            //{
+            //    Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            //    Console.WriteLine(e.ToString());
+            //    Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+            //}
         }
 
         public void getFinalResult(string result)
@@ -143,11 +153,11 @@ namespace Spinach
             if (FinalResult != null)
                 FinalResult(result);
         }
-        public void BroadcastError(string num,string error)
+        public void BroadcastError(string error)
         {
-            if (permissions.Count > 1)
+            if (permissions.Count > 0)
             {
-                string xml = "<ComError>" + "<Pid>" + Pid + "</Pid>" + "<ErrorNum>" + num + "</ErrorNum>" + "<ErrorDetail>" + error + "</ErrorDetail>" + "</ComError>";
+                string xml = "<ComError>" + "<Pid>" + Pid + "</Pid>" + "<ErrorDetail>" + error + "</ErrorDetail>" + "</ComError>";
                 AsynchronousSocketListener msocket = conn.getSocket();
                 string myIP = msocket.GetIP();
                 string myPort = msocket.GetPort();
@@ -170,10 +180,10 @@ namespace Spinach
                 t.Start();
             }
         }
-        public void GetError(string num, string error)
+        public void GetError(string error)
         {
             if (ErrorResult != null)
-                ErrorResult(num, error);
+                ErrorResult(error);
             
         }
         public void programClosed()
@@ -432,7 +442,7 @@ namespace Spinach
                     AsynchronousSocketListener msocket = conn.getSocket();
                     if ((msocket.GetIP() + ":" + msocket.GetPort()) == Master)
                     {
-                        //PeerGone(IPPort);
+                        PeerGone(IPPort);
                     }
               
                 }
@@ -443,7 +453,7 @@ namespace Spinach
                     AsynchronousSocketListener msocket = conn.getSocket();
                     if ((msocket.GetIP() + ":" + msocket.GetPort()) == Master)
                     {
-                        //PeerGone(IPPort);
+                        PeerGone(IPPort);
                     }
                 }
             }
@@ -774,61 +784,62 @@ namespace Spinach
             Thread t = new Thread(new ThreadStart(client.SendSingleClient));
             t.IsBackground = true;
             t.Start();
+            Thread.Sleep(5);
              
         }
-        //public void PeerGone(string IPPort)
-        //{
-        //    List<string> temp = new List<string>();
-        //    foreach (DictionaryEntry item in ParallelPortions)
-        //    {
-        //        if (item.Value.ToString()==IPPort)
-        //        {
-        //            temp.Add(item.Key.ToString());
-        //        }
-        //    }
-        //    if(temp.Count>0)
-        //    {        
-        //        int nextStatement = 0;
-        //        int numberofStatements = temp.Count;
-        //        int numberofComputers = permissions.Count;
-        //        int StatementPerComputer;
-        //        if ((numberofStatements % numberofComputers) == 0)
-        //            StatementPerComputer = (int)(numberofStatements / numberofComputers);
-        //        else
-        //            StatementPerComputer = (int)(numberofStatements / numberofComputers + 1);
-        //        //split the codes
-        //        foreach (DictionaryEntry Permitted in permissions)
-        //        {
-        //            for (int i = 0; i < StatementPerComputer; i++)
-        //            {
-        //                ParallelPortions[temp[nextStatement]] = Permitted.Key.ToString();                        
-        //                if (nextStatement >= temp.Count)
-        //                    break;
-        //                else
-        //                    nextStatement++;
-        //            }
-        //            if (nextStatement >= temp.Count)
-        //                break;
-        //        }
-        //        foreach (DictionaryEntry item in ParallelPortions)
-        //        {
-        //            if(temp.Contains(item.Key.ToString()))
-        //            {
-        //                string theIP = item.Value.ToString();
-        //                theIP = theIP.Substring(0, theIP.IndexOf(':'));
-        //                string thePort = item.Value.ToString();
-        //                thePort = thePort.Substring(thePort.IndexOf(':') + 1);
-        //                AsynchronousClient client = new AsynchronousClient();
-        //                client.SetSingleMsg(theIP, thePort, createParallelDistributionMessage(item.Key.ToString()));
-        //                Thread t = new Thread(new ThreadStart(client.SendSingleClient));
-        //                t.IsBackground = true;
-        //                t.Start();
-                        
-        //            }
-        //        }
-        //    }
-            
-        //}
+        public void PeerGone(string IPPort)
+        {
+            List<string> temp = new List<string>();
+            foreach (DictionaryEntry item in ParallelPortions)
+            {
+                if (item.Value.ToString() == IPPort)
+                {
+                    temp.Add(item.Key.ToString());
+                }
+            }
+            if (temp.Count > 0)
+            {
+                int nextStatement = 0;
+                int numberofStatements = temp.Count;
+                int numberofComputers = permissions.Count;
+                int StatementPerComputer;
+                if ((numberofStatements % numberofComputers) == 0)
+                    StatementPerComputer = (int)(numberofStatements / numberofComputers);
+                else
+                    StatementPerComputer = (int)(numberofStatements / numberofComputers + 1);
+                //split the codes
+                foreach (DictionaryEntry Permitted in permissions)
+                {
+                    for (int i = 0; i < StatementPerComputer; i++)
+                    {
+                        ParallelPortions[temp[nextStatement]] = Permitted.Key.ToString();
+                        if (nextStatement >= temp.Count)
+                            break;
+                        else
+                            nextStatement++;
+                    }
+                    if (nextStatement >= temp.Count)
+                        break;
+                }
+                foreach (DictionaryEntry item in ParallelPortions)
+                {
+                    if (temp.Contains(item.Key.ToString()))
+                    {
+                        string theIP = item.Value.ToString();
+                        theIP = theIP.Substring(0, theIP.IndexOf(':'));
+                        string thePort = item.Value.ToString();
+                        thePort = thePort.Substring(thePort.IndexOf(':') + 1);
+                        AsynchronousClient client = new AsynchronousClient();
+                        client.SetSingleMsg(theIP, thePort, createParallelDistributionMessage(item.Key.ToString()));
+                        Thread t = new Thread(new ThreadStart(client.SendSingleClient));
+                        t.IsBackground = true;
+                        t.Start();
+
+                    }
+                }
+            }
+
+        }
         public void incomingResult(string result, string index)
         {
             ParallelResults[index] = result;
@@ -856,7 +867,7 @@ namespace Spinach
             xml += "</PrallelResult>";
             return xml;
         }
-        private string createParallelDistributionMessage(string index,string range)
+        private string createParallelDistributionMessage(string index)
         {  
             
             string xml = "<Prallel>";
@@ -864,7 +875,7 @@ namespace Spinach
             xml += "<Index>" + index + "</Index>";            
             xml += "<Data>" + ParallelForData + "</Data>";
             xml += "<Body>" + ParallelForBody + "</Body>";
-            xml += "<Range>" + range + "</Range>";
+            xml += "<Range>" + rng + "</Range>";
             xml += "</Prallel>";
             return xml;
         }
@@ -876,6 +887,7 @@ namespace Spinach
         }        
         public void distributeParallelCode(int start, int end, string data, string body, string range)
         {
+            rng = range;
             ParallelPortions = new Hashtable();
             ParallelResults = new Hashtable();
             ParallelForBody = body;
@@ -948,10 +960,11 @@ namespace Spinach
                 string thePort = item.Value.ToString();
                 thePort = thePort.Substring(thePort.IndexOf(':') + 1);
                 AsynchronousClient client = new AsynchronousClient();
-                client.SetSingleMsg(theIP, thePort, createParallelDistributionMessage(item.Key.ToString(),range));
+                client.SetSingleMsg(theIP, thePort, createParallelDistributionMessage(item.Key.ToString()));
                 Thread t = new Thread(new ThreadStart(client.SendSingleClient));
                 t.IsBackground = true;
                 t.Start();
+                Thread.Sleep(5);
             }
            
         }
