@@ -395,6 +395,7 @@ namespace Spinach
       private void submnuLoad_Click(object sender, RoutedEventArgs e)
       {
           programText = "";
+          WindowCount++;
           Stream myStream = null;
           OpenFileDialog openFileDialog1 = new OpenFileDialog();
 

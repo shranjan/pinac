@@ -38,6 +38,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net;
 using System.Net.Sockets;
+using System.IO;
 
 namespace Spinach
 {
@@ -72,6 +73,11 @@ namespace Spinach
         txtPort.Text = "11001";
         txtSelfIP.Focus();
         txtSelfIP.SelectAll();
+        foreach (string sFile in Directory.GetFiles(Directory.GetCurrentDirectory()))
+        {
+            if (sFile.EndsWith(".png"))
+                File.Delete(sFile);
+        }
     }
 
     //----< Get the IP of the machine >----

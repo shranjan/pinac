@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Spinach.ProgPlot"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="ProgPlot" Height="375" Width="582" Name="frmPlot" Loaded="frmPlot_Loaded" Closed="frmPlot_Closed">
+    Title="ProgPlot" Height="404" Width="597" Name="frmPlot" Loaded="frmPlot_Loaded" Closed="frmPlot_Closed">
     <Grid>
         <Image Margin="10,10,174,10" Name="imgPlot" Stretch="Fill" />
         <Grid HorizontalAlignment="Right" Name="gridParam" Width="168" Visibility="Hidden">
@@ -41,7 +41,8 @@
             <TextBox Height="22" HorizontalAlignment="Right" Margin="0,225,6,0" Name="txtNearPlane" VerticalAlignment="Top" Width="47">0</TextBox>
             <TextBox Height="22" HorizontalAlignment="Right" Margin="0,253,6,0" Name="txtFieldView" VerticalAlignment="Top" Width="47">0</TextBox>
             <TextBox Height="22" HorizontalAlignment="Right" Margin="0,279,6,0" Name="txtRotAngle" VerticalAlignment="Top" Width="47">0</TextBox>
-            <Button Margin="44,307,50,0" Name="btnPlot" Click="btnPlot_Click" Height="23" VerticalAlignment="Top">Plot</Button>
+            <Button Margin="0,312,88,0" Name="btnPlot" Click="btnPlot_Click" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" Width="74">Plot</Button>
+            <Button Height="23" Margin="0,312,8,0" Name="btnSavePlot" VerticalAlignment="Top" HorizontalAlignment="Right" Width="74" Click="btnSavePlot_Click">Save</Button>
         </Grid>
     </Grid>
 </Window>
