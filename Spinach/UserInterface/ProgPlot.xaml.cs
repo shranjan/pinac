@@ -22,6 +22,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 
@@ -32,36 +33,42 @@ namespace Spinach
     /// </summary>
     public partial class ProgPlot : Window
     {
-        string imagepath = "";
+        private string imagepath = "";
         List<double> PlotVals = new List<double>();
         private PlotReceiver plot;
-        private string plotpath = "";
+        private int plotcount = 0;
+        private string OrgImgPath = "";
+
         //private PngBitmapEncoder PBE;
-        private ImageSource Img;
-        private Image img;
-        private BitmapImage bmpSource = null;
+        //private ImageSource Img;
+        //private Image img;
+        //private BitmapImage bmpSource = null;
         public ProgPlot(string path, List<double> Vals, PlotReceiver p)
         {
             InitializeComponent();
             plot = p;
             plot.newimage += new PlotReceiver.BmpImage(plot_newimage);
-            imagepath = path;
-            Img = (ImageSource)new ImageSourceConverter().ConvertFromString(imagepath);
+            OrgImgPath = path.Split('.')[0];
+            imagepath = OrgImgPath+".png";
+            //Img = (ImageSource)new ImageSourceConverter().ConvertFromString(imagepath);
             //Img.clo
             if (Vals.Count != 0)
             {
                 if (Vals[0] == -1)
                 {
-                    gridParam.Visibility = Visibility.Visible;
-                    txtCamPosX.Text = Vals[1].ToString();
-                    txtCamPosY.Text = Vals[2].ToString();
-                    txtCamPosZ.Text = Vals[3].ToString();
-                    txtLookDirX.Text = Vals[4].ToString();
-                    txtLookDirY.Text = Vals[5].ToString();
-                    txtLookDirZ.Text = Vals[6].ToString();
-                    txtNearPlane.Text = Vals[7].ToString();
-                    txtFieldView.Text = Vals[8].ToString();
-                    txtRotAngle.Text = Vals[9].ToString();
+                    if (Vals.Count >= 10)
+                    {
+                        gridParam.Visibility = Visibility.Visible;
+                        txtCamPosX.Text = Vals[1].ToString();
+                        txtCamPosY.Text = Vals[2].ToString();
+                        txtCamPosZ.Text = Vals[3].ToString();
+                        txtLookDirX.Text = Vals[4].ToString();
+                        txtLookDirY.Text = Vals[5].ToString();
+                        txtLookDirZ.Text = Vals[6].ToString();
+                        txtNearPlane.Text = Vals[7].ToString();
+                        txtFieldView.Text = Vals[8].ToString();
+                        txtRotAngle.Text = Vals[9].ToString();
+                    }
                 }
                 else
                 {
@@ -90,9 +97,11 @@ namespace Spinach
                                     //PlotVals = listvalues;
                                     PngBitmapEncoder PBE = new PngBitmapEncoder();
                                     PBE.Frames.Add(BitmapFrame.Create(encoder.Frames[0].Clone()));
-                                    //isplotReady = 1;
-                                    //plotpath = Title;
-                                    //plotpath += ".png";
+                                    //imagepath = OrgImgPath + plotcount.ToString()+".png";
+                                    //plotcount++;
+                                    //Guid g = new Guid();
+                                    //imagepath = g.ToString();
+                                    imagepath = System.Guid.NewGuid().ToString()+".png";
                                     System.IO.FileStream outStream = new System.IO.FileStream(imagepath, System.IO.FileMode.Create);
                                     //imagepath = plotpath;
                                     PBE.Save(outStream);
@@ -115,52 +124,26 @@ namespace Spinach
             ShowPlot();
         }
 
-        public static ImageSource BitmapFromUri(Uri source)
-        {
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = source;
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.EndInit();
-            return bitmap;
-        }
-
+       
         private void ShowPlot()
         {
             try
             {
-                //Img = (ImageSource)new ImageSourceConverter().ConvertFromString(imagepath);
-                //Uri siteUri = new Uri(@"C:\Spinach\UserInterface\bin\Debug\SPINACH - Program Editor.png"); 
-                //imgPlot.Source = BitmapFromUri(siteUri);//Img;
-                //Image i = new Image();
-                //imgPlot.Source = (ImageSource)new ImageSourceConverter().ConvertFromString(imagepath);
-                // load the image, specify CacheOption so the file is not locked
-                string d = Directory.GetCurrentDirectory() + "\\SPINACH - Program Editor.png";
-
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = new Uri(d);
-                image.EndInit();
-                imgPlot.Source = image;
+                imgPlot.Source = (ImageSource)new ImageSourceConverter().ConvertFromString(imagepath);
             }
-            catch
-            {
-                MessageBox.Show("No Plot");
+            catch(Exception e)
+            {   
+                System.Windows.MessageBox.Show("No Plot: "+e.Message);
             }
         }
 
         private void btnPlot_Click(object sender, RoutedEventArgs e)
         {
             
-            //Uri siteUri = new Uri(@"C:\Spinach\UserInterface\bin\Debug\SPINACH - Program Editor.jpg");
             imgPlot.Source = null;
             imgPlot.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("SPINACH - Program Editor.jpg");
-            //imgPlot.Source = BitmapFromUri(siteUri);
-            string d = Directory.GetCurrentDirectory() + "\\SPINACH - Program Editor.png";
-            //Directory.Delete(d);
-            //File.Delete(d);
-            GC.Collect();
+            //string d = Directory.GetCurrentDirectory() + "\\SPINACH - Program Editor.png";
+            PlotVals.Clear();
             PlotVals.Add(Convert.ToDouble(txtCamPosX.Text));
             PlotVals.Add(Convert.ToDouble(txtCamPosY.Text));
             PlotVals.Add(Convert.ToDouble(txtCamPosZ.Text));
@@ -186,6 +169,26 @@ namespace Spinach
             //Img = null;
             //imgPlot.Source = null;
             //imgPlot = null;
+        }
+
+        private void btnSavePlot_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "png files (*.png)|*.png";
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    String tempPath = saveFileDialog1.FileName;
+                    System.IO.File.Copy(imagepath, tempPath);
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("Error: Could not Write file to disk. Original error: " + ex.Message);
+                }
+            }
         }
     }
 }

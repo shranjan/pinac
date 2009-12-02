@@ -43,6 +43,7 @@ namespace Spinach
         private string owner;
         private string username;
         private string progName="";
+        private string progtitle="";
         string IP = "";
         string Port = "";
         private List<string> swarmUserList; 
@@ -84,6 +85,7 @@ namespace Spinach
         private PlotReceiver plot = new PlotReceiver();             
         //PngBitmapEncoder PBE = new PngBitmapEncoder();
         private string plotpath = "";
+        private int plotcount = 0;
         private int isplotReady = 0;
         private List<double> PlotVals;
 
@@ -121,6 +123,7 @@ namespace Spinach
             err.SetPlotObject(plot);
             username = uname;
             progName = Prog;
+            
 
             //Swarm Operations
             SC = sconn;
@@ -177,8 +180,9 @@ namespace Spinach
                             {
                                 txtResult.Text = "";
                                 isplotReady = 0;
-                                plotpath = Title;
-                                plotpath += ".png";
+                                //plotpath += plotcount.ToString();
+                                //plotcount++;
+                                //plotpath += ".png";
                                 TextPointer start = rtbInput.Document.ContentStart;
                                 TextPointer end = rtbInput.Document.ContentEnd;
                                 TextRange tr = new TextRange(start, end);
@@ -411,6 +415,8 @@ namespace Spinach
         {
             this.Title += " - ";
             this.Title += progName;
+            //mnuPlot.IsEnabled = false;
+            progtitle = Title;
             lblProgName.Content = "Program Name: " + progName;
             if (et == editorType.collaborator)
             {
@@ -863,9 +869,15 @@ namespace Spinach
                     PngBitmapEncoder PBE = new PngBitmapEncoder();
                     PBE.Frames.Add(BitmapFrame.Create(encoder.Frames[0].Clone()));
                     isplotReady = 1;
+                    //plotpath = progtitle + plotcount.ToString();
+                    //plotcount++;
+                    //Guid g = new Guid();
+                    plotpath = System.Guid.NewGuid().ToString();
+                    plotpath += ".png";
                     System.IO.FileStream outStream = new System.IO.FileStream(plotpath, System.IO.FileMode.Create);
                     PBE.Save(outStream);
                     outStream.Close();
+                    mnuPlot.IsEnabled = true;
                 }
             }
             catch (Exception e)
@@ -965,14 +977,14 @@ namespace Spinach
                 clickedCompute = true;
                 txtResult.Text = "";
                 isplotReady = 0;
-                plotpath = Title;
-                plotpath += ".png";
+//                plotpath = "PlotImage";
+//                plotpath += ".png";
                 TextPointer start = rtbInput.Document.ContentStart;
                 TextPointer end = rtbInput.Document.ContentEnd;
                 TextRange tr = new TextRange(start, end);
                 Controller.clearCoreValues();
                 worker.RunWorkerAsync(tr.Text);
-                mnuPlot.IsEnabled = true;
+                mnuPlot.IsEnabled = false;
             }
         }
 
@@ -1030,14 +1042,7 @@ namespace Spinach
                 try
                 {
                     String tempPath = saveFileDialog1.FileName;
-
-                    // create a file stream for saving image
-                    using (FileStream outStream = new FileStream(tempPath, FileMode.Create))
-                    {
-                        //SAVING**************************
-                        //PBE.Save(outStream);
-                    }
-
+                    System.IO.File.Copy(plotpath ,tempPath);
                 }
                 catch (Exception ex)
                 {
