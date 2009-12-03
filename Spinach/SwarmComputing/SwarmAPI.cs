@@ -70,6 +70,7 @@ namespace Spinach
             mSocket.AddPrev+=new AsynchronousSocketListener.PrivelageEventHandler(AddPrevChanged);
             mSocket.ChngPermission+=new AsynchronousSocketListener.PrivelageEventHandler(ChangPermission);
             mSocket.TransOwner+=new AsynchronousSocketListener.PrivelageEventHandler(TransferOwnership);
+         
         }
         public void InsertProgtoSC(SwarmMemory sm)
         {

@@ -52,7 +52,8 @@ namespace Spinach
         Socket listener;
 
         public AsynchronousSocketListener()
-        {        
+        {  
+            
         }
 
         public void StartListening()

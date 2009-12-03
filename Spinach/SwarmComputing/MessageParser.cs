@@ -81,6 +81,7 @@ namespace Spinach
                         getErrorMsg(msg);
                     else if (type == "Disconnect")
                         getDisconnectMsg(msg);
+<<<<<<< HEAD
                 }
                 else if (q1.ElementAt(0).Name.ToString() == "NewProg")
                 {
@@ -105,6 +106,32 @@ namespace Spinach
                 else if (q1.ElementAt(0).Name.ToString() == "PermissionChange")
                 {
                     SwarmMemoryCaller smc = new SwarmMemoryCaller();
+=======
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "NewProg")
+                {
+                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                    string[] temp = smc.addPermission(msg);
+                    string myIp = GetIP();
+                    string myPort = GetPort();
+                    if (myIp == temp[3] && myPort == temp[4])
+                    {
+                        if (AddPrev != null)
+                            AddPrev(temp);
+                    }
+                    else
+                    {
+                        //string[] temp = { Pid,owner,code,theIP,thePort,read,write, changes};
+                        //string[] temp={Pid, theIP, thePort, read, write};
+                        string[] temp1 = { temp[0], temp[3], temp[4], temp[5], temp[6] };
+                        if (ChngPermission != null)
+                            ChngPermission(temp1);
+                    }
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "PermissionChange")
+                {
+                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
+>>>>>>> zuzhu-master
                     string[] temp = smc.changePermission(msg);
                     if (ChngPermission != null)
                         ChngPermission(temp);
@@ -183,12 +210,21 @@ namespace Spinach
                     XDocument doc = XDocument.Parse(msg);
                     var q = from x in doc.Elements().Descendants("Pid") select x;
                     string Pid = q.ElementAt(0).Value.ToString();
+<<<<<<< HEAD
                     q = from x in doc.Elements().Descendants("ErrorNum") select x;
                     string ErrorNum = q.ElementAt(0).Value.ToString();
                     q = from x in doc.Elements().Descendants("ErrorDetail") select x;
                     string ErrorDetail = q.ElementAt(0).Value.ToString();
                     SwarmMemory sm = GetProg(Pid);
                     sm.GetError(ErrorNum, ErrorDetail);
+=======
+                    //q = from x in doc.Elements().Descendants("ErrorNum") select x;
+                    //string ErrorNum = q.ElementAt(0).Value.ToString();
+                    q = from x in doc.Elements().Descendants("ErrorDetail") select x;
+                    string ErrorDetail = q.ElementAt(0).Value.ToString();
+                    SwarmMemory sm = GetProg(Pid);
+                    sm.GetError(ErrorDetail);
+>>>>>>> zuzhu-master
                 }
             }
             catch (Exception e)
@@ -467,10 +503,15 @@ namespace Spinach
             string[] sr = error.Split(':');
             int errorCode = Convert.ToInt32(sr[0]);
             string errorMsg = sr[1];
-           // Console.WriteLine(error);
+            Console.WriteLine(error);
             ////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////////////////
             if (ErrorChanged != null)
                 ErrorChanged(errorCode,errorMsg);
+            if (errorCode == 10)
+            {
+                Clear();
+                CloseSocket();
+            }
 
 
             /////////

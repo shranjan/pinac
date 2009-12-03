@@ -124,7 +124,16 @@ namespace Spinach
             catch (Exception e)
             {
                //System.Windows.Forms.MessageBox.Show(e.Message, "Failed to send to single client.");
+<<<<<<< HEAD
                 Console.WriteLine(e.Message);
+=======
+               // Console.WriteLine(e.Message);
+                Console.WriteLine("Please check the IP");
+                int ErrorCode = 10;
+                string Error = "Please Check the IP";
+                if (ErrorExcep != null)
+                    ErrorExcep(ErrorCode, Error);
+>>>>>>> zuzhu-master
             }
         }
 
@@ -165,7 +174,11 @@ namespace Spinach
         {
             try
             {
+<<<<<<< HEAD
                 if (table.Count > 1)
+=======
+                if (table.Count > 0)
+>>>>>>> zuzhu-master
                 {
                     int count = 0;
                     resetEvent = new ManualResetEvent[table.Count];
@@ -184,6 +197,13 @@ namespace Spinach
                         w.WaitOne();
                     }
                 }
+<<<<<<< HEAD
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+=======
+>>>>>>> zuzhu-master
             }
             catch (Exception e)
             {
