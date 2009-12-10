@@ -81,7 +81,6 @@ namespace Spinach
                         getErrorMsg(msg);
                     else if (type == "Disconnect")
                         getDisconnectMsg(msg);
-<<<<<<< HEAD
                 }
                 else if (q1.ElementAt(0).Name.ToString() == "NewProg")
                 {
@@ -106,32 +105,6 @@ namespace Spinach
                 else if (q1.ElementAt(0).Name.ToString() == "PermissionChange")
                 {
                     SwarmMemoryCaller smc = new SwarmMemoryCaller();
-=======
-                }
-                else if (q1.ElementAt(0).Name.ToString() == "NewProg")
-                {
-                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
-                    string[] temp = smc.addPermission(msg);
-                    string myIp = GetIP();
-                    string myPort = GetPort();
-                    if (myIp == temp[3] && myPort == temp[4])
-                    {
-                        if (AddPrev != null)
-                            AddPrev(temp);
-                    }
-                    else
-                    {
-                        //string[] temp = { Pid,owner,code,theIP,thePort,read,write, changes};
-                        //string[] temp={Pid, theIP, thePort, read, write};
-                        string[] temp1 = { temp[0], temp[3], temp[4], temp[5], temp[6] };
-                        if (ChngPermission != null)
-                            ChngPermission(temp1);
-                    }
-                }
-                else if (q1.ElementAt(0).Name.ToString() == "PermissionChange")
-                {
-                    SwarmMemoryCaller smc = new SwarmMemoryCaller();
->>>>>>> zuzhu-master
                     string[] temp = smc.changePermission(msg);
                     if (ChngPermission != null)
                         ChngPermission(temp);
@@ -148,7 +121,16 @@ namespace Spinach
                     SwarmMemoryCaller smc = new SwarmMemoryCaller();
                     string[] temp = smc.PortionReceive(msg);
                     SwarmMemory sm = GetProg(temp[0].ToString());
-                    sm.acceptParallelfor(temp[2].ToString(), temp[3].ToString(), temp[1].ToString(), temp[4].ToString());
+                    if (temp[5].ToString() == sm.getMaster())
+                        sm.acceptParallelfor(temp[2].ToString(), temp[3].ToString(), temp[1].ToString(), temp[4].ToString());
+                }
+                else if (q1.ElementAt(0).Name.ToString() == "PrallelSet")
+                {
+                    lock (this)
+                    {
+                        getPrallelSet(msg);
+                    }
+
                 }
                 else if (q1.ElementAt(0).Name.ToString() == "PrallelResult")
                 {
@@ -157,6 +139,13 @@ namespace Spinach
                     SwarmMemory sm = GetProg(temp[0].ToString());
                     sm.incomingResult(temp[2].ToString(), temp[1].ToString());
                 }
+                else if (q1.ElementAt(0).Name.ToString() == "ResultSet")
+                {
+                    lock (this)
+                    {
+                        getResultSet(msg);
+                    }
+                }
                 else if (q1.ElementAt(0).Name.ToString() == "MasterBackUp")
                 {
                     SwarmMemoryCaller smc = new SwarmMemoryCaller();
@@ -164,6 +153,7 @@ namespace Spinach
                     SwarmMemory sm = GetProg(temp[0].ToString());
                     sm.setMaster(temp[1].ToString());
                     sm.setBackUp(temp[2].ToString());
+                    sm.ClearTask();
                     sm.Lock();
 
                 }
@@ -185,6 +175,7 @@ namespace Spinach
                     q = from x in doc.Elements().Descendants("IPPort") select x;
                     string IPPort = q.ElementAt(0).Value.ToString();
                     SwarmMemory sm = GetProg(Pid);
+                    lock(this)                  
                     sm.removePermissionRec(IPPort);
                 }
                 else if (q1.ElementAt(0).Name.ToString() == "SourceChange")
@@ -205,26 +196,27 @@ namespace Spinach
                     SwarmMemory sm = GetProg(Pid);
                     sm.getFinalResult(Result);
                 }
+                else if (q1.ElementAt(0).Name.ToString() == "Plotmsg")
+                {
+                    XDocument doc = XDocument.Parse(msg);
+                    var q = from x in doc.Elements().Descendants("Pid") select x;
+                    string Pid = q.ElementAt(0).Value.ToString();
+                    q = from x in doc.Elements().Descendants("Plot") select x;
+                    string Plot = q.ElementAt(0).ToString();
+                    SwarmMemory sm = GetProg(Pid);
+                    sm.getPlot(Plot);
+                }
                 else if (q1.ElementAt(0).Name.ToString() == "ComError")
                 {
                     XDocument doc = XDocument.Parse(msg);
                     var q = from x in doc.Elements().Descendants("Pid") select x;
                     string Pid = q.ElementAt(0).Value.ToString();
-<<<<<<< HEAD
-                    q = from x in doc.Elements().Descendants("ErrorNum") select x;
-                    string ErrorNum = q.ElementAt(0).Value.ToString();
                     q = from x in doc.Elements().Descendants("ErrorDetail") select x;
                     string ErrorDetail = q.ElementAt(0).Value.ToString();
-                    SwarmMemory sm = GetProg(Pid);
-                    sm.GetError(ErrorNum, ErrorDetail);
-=======
-                    //q = from x in doc.Elements().Descendants("ErrorNum") select x;
-                    //string ErrorNum = q.ElementAt(0).Value.ToString();
-                    q = from x in doc.Elements().Descendants("ErrorDetail") select x;
-                    string ErrorDetail = q.ElementAt(0).Value.ToString();
+                    ErrorDetail = ErrorDetail.Replace('@', '<');
+                    ErrorDetail = ErrorDetail.Replace('$', '>');
                     SwarmMemory sm = GetProg(Pid);
                     sm.GetError(ErrorDetail);
->>>>>>> zuzhu-master
                 }
             }
             catch (Exception e)
@@ -235,299 +227,346 @@ namespace Spinach
 
         private void getConnectionRequestMsg(String msg)
         {
-            String ip;
-            String port;
-            String name;
-            String cpu;
-            Thread t1 = null;
-            Thread t2 = null;
-            Thread t3 = null;
-
-            XDocument xml = XDocument.Parse(msg);
-            var q = from x in xml.Elements("root").Descendants()
-                    select x;
-            foreach (var elem in q)
+            try
             {
+                String ip;
+                String port;
+                String name;
+                String cpu;
+                Thread t1 = null;
+                Thread t2 = null;
+                Thread t3 = null;
 
-                ip = elem.Attributes().ElementAt(0).Value;
-                port = elem.Attributes().ElementAt(1).Value;
-                name = elem.Attributes().ElementAt(2).Value;
-                cpu = elem.Attributes().ElementAt(3).Value;
-                if (IPtoPeer.Count > 0)
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Elements("root").Descendants()
+                        select x;
+                foreach (var elem in q)
                 {
-                    if (!NametoIP.Contains(name))
-                    {
-                        InsertPeer(ip, port, name, cpu);
-                        if (IPtoPeer.Count == 2)
-                            SetBackup(ip + ":" + port);
 
-                        MessageGenerator temp = new MessageGenerator();
-                        string mMsg = temp.msgIPtoPeer(IPtoPeer);
-                        string master = temp.msgMaster(GetMaster());
-                        string backup = temp.msgBackup(GetBackup());
-                        AsynchronousClient client1 = new AsynchronousClient();
-                        client1.SetMultiMsg(IPtoPeer, mMsg, mPeer.mIP + ":" + mPeer.mPort);
-                        t1 = new Thread(new ThreadStart(client1.SendMultiClient));
-                        t1.IsBackground = true;
-                        t1.Start();
-                        
-                        AsynchronousClient client2 = new AsynchronousClient();
-                        client2.SetSingleMsg(ip, port, master);
-                        t2 = new Thread(new ThreadStart(client2.SendSingleClient));
-                        t2.IsBackground = true;
-                        t2.Start();
-                        
-                        AsynchronousClient client3 = new AsynchronousClient();
-                        client3.SetSingleMsg(ip, port, backup);
-                        t3 = new Thread(new ThreadStart(client3.SendSingleClient));
-                        t3.IsBackground = true;
-                        t3.Start();
-                        
+                    ip = elem.Attributes().ElementAt(0).Value;
+                    port = elem.Attributes().ElementAt(1).Value;
+                    name = elem.Attributes().ElementAt(2).Value;
+                    cpu = elem.Attributes().ElementAt(3).Value;
+                    if (IPtoPeer.Count > 0)
+                    {
+                        if (!NametoIP.Contains(name))
+                        {
+                            InsertPeer(ip, port, name, cpu);
+                            if (IPtoPeer.Count == 2)
+                                SetBackup(ip + ":" + port);
+
+                            MessageGenerator temp = new MessageGenerator();
+                            string mMsg = temp.msgIPtoPeer(IPtoPeer);
+                            string master = temp.msgMaster(GetMaster());
+                            string backup = temp.msgBackup(GetBackup());
+                            AsynchronousClient client1 = new AsynchronousClient();
+                            client1.SetMultiMsg(IPtoPeer, mMsg, mPeer.mIP + ":" + mPeer.mPort);
+                            t1 = new Thread(new ThreadStart(client1.SendMultiClient));
+                            t1.IsBackground = true;
+                            t1.Start();
+
+                            AsynchronousClient client2 = new AsynchronousClient();
+                            client2.SetSingleMsg(ip, port, master);
+                            t2 = new Thread(new ThreadStart(client2.SendSingleClient));
+                            t2.IsBackground = true;
+                            t2.Start();
+
+                            AsynchronousClient client3 = new AsynchronousClient();
+                            client3.SetSingleMsg(ip, port, backup);
+                            t3 = new Thread(new ThreadStart(client3.SendSingleClient));
+                            t3.IsBackground = true;
+                            t3.Start();
+
+                        }
+                        else
+                        {
+                            MessageGenerator temp = new MessageGenerator();
+                            string error = temp.msgError("10:Username Already Exists");
+                            AsynchronousClient client = new AsynchronousClient();
+                            client.SetSingleMsg(ip, port, error);
+                            t1 = new Thread(new ThreadStart(client.SendSingleClient));
+                            t1.IsBackground = true;
+                            t1.Start();
+
+                        }
                     }
                     else
                     {
                         MessageGenerator temp = new MessageGenerator();
-                        string error = temp.msgError("10:Username Already Exists");
+                        string error = temp.msgError("10:Peer is not a part of Swarm");
                         AsynchronousClient client = new AsynchronousClient();
                         client.SetSingleMsg(ip, port, error);
                         t1 = new Thread(new ThreadStart(client.SendSingleClient));
                         t1.IsBackground = true;
                         t1.Start();
-                        
+
                     }
                 }
-                else
-                {
-                    MessageGenerator temp = new MessageGenerator();
-                    string error = temp.msgError("10:Peer is not a part of Swarm");
-                    AsynchronousClient client = new AsynchronousClient();
-                    client.SetSingleMsg(ip, port, error);
-                    t1 = new Thread(new ThreadStart(client.SendSingleClient));
-                    t1.IsBackground = true;
-                    t1.Start();
-                    
-                }
+                showTable();
             }
-            showTable();
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
         private void getIPtoPeerMsg(String msg)
         {
-            String ip;
-            String port;
-            String name;
-            String cpu;
-
-            XDocument xml = XDocument.Parse(msg);
-            var q = from x in xml.Elements("root").Descendants()
-                    select x;
-            foreach (var elem in q)
+            try
             {
-                ip = elem.Attributes().ElementAt(0).Value;
-                port = elem.Attributes().ElementAt(1).Value;
-                name = elem.Attributes().ElementAt(2).Value;
-                cpu = elem.Attributes().ElementAt(3).Value;
-                InsertPeer(ip, port, name, cpu);
+                String ip;
+                String port;
+                String name;
+                String cpu;
+
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Elements("root").Descendants()
+                        select x;
+                foreach (var elem in q)
+                {
+                    ip = elem.Attributes().ElementAt(0).Value;
+                    port = elem.Attributes().ElementAt(1).Value;
+                    name = elem.Attributes().ElementAt(2).Value;
+                    cpu = elem.Attributes().ElementAt(3).Value;
+                    InsertPeer(ip, port, name, cpu);
+                }
+                showTable();
             }
-            showTable();
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
         private void getHeartBeatRequestMsg(String msg)
         {
-            Thread t;
-            string ipport = GetIP() + ":" + GetPort();
-            string target = " ";
-            string reply = " ";
-            XDocument xml = XDocument.Parse(msg);
-            var q = from x in xml.Descendants()
-                    where (x.Name == "root")
-                    select x;
-            foreach (var elem in q)
-                target = elem.Value;
-            MessageGenerator temp = new MessageGenerator();
-            reply = temp.msgHeartBeatReply(ipport);
-            AsynchronousClient client = new AsynchronousClient();
-            string[] str = target.Split(':');
-            string ip = str[0];
-            string port = str[1];
-            client.SetSingleMsg(ip, port, reply);
-            t = new Thread(new ThreadStart(client.SendSingleClient));
-            t.IsBackground = true;
-            t.Start();
+            try
+            {
+                Thread t;
+                string ipport = GetIP() + ":" + GetPort();
+                string target = " ";
+                string reply = " ";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Descendants()
+                        where (x.Name == "root")
+                        select x;
+                foreach (var elem in q)
+                    target = elem.Value;
+                MessageGenerator temp = new MessageGenerator();
+                reply = temp.msgHeartBeatReply(ipport);
+                AsynchronousClient client = new AsynchronousClient();
+                string[] str = target.Split(':');
+                string ip = str[0];
+                string port = str[1];
+                client.SetSingleMsg(ip, port, reply);
+                t = new Thread(new ThreadStart(client.SendSingleClient));
+                t.IsBackground = true;
+                t.Start();
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
             
         }
 
         private void getHeartBeatReplyMsg(String msg) 
         {
-            string target="";
-            XDocument xml = XDocument.Parse(msg);
-            var q = from x in xml.Descendants()
-                    where (x.Name == "root")
-                    select x;
-            foreach (var elem in q)
-                target = elem.Value;
-            Console.WriteLine(target);
-            string receivetime = DateTime.Now.ToLongTimeString() + ":" + DateTime.Now.Millisecond.ToString();
-            InsertReceiveTime(target, receivetime);
-            string sendtime;
-            int delay;
-            Heartbeat temp = (Heartbeat)IPtoHeartbeat[target];
-            sendtime = temp.SendTime;
-            delay = GetTimeDifference(sendtime, receivetime);
-            InsertDelay(target, delay.ToString());
-            showHeartBeat(target);
+            try
+            {
+                string target = "";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Descendants()
+                        where (x.Name == "root")
+                        select x;
+                foreach (var elem in q)
+                    target = elem.Value;
+                Console.WriteLine(target);
+                string receivetime = DateTime.Now.ToLongTimeString() + ":" + DateTime.Now.Millisecond.ToString();
+                InsertReceiveTime(target, receivetime);
+                string sendtime;
+                int delay;
+                Heartbeat temp = (Heartbeat)IPtoHeartbeat[target];
+                sendtime = temp.SendTime;
+                delay = GetTimeDifference(sendtime, receivetime);
+                InsertDelay(target, delay.ToString());
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
         private void getMasterMsg(String msg)
         {
-            string master = " ";
-            XDocument xml = XDocument.Parse(msg);
-            var q = from x in xml.Descendants()
-                    where (x.Name == "root")
-                    select x;
-            foreach (var elem in q)
-                master = elem.Value;
-            SetMaster(master);
-            showTable();
+            try
+            {
+                string master = " ";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Descendants()
+                        where (x.Name == "root")
+                        select x;
+                foreach (var elem in q)
+                    master = elem.Value;
+                SetMaster(master);
+                showTable();
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
         private void getBackupMsg(String msg)
         {
-            string backup = " ";
-            XDocument xml = XDocument.Parse(msg);
-            var q = from x in xml.Descendants()
-                    where (x.Name == "root")
-                    select x;
-            foreach (var elem in q)
-                backup = elem.Value;
-            SetBackup(backup);
-            showTable();
+            try
+            {
+                string backup = " ";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Descendants()
+                        where (x.Name == "root")
+                        select x;
+                foreach (var elem in q)
+                    backup = elem.Value;
+                SetBackup(backup);
+                showTable();
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
         public void getRunMsg(String msg)
         {
-            MessageGenerator temp = new MessageGenerator();
-            string pid = " ";
-            string ipport="";
-            string reply = "";
-            XDocument xml = XDocument.Parse(msg);
-            var q = from x in xml.Elements() select x;
-            //var q = from x in xml.Elements().Descendants("root") select x;
-            pid = q.ElementAt(0).Attributes().ElementAt(1).Value;
-            ipport = q.ElementAt(0).Attributes().ElementAt(2).Value;
-            SwarmMemory sm = GetProg(pid.ToString());
-            if (sm.getRunFlag() == false)
+            try
             {
-                sm.setRunFlag(true);
-                reply = temp.msgRunSucessReply(pid);
+                MessageGenerator temp = new MessageGenerator();
+                string pid = " ";
+                string ipport = "";
+                string reply = "";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Elements() select x;
+                //var q = from x in xml.Elements().Descendants("root") select x;
+                pid = q.ElementAt(0).Attributes().ElementAt(1).Value;
+                ipport = q.ElementAt(0).Attributes().ElementAt(2).Value;
+                SwarmMemory sm = GetProg(pid.ToString());
+                if (sm.getRunFlag() == false)
+                {
+                    sm.setRunFlag(true);
+                    reply = temp.msgRunSucessReply(pid);
+                }
+                else
+                {
+                    reply = temp.msgRunFailReply(pid);
+                }
+                if (ipport != "")
+                {
+                    string[] target = ipport.Split(':');
+                    string ip = target[0];
+                    string port = target[1];
+                    AsynchronousClient client = new AsynchronousClient();
+                    client.SetSingleMsg(ip, port, reply);
+                    Thread t;
+                    t = new Thread(new ThreadStart(client.SendSingleClient));
+                    t.IsBackground = true;
+                    t.Start();
+                }
             }
-            else
-            {
-                reply = temp.msgRunFailReply(pid);
-            }
-            if(ipport!="")
-            {
-                string[] target = ipport.Split(':');
-                string ip = target[0];
-                string port = target[1];
-                AsynchronousClient client = new AsynchronousClient();
-                client.SetSingleMsg(ip, port, reply);
-                Thread t;
-                t = new Thread(new ThreadStart(client.SendSingleClient));
-                t.IsBackground = true;
-                t.Start();
-            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
 
         }
 
         public void getRunFailMsg(String msg)
         {
-            string pid = " ";
-            XDocument xml = XDocument.Parse(msg);
-            //var q = from x in xml.Elements().Descendants("root") select x;
-            var q = from x in xml.Elements() select x;
-            pid = q.ElementAt(0).Attributes().ElementAt(1).Value;
-            SwarmMemory sm = GetProg(pid.ToString());
-            sm.setStartFlag("Fail");
+            try
+            {
+                string pid = " ";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Elements() select x;
+                pid = q.ElementAt(0).Attributes().ElementAt(1).Value;
+                SwarmMemory sm = GetProg(pid.ToString());
+                sm.setStartFlag("Fail");
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
         public void getRunSuccessMsg(String msg)
         {
-            string pid = " ";
-            XDocument xml = XDocument.Parse(msg);
-            //var q = from x in xml.Elements().Descendants("root") select x;
-            var q = from x in xml.Elements() select x;
-            pid = q.ElementAt(0).Attributes().ElementAt(1).Value;
-            SwarmMemory sm = GetProg(pid.ToString());
-            sm.setStartFlag("Success");
+            try
+            {
+                string pid = " ";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Elements() select x;
+                pid = q.ElementAt(0).Attributes().ElementAt(1).Value;
+                SwarmMemory sm = GetProg(pid.ToString());
+                sm.setStartFlag("Success");
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
         private void getChatMsg(String msg) 
         {
-            string chat = "";
-            string ip = "";
-            XDocument xml = XDocument.Parse(msg);
-            //var q = from x in xml.Descendants()
-            //        where (x.Name == "root")
-            //        select x;
-            //foreach (var elem in q)
-            //    chat = elem.Value;
-            var q = from x in xml.Elements("root").Descendants()
-                    select x;
-            foreach (var elem in q)
+            try
             {
+                string chat = "";
+                string ip = "";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Elements("root").Descendants()
+                        select x;
+                foreach (var elem in q)
+                {
 
-                ip = elem.Attributes().ElementAt(0).Value;
-                chat = elem.Attributes().ElementAt(1).Value;
+                    ip = elem.Attributes().ElementAt(0).Value;
+                    chat = elem.Attributes().ElementAt(1).Value;
+                }
+                string name = "";
+                Peer temp = new Peer();
+                temp = (Peer)GetIPtoPeer()[ip];
+                name = temp.mName;
+                Console.WriteLine("{0}:{1}", name, chat);
+
+                if (ChatChanged != null)
+                    ChatChanged(name, chat);
             }
-            string name = "";
-            Peer temp = new Peer();
-            temp = (Peer)GetIPtoPeer()[ip];
-            name = temp.mName;
-            Console.WriteLine("{0}:{1}",name,chat);
-            ////////////////////////////////////////////////
-            if (ChatChanged != null)
-                ChatChanged(name,chat);
-
-            //
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
         private void getErrorMsg(String msg)
         {
-            string error = " ";
-            XDocument xml = XDocument.Parse(msg);
-            var q = from x in xml.Descendants()
-                    where (x.Name == "root")
-                    select x;
-            foreach (var elem in q)
-                error = elem.Value;
-            string[] sr = error.Split(':');
-            int errorCode = Convert.ToInt32(sr[0]);
-            string errorMsg = sr[1];
-            Console.WriteLine(error);
-            ////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////////////////
-            if (ErrorChanged != null)
-                ErrorChanged(errorCode,errorMsg);
-            if (errorCode == 10)
+            try
             {
-                Clear();
-                CloseSocket();
+                string error = " ";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Descendants()
+                        where (x.Name == "root")
+                        select x;
+                foreach (var elem in q)
+                    error = elem.Value;
+                string[] sr = error.Split(':');
+                int errorCode = Convert.ToInt32(sr[0]);
+                string errorMsg = sr[1];
+                Console.WriteLine(error);
+
+                if (ErrorChanged != null)
+                    ErrorChanged(errorCode, errorMsg);
+                if (errorCode == 10)
+                {
+                    Clear();
+                    CloseSocket();
+                }
             }
-
-
-            /////////
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
         private void getDisconnectMsg(String msg)
         {
-            string ipport = " ";
-            XDocument xml = XDocument.Parse(msg);
-            var q = from x in xml.Descendants()
-                    where (x.Name == "root")
-                    select x;
-            foreach (var elem in q)
-                ipport = elem.Value;
-            setMasterBackup(ipport);
-            showTable();
+            try
+            {
+                string ipport = " ";
+                XDocument xml = XDocument.Parse(msg);
+                var q = from x in xml.Descendants()
+                        where (x.Name == "root")
+                        select x;
+                foreach (var elem in q)
+                    ipport = elem.Value;
+                setMasterBackup(ipport);
+                showTable();
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
         private void showHeartBeat(String ipport)
         {
@@ -551,12 +590,21 @@ namespace Spinach
             int receMs = Convert.ToInt32(strRecevTimeMillisecond);
 
             int diffInMs = receMs - sentMs;
+
             if (diffInMs < 0)
             {
                 string strSendSeconds = sendTArr[sendTArr.Length - 2];
                 string strRecevSeconds = sendTArr[sendTArr.Length - 2];
-                int sendSec = Convert.ToInt32(strSendSeconds);
-                int receSec = Convert.ToInt32(strRecevSeconds);
+                int sendSec = 0;
+                if(!string.IsNullOrEmpty(strSendSeconds))
+                {
+                    sendSec = Convert.ToInt32(strSendSeconds);
+                }
+                int receSec=0;
+                if (!string.IsNullOrEmpty(strRecevSeconds))
+                {
+                    receSec = Convert.ToInt32(strRecevSeconds);
+                }
                 int diffSec = receSec - sendSec;
                 int SecMilliSec = diffSec * 1000;
                 int DiffMilleSec = SecMilliSec + (receMs - sentMs);
@@ -566,8 +614,6 @@ namespace Spinach
             {
                 return diffInMs;
             }
-
-           
         }
 
         private void showTable()
@@ -611,23 +657,83 @@ namespace Spinach
         }
         private void setMasterBackup(String ipport)
         {
-            if (ipport == GetMaster())
+            try
             {
-                SetMaster(GetBackup());
-                RemovePeer(ipport);
-                string backup = selectbackup();
-                SetBackup(backup);
+                if (ipport == GetMaster())
+                {
+                    SetMaster(GetBackup());
+                    RemovePeer(ipport);
+                    string backup = selectbackup();
+                    SetBackup(backup);
+                }
+                else if (ipport == GetBackup())
+                {
+                    RemovePeer(ipport);
+                    string backup = selectbackup();
+                    SetBackup(backup);
+                }
+                else
+                {
+                    RemovePeer(ipport);
+                }
             }
-            else if (ipport == GetBackup())
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
+        }
+        private void getPrallelSet(String msg)
+        {
+            XDocument doc = XDocument.Parse(msg);
+            var q = from x in doc.Elements().Descendants("Prallel") select x;
+            string Prallel = q.ElementAt(0).ToString();
+            q = from x in doc.Elements().Descendants("lower") select x;
+            string lower = q.ElementAt(0).Value.ToString();
+            q = from x in doc.Elements().Descendants("upper") select x;
+            string upper = q.ElementAt(0).Value.ToString();
+            int l=Int32.Parse(lower);
+            int r=Int32.Parse(upper);
+            for (int i = l; i <= r; i++)
             {
-                RemovePeer(ipport);
-                string backup = selectbackup();
-                SetBackup(backup);
+                SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                string[] temp = smc.PortionReceive(Prallel.ToString());
+                SwarmMemory sm = GetProg(temp[0].ToString());
+                sm.AddTaskIndex(i);
             }
-            else
+            for (int i = l; i <= r; i++)
             {
-                RemovePeer(ipport);
+                SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                string[] temp = smc.PortionReceive(Prallel.ToString());
+                SwarmMemory sm = GetProg(temp[0].ToString());
+                //sm.AddTaskIndex(i);
+                if (temp[4].ToString() == sm.getMaster())
+                {
+                    //sm.acceptParallelfor(temp[2].ToString(), temp[3].ToString(), temp[1].ToString(), temp[4].ToString());
+                    sm.acceptParallelfor(temp[1].ToString(), temp[2].ToString(), i.ToString(), temp[3].ToString());
+                }
             }
+
+        }
+        private void getResultSet(String msg)
+        {
+            XDocument doc = XDocument.Parse(msg);
+            var q = from x in doc.Elements().Descendants("Numbers") select x;
+            string Numbers = q.ElementAt(0).Value.ToString();
+            //var q = from x in doc.Elements().Descendants("lower") select x;
+            //string lower = q.ElementAt(0).Value.ToString();
+            //q = from x in doc.Elements().Descendants("upper") select x;
+            //string upper = q.ElementAt(0).Value.ToString();
+            q = from x in doc.Elements().Descendants("PrallelResult") select x;
+            //int l = Int32.Parse(lower);
+            //int r = Int32.Parse(upper);
+            int counter=Int32.Parse(Numbers);
+            for (int i = 0; i < counter; i++)
+            {
+                string Prallel = q.ElementAt(i).ToString();
+                SwarmMemoryCaller smc = new SwarmMemoryCaller();
+                string[] temp = smc.PortionResultReceive(Prallel.ToString());
+                SwarmMemory sm = GetProg(temp[0].ToString());
+                sm.incomingResult(temp[2].ToString(), temp[1].ToString());
+            }
+
         }
     }
 }

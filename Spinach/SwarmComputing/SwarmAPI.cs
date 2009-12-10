@@ -51,7 +51,9 @@ namespace Spinach
         public event PrivelageEventHandler TransOwner;
         public delegate void DisconnectEventHandler(bool disconnect);
         public event DisconnectEventHandler DisconnectChanged;
-
+        public delegate void ListeningEventHandler(bool listen);
+        public event ListeningEventHandler ListenChanged;
+        bool listen;
 
         private List<string> DisplayList = new List<string>();
         Thread listenerThread;
@@ -70,11 +72,16 @@ namespace Spinach
             mSocket.AddPrev+=new AsynchronousSocketListener.PrivelageEventHandler(AddPrevChanged);
             mSocket.ChngPermission+=new AsynchronousSocketListener.PrivelageEventHandler(ChangPermission);
             mSocket.TransOwner+=new AsynchronousSocketListener.PrivelageEventHandler(TransferOwnership);
+            mSocket.ListenChanged += new AsynchronousSocketListener.ListeningEventHandler(ListenChan);
+
          
         }
-        public void InsertProgtoSC(SwarmMemory sm)
+        public void ListenChan(bool x)
         {
-            mSocket.InsertProg(sm.getPid(), sm);
+            if (x == true)
+                listen = true;
+            else
+                listen = false;
         }
         private void AddPrevChanged(string[] strTemp)
         {
@@ -91,95 +98,39 @@ namespace Spinach
             if (TransOwner != null)
                 TransOwner(strTemp);
         }
-
-        private void List_Changed(Hashtable Displist)
-        {
-            DisplayList.Clear();
-            //string Delay = "0";
-            foreach (string iport in Displist.Keys)
-            {
-                Peer st = (Peer)Displist[iport];
-                string Username = st.mName;
-                string Delay;
-                if (st.mDelay == null)
-                    Delay = "0";
-                else
-                    Delay = st.mDelay;
-                string conMsg = Username + " | " + iport + " | Delay: " + Delay;
-                //if (DisplayList.Count < Displist.Count)
-                //{
-                //    if (!DisplayList.Contains(conMsg))
-                //    {
-                //        DisplayList.Add(conMsg);
-                //    }
-                //}
-                //else if (DisplayList.Count > Displist.Count)
-                //{
-                //    DisplayList.Clear();
-                //    DisplayList.Add(conMsg);
-                //}
-                DisplayList.Add(conMsg);
-            }
-            if (ListChanged != null)
-                ListChanged(DisplayList);
-
-        }
-        private void Chat_Changed(string Username,string ChatMessage)
+        private void Chat_Changed(string Username, string ChatMessage)
         {
             if (ChatChanged != null)
-                ChatChanged(Username,ChatMessage);
+                ChatChanged(Username, ChatMessage);
 
         }
-        private void Error_Changed(int errorcode,string ErrorMsg)
+        private void Error_Changed(int errorcode, string ErrorMsg)
         {
             if (ErrorChanged != null)
-                ErrorChanged(errorcode,ErrorMsg);
-
+                ErrorChanged(errorcode, ErrorMsg);
         }
-
-        //*************************************
-        public bool Join_Swarm(string DstIP, string DstPort, string SrcIP, string SrcPort, string Username)
+        private void List_Changed(Hashtable Displist)
         {
-            Thread t1 = null;
-            Thread t2 = null;
             try
             {
-                string cpu = "1";
-                mSocket.SetIP(SrcIP);
-                mSocket.SetPort(SrcPort);
-                mSocket.SetName(Username);
-                mSocket.SetCPU(cpu);
-
-                listenerThread = new Thread(new ThreadStart(mSocket.StartListening));
-                listenerThread.IsBackground = true;
-                listenerThread.Start();
-
-                t1 = new Thread(new ThreadStart(mSocket.StarHeartBeat));
-                t1.IsBackground = true;
-                t1.Start();
-
-                MessageGenerator msg = new MessageGenerator();
-                string mMsg = msg.msgConnectionRequest
-                    (mSocket.GetIP(), mSocket.GetPort(), mSocket.GetName(), mSocket.GetCPU());
-                AsynchronousClient client = new AsynchronousClient();
-                client.ErrorExcep += new AsynchronousClient.EventHandlerExcep(Error_Changed);
-                client.SetSingleMsg(DstIP, DstPort, mMsg);
-                // t2 = new Thread(new ThreadStart(client.SendSingleClient));
-                client.SendSingleClient();
-                // t2.Start();
-                // t2.IsBackground = true;
-                Thread.Sleep(2000);
-                if (mSocket.GetIPtoPeer().Count > 0)
-                    return true;
-                else
-                    return false;
-
+                DisplayList.Clear();
+                foreach (string iport in Displist.Keys)
+                {
+                    Peer st = (Peer)Displist[iport];
+                    string Username = st.mName;
+                    string Delay;
+                    if (st.mDelay == null)
+                        Delay = "0";
+                    else
+                        Delay = st.mDelay;
+                    string conMsg = Username + " | " + iport + " | Delay: " + Delay;
+                    DisplayList.Add(conMsg);
+                }
+                if (ListChanged != null)
+                    ListChanged(DisplayList);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Failed to join swarm.");
-                return false;
-            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
 
         }
 
@@ -198,19 +149,69 @@ namespace Spinach
                 listenerThread = new Thread(new ThreadStart(mSocket.StartListening));
                 listenerThread.IsBackground = true;
                 listenerThread.Start();
+                Thread.Sleep(1000);
+                if (listen == true)
+                {
 
-                t1 = new Thread(new ThreadStart(mSocket.StarHeartBeat));
-                t1.IsBackground = true;
-                t1.Start();
+                    t1 = new Thread(new ThreadStart(mSocket.StarHeartBeat));
+                    t1.IsBackground = true;
+                    t1.Start();
 
 
-                mSocket.InsertPeer(mSocket.GetIP(), mSocket.GetPort(), mSocket.GetName(), mSocket.GetCPU());
-                mSocket.SetMaster(mSocket.GetIP() + ":" + mSocket.GetPort());
-                return true;
+                    mSocket.InsertPeer(mSocket.GetIP(), mSocket.GetPort(), mSocket.GetName(), mSocket.GetCPU());
+                    mSocket.SetMaster(mSocket.GetIP() + ":" + mSocket.GetPort());
+                    return true;
+                }
+                else
+                    return false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Failed to create swarm.");
+                return false;
+            }
+        }
+
+        public bool Join_Swarm(string DstIP, string DstPort, string SrcIP, string SrcPort, string Username)
+        {
+            Thread t1 = null;
+            try
+            {
+                string cpu = "1";
+                mSocket.SetIP(SrcIP);
+                mSocket.SetPort(SrcPort);
+                mSocket.SetName(Username);
+                mSocket.SetCPU(cpu);
+
+                listenerThread = new Thread(new ThreadStart(mSocket.StartListening));
+                listenerThread.IsBackground = true;
+                listenerThread.Start();
+                Thread.Sleep(1000);
+                if (listen == true)
+                {
+                    t1 = new Thread(new ThreadStart(mSocket.StarHeartBeat));
+                    t1.IsBackground = true;
+                    t1.Start();
+
+                    MessageGenerator msg = new MessageGenerator();
+                    string mMsg = msg.msgConnectionRequest
+                        (mSocket.GetIP(), mSocket.GetPort(), mSocket.GetName(), mSocket.GetCPU());
+                    AsynchronousClient client = new AsynchronousClient();
+                    client.ErrorExcep += new AsynchronousClient.EventHandlerExcep(Error_Changed);
+                    client.SetSingleMsg(DstIP, DstPort, mMsg);
+                    client.SendSingleClient();
+                    Thread.Sleep(2000);
+                    if (mSocket.GetIPtoPeer().Count > 0)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Failed to join swarm.");
                 return false;
             }
 
@@ -237,49 +238,24 @@ namespace Spinach
             }
         }
 
-        //
-
-
-        //public void CreatProgram(string _Pid, string myIP, string myPort)
-        //{
-        //    SwarmMemory sm = new SwarmMemory(pid, mSocket.GetIP() + ":" + mSocket.GetPort());
-        //    sm.setOwner(mSocket.GetIP() + ":" + mSocket.GetPort());
-        //    mSocket.InsertProg(pid, sm);
-        //}
-
-        //public void AssignPermission(string pid,string code,string ip,string port,string read, string write)
-        //{
-        //    string ipport = ip + ":" + port;
-        //    SwarmMemory sm = mSocket.GetProg(pid);
-        //    sm.addPermissionRequest(mSocket.GetIP() + ":" + mSocket.GetPort(), mSocket.GetIPtoPeer(), code, ipport, read, write);
-        //}
-
-        //public void ChangePermission(string pid, string ip,string port, string read, string write)
-        //{
-        //    string ipport = ip + ":" + port;
-        //    SwarmMemory sm = mSocket.GetProg(pid);
-        //    sm.changePermissionRequest(mSocket.GetIP() + ":" + mSocket.GetPort(), mSocket.GetIPtoPeer(), ipport, read, write);
-        //}
-
-
-        //public Hashtable GetPermission(string pid)
-        //{
-        //    return mSocket.GetPermission(pid);
-        //}
-
         public void Disconnect()
         {
-            if (DisconnectChanged != null)
-                DisconnectChanged(true);
-            mSocket.Disconnect();
-            Thread.Sleep(1000);
-            mSocket.Clear();
-            mSocket.CloseSocket();
-            //if (listenerThread.IsAlive)
-            //{
-            //    listenerThread.Abort();
-            //}
-            //            Thread.CurrentThread.Abort();
+            try
+            {
+                if (DisconnectChanged != null)
+                    DisconnectChanged(true);
+                mSocket.Disconnect();
+                Thread.Sleep(1000);
+                mSocket.Clear();
+                mSocket.CloseSocket();
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
+        }
+
+        public void InsertProgtoSC(SwarmMemory sm)
+        {
+            mSocket.InsertProg(sm.getPid(), sm);
         }
 
         public Hashtable GetIPtoPeer()

@@ -13,6 +13,6 @@
     </ErrorReportUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
-    <ReferencePath>C:\Users\MIT\pinac\Spinach\SPINACH_DLLS\</ReferencePath>
+    <ReferencePath>\\stu04-fsrv.ad.syr.edu\skyasara$\Desktop\latest\Spinach\SPINACH_DLLS\</ReferencePath>
   </PropertyGroup>
 </Project>

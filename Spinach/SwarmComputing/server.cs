@@ -45,6 +45,8 @@ namespace Spinach
         public event EventHandlerHeartBeat HeartBeatException;
         public delegate void ChangedEventHandlerForDelay(Hashtable conInfo);
         public event ChangedEventHandlerForDelay ListChangedWithDelay;
+        public delegate void ListeningEventHandler(bool listen);
+        public event ListeningEventHandler ListenChanged;
 
 
         // Thread signal.
@@ -60,12 +62,14 @@ namespace Spinach
         {
             // Data buffer for incoming data.
             byte[] bytes = new Byte[1024];
-
+            try
+            {
             // Establish the local endpoint for the socket.
             // The DNS name of the computer
             // running the listener is "host.contoso.com".
-            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
+            //IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
+            //IPAddress ipAddress = ipHostInfo.AddressList[0];
+            IPAddress ipAddress = IPAddress.Parse(mPeer.mIP);
             string strport = mPeer.mPort;
             int port = Convert.ToInt32(strport);
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
@@ -75,11 +79,11 @@ namespace Spinach
                 SocketType.Stream, ProtocolType.Tcp);
 
             // Bind the socket to the local endpoint and listen for incoming connections.
-            try
-            {
+           
                 listener.Bind(localEndPoint);
-                listener.Listen(100);
-
+                listener.Listen(10000);
+                if (ListenChanged != null)
+                    ListenChanged(true);
                 while (true)
                 {
                     // Set the event to nonsignaled state.
@@ -99,6 +103,8 @@ namespace Spinach
             catch (Exception e)
             {
                 //System.Windows.Forms.MessageBox.Show(e.Message, "Failed to listen.");
+                if (ListenChanged != null)
+                    ListenChanged(false);
             }
 
             //Console.WriteLine("\nPress ENTER to continue...");
@@ -127,6 +133,7 @@ namespace Spinach
             catch (Exception e)
             {
                 //System.Windows.Forms.MessageBox.Show(e.Message, "Accept callback exception");
+                Console.WriteLine("Accept callback exception " + e.Message);
             }
         }
 
@@ -173,36 +180,41 @@ namespace Spinach
             catch (Exception e)
             {
                 //System.Windows.Forms.MessageBox.Show(e.Message, "Read callback exception");
+                Console.WriteLine("Read callback exception " + e.Message);
             }
         }
 
         private void preProcess(String msg)
         {
-            string mMsg=msg.Remove(msg.Length-5);
-            //Console.WriteLine("{0}\n ",mMsg);
-            parseMsg(mMsg);
+            try
+            {
+                string mMsg = msg.Remove(msg.Length - 5);
+                //Console.WriteLine("{0}\n ", mMsg);
+                parseMsg(mMsg);
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
         public void Disconnect()
         {
-            MessageGenerator temp = new MessageGenerator();
-            string msg = temp.msgDisconnect(mPeer.mIP + ":" + mPeer.mPort);
-            Thread t = null;
-            AsynchronousClient client = new AsynchronousClient();
-            client.SetMultiMsg(GetIPtoPeer(), msg, GetIP() + ":" + GetPort());
+            try
+            {
+                MessageGenerator temp = new MessageGenerator();
+                string msg = temp.msgDisconnect(mPeer.mIP + ":" + mPeer.mPort);
+                Thread t = null;
+                AsynchronousClient client = new AsynchronousClient();
+                client.SetMultiMsg(GetIPtoPeer(), msg, GetIP() + ":" + GetPort());
 
-            t = new Thread(new ThreadStart(client.SendMultiClient));
-            t.IsBackground = true;
-            t.Start();
-//            Thread.Sleep(5000);
-  //          Clear();
-            //Thread.Sleep(5000);
+                t = new Thread(new ThreadStart(client.SendMultiClient));
+                t.IsBackground = true;
+                t.Start();
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
 
-        public void CloseSocket()
-        {
-            listener.Close();
-        }
+
         public void StarHeartBeat()
         {
             MessageGenerator temp=new MessageGenerator();
@@ -213,7 +225,10 @@ namespace Spinach
                 {
                     if (IPtoPeer.Count > 1)
                     {
-                        foreach (string IP in IPtoPeer.Keys)
+
+                        string[] keys = new string[IPtoPeer.Keys.Count];
+                        IPtoPeer.Keys.CopyTo(keys, 0);
+                        foreach (string IP in keys)
                         {
                             if (IP != GetIP() + ":" + GetPort())
                             {
@@ -241,7 +256,7 @@ namespace Spinach
                 }
             }
         }
-        public void InsertSendTime(String ipport, String time)
+        private void InsertSendTime(String ipport, String time)
         {
             try
             {
@@ -265,7 +280,7 @@ namespace Spinach
                 Console.WriteLine(e.ToString());
             }
         }
-        public void InsertReceiveTime(String ipport, String time)
+        private void InsertReceiveTime(String ipport, String time)
         {
             Heartbeat temp = (Heartbeat)IPtoHeartbeat[ipport];
             temp.ReceiveTime = time;
@@ -297,6 +312,16 @@ namespace Spinach
             {
                 Console.WriteLine(e.ToString());
             }
+        }
+
+        public void CloseSocket()
+        {
+            try
+            {
+                listener.Close();
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString()); }
         }
         //private void Send(Socket handler, String data)
         //{

@@ -46,6 +46,33 @@ namespace Spinach
             string[] temp = {Pid,index,result};
             return temp;
         }
+        //old version
+        //public string[] PortionReceive(string PortionXML)
+        //{
+        //    //xml += "<Pid>" + Pid + "<Pid>";
+        //    //xml += "<Index>" + index + "</Index>";
+        //    //xml += "<Sender>" + mSocket.GetIP() + ":" + mSocket.GetPort() + "</Sender>";
+        //    //xml += "<Data>" + ParallelForData + "</Data>";
+        //    //xml += "<Body>" + ParallelForBody + "</Body>";
+        //    XDocument doc = XDocument.Parse(PortionXML);
+        //    var q = from x in doc.Elements().Descendants("Pid") select x;
+        //    string Pid = q.ElementAt(0).Value.ToString();
+        //    q = from x in doc.Elements().Descendants("IPPort") select x;
+        //    string IPPort = q.ElementAt(0).Value.ToString();
+        //    q = from x in doc.Elements().Descendants("Index") select x;
+        //    string index = q.ElementAt(0).Value.ToString();            
+        //    q = from x in doc.Elements().Descendants("Data") select x;
+        //    string data = q.ElementAt(0).ToString();            
+        //    q = from x in doc.Elements().Descendants("Body") select x;
+        //    string body = q.ElementAt(0).Value.ToString();
+        //    body = body.Replace('%', '<');
+        //    body = body.Replace('@', '>');
+        //    q = from x in doc.Elements().Descendants("Range") select x;
+        //    string range = q.ElementAt(0).Value.ToString();
+        //    string[] temp = { Pid, index, data, body, range, IPPort };
+        //    return temp;
+
+        //}
         public string[] PortionReceive(string PortionXML)
         {
             //xml += "<Pid>" + Pid + "<Pid>";
@@ -56,17 +83,19 @@ namespace Spinach
             XDocument doc = XDocument.Parse(PortionXML);
             var q = from x in doc.Elements().Descendants("Pid") select x;
             string Pid = q.ElementAt(0).Value.ToString();
-            q = from x in doc.Elements().Descendants("Index") select x;
-            string index = q.ElementAt(0).Value.ToString();            
+            q = from x in doc.Elements().Descendants("IPPort") select x;
+            string IPPort = q.ElementAt(0).Value.ToString();
+            //q = from x in doc.Elements().Descendants("Index") select x;
+            //string index = q.ElementAt(0).Value.ToString();
             q = from x in doc.Elements().Descendants("Data") select x;
-            string data = q.ElementAt(0).ToString();            
+            string data = q.ElementAt(0).ToString();
             q = from x in doc.Elements().Descendants("Body") select x;
             string body = q.ElementAt(0).Value.ToString();
             body = body.Replace('%', '<');
             body = body.Replace('@', '>');
             q = from x in doc.Elements().Descendants("Range") select x;
             string range = q.ElementAt(0).Value.ToString();
-            string[] temp = {Pid,index,data,body,range};
+            string[] temp = { Pid, data, body, range, IPPort };
             return temp;
 
         }

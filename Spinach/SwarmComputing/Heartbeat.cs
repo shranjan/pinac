@@ -120,7 +120,7 @@ namespace Spinach
             }
             catch (Exception e)
             {
-                Console.WriteLine("Heartbeat Error");
+                Console.WriteLine("Heartbeat Error " + e.Message);
 
                 //////////////////////////////////////!!!!!!!!!!!!!!!///////////////////
                 string IPPort = targetip + ":" + targetport;

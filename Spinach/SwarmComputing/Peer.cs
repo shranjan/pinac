@@ -46,14 +46,10 @@ namespace Spinach
         public event ChangedEventHandler ListChanged;
 
 
-        ////////////////////////////////////////////////////////////////////////////////
-
-
         //connection part
         Peer mPeer = new Peer();
 
         //computation part
-        //private Hashtable RunFlag = new Hashtable();//pid->runflag
         private Hashtable Program = new Hashtable();//pid->swarm program object
 
         //shared infomation part
@@ -94,11 +90,9 @@ namespace Spinach
             IPtoPeer[ipport] = nPeer;
             NametoIP[name] = ipport;
 
-
-            //////////////////////////////
             if (ListChanged != null)
                 ListChanged(IPtoPeer);
-            //////////////////////////////////
+
             return 1;
         }
 
@@ -111,10 +105,8 @@ namespace Spinach
                 IPtoPeer.Remove(ipport);
                 if (NametoIP.Contains(name))
                     NametoIP.Remove(name);
-                ///////////////////////
                 if (ListChanged != null)
                     ListChanged(IPtoPeer);
-                /////////////////////////////
                 return 1;
             }
             else
